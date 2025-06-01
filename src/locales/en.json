@@ -1,0 +1,11 @@
+{
+  "sideBar": {
+    "casher": "Casher",
+    "stock": "Stock",
+    "discount": "Discount",
+    "support": "Support",
+    "settings": "Settings",
+    "mode": "Mode",
+    "language": "language"
+  }
+}
