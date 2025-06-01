@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 
 import CloseBtn from "../../../shared/components/CloseBtn";
 import { SwitchMode } from "../Components/SwitchMode";
@@ -13,14 +13,17 @@ const SettingsView = ({ onClose }: SupportViewProps) => {
   const { t } = useTranslation();
 
   return (
-    <Stack spacing={2} alignItems="center" textAlign="center">
+    <Box>
       <CloseBtn CloseModal={onClose} />
       <Box sx={{ display: "flex", gap: 3, flexDirection: "column" }}>
         <Box sx={{ display: "flex", gap: 1, flexDirection: "column" }}>
           <Typography
+            variant="body1"
             sx={{
               color: theme.palette.text.primary,
-              fontWeight: 500,
+              letterSpacing: 0,
+              fontSize: 24,
+              fontWeight: 800,
               width: "100%",
               textAlign: "left",
             }}
@@ -33,7 +36,9 @@ const SettingsView = ({ onClose }: SupportViewProps) => {
           <Typography
             sx={{
               color: theme.palette.text.primary,
-              fontWeight: 500,
+              letterSpacing: 0,
+              fontSize: 24,
+              fontWeight: 800,
               width: "100%",
               textAlign: "left",
             }}
@@ -43,7 +48,7 @@ const SettingsView = ({ onClose }: SupportViewProps) => {
           <SwitchLang />
         </Box>
       </Box>
-    </Stack>
+    </Box>
   );
 };
 

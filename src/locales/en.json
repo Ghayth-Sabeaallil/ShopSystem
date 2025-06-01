@@ -6,6 +6,12 @@
     "support": "Support",
     "settings": "Settings",
     "mode": "Mode",
-    "language": "language"
+    "language": "Language"
+  },
+  "help": {
+    "help": "Support",
+    "contact": "Contact Us",
+    "callUs": "Call Us",
+    "mailUs": "Send Mail"
   }
 }

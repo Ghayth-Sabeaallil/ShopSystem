@@ -1,48 +1,26 @@
-import { Typography, Button, Stack, Link } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import CallIcon from "@mui/icons-material/Call";
+import { Typography, Button, Stack } from "@mui/material";
 import CloseBtn from "../../../shared/components/CloseBtn";
+import { useTranslation } from "react-i18next";
 
 type SupportViewProps = {
   onClose: () => void;
 };
 const SupportView = ({ onClose }: SupportViewProps) => {
-  const theme = useTheme();
+  const { t } = useTranslation();
 
   return (
     <Stack spacing={2} alignItems="center" textAlign="center">
       <CloseBtn CloseModal={onClose} />
-      <Typography variant="body1">help</Typography>
-
-      <Typography variant="body1" fontStyle="italic">
-        contactUs
-      </Typography>
-
-      <Stack
-        direction="row"
-        alignItems="center"
-        spacing={1}
-        sx={{ transform: "translateX(-14px)" }}
-      >
-        <CallIcon fontSize="small" color="action" />
-        <Link
-          href="tel:0337991472"
-          underline="hover"
-          variant="body2"
-          sx={{ color: theme.palette.text.primary }}
-        >
-          central: 033-799 14 72
-        </Link>
-      </Stack>
-
+      <Typography variant="body1">{t(`help.contact`)}</Typography>
+      <Typography variant="body1">0046 720 464 311</Typography>
       <Button
         variant="contained"
         color="primary"
-        href="https://www.ekelundstyr.se/service"
+        href="mailto:ghaessesa58@gmail.com"
         target="_blank"
         rel="noopener noreferrer"
       >
-        contact
+        {t(`help.mailUs`)}
       </Button>
     </Stack>
   );

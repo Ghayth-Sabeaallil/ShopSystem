@@ -60,7 +60,7 @@ export default function SidebarModal({
             minWidth: "fit-content",
             maxWidth: "100vw",
             maxHeight: { xs: "100vh", md: "90vh" },
-            bgcolor: theme.palette.background.paper,
+            bgcolor: theme.palette.background.default,
             boxShadow: theme.shadows[4],
             borderRadius: `${theme.shape.borderRadius}px`,
             padding: 10,

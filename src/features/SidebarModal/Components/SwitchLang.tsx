@@ -21,7 +21,7 @@ export const SwitchLang = () => {
         onChange={handleLanguageChange}
         size="small"
         variant="outlined"
-        sx={{ minWidth: 80 }}
+        sx={{ minWidth: 80, letterSpacing: 0, fontSize: 22, fontWeight: 500 }}
       >
         <MenuItem value="ar">العربية</MenuItem>
         <MenuItem value="en">English</MenuItem>
