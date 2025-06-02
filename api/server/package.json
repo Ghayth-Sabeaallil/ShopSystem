@@ -1,0 +1,26 @@
+{
+    "name": "backend",
+    "version": "1.0.0",
+    "description": "Ett tillhörande REST-api för att rösta och se resultaten.",
+    "main": "index.js",
+    "scripts": {
+        "dev": "npm run build && npm run start",
+        "start": "node ./dist/index.js",
+        "build": "npx esbuild index.ts --platform=node --bundle --packages=external --outdir=./dist --format=cjs"
+    },
+    "dependencies": {
+        "@types/express": "^5.0.0",
+        "@types/mongoose": "^5.11.97",
+        "@types/node": "^22.7.9",
+        "bcryptjs": "^2.4.3",
+        "cloudinary": "^2.5.1",
+        "cookie-parser": "^1.4.7",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.7",
+        "esbuild": "^0.24.0",
+        "express": "^4.21.1",
+        "jsonwebtoken": "^9.0.2",
+        "mongoose": "^8.7.2",
+        "node": "^22.10.0"
+    }
+}
