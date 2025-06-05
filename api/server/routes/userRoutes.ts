@@ -14,7 +14,6 @@ userRouter.get("/", async ({ res }: any) => {
     }
 });
 
-// Register Route
 userRouter.post("/register", async (req, res) => {
     try {
         const newUser = new UserModel(req.body);
@@ -23,7 +22,7 @@ userRouter.post("/register", async (req, res) => {
             const hashedPassword = await bcrypt.hash(newUser.password, 10);
             const newUserRegister = new UserModel({ username: newUser.username, password: hashedPassword });
             await newUserRegister.save();
-            res.status(201).json({ msg: 'User created successfully' });
+            res.status(200).json({ msg: 'User created successfully' });
         }
         else {
             res.status(400).json({ msg: 'User already exists' });

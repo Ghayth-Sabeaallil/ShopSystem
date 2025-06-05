@@ -1,6 +1,5 @@
 import Mongoose from "mongoose";
 
-
 interface User {
     username: string;
     password: string;
