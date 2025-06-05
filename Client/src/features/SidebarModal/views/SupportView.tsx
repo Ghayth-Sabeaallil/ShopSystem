@@ -1,16 +1,11 @@
-import { Typography, Button, Stack } from "@mui/material";
-import CloseBtn from "../../../shared/components/CloseBtn";
+import { Typography, Button, Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-type SupportViewProps = {
-  onClose: () => void;
-};
-const SupportView = ({ onClose }: SupportViewProps) => {
+const SupportView = () => {
   const { t } = useTranslation();
 
   return (
-    <Stack spacing={2} alignItems="center" textAlign="center">
-      <CloseBtn CloseModal={onClose} />
+    <Box>
       <Typography variant="body1">{t(`help.contact`)}</Typography>
       <Typography variant="body1">0046 720 464 311</Typography>
       <Button
@@ -22,7 +17,7 @@ const SupportView = ({ onClose }: SupportViewProps) => {
       >
         {t(`help.mailUs`)}
       </Button>
-    </Stack>
+    </Box>
   );
 };
 

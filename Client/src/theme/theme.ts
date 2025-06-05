@@ -49,7 +49,7 @@ const theme = (mode: "light" | "dark"): Theme =>
 
         typography: {
             fontFamily: `"Roboto", sans-serif`,
-            body1: { fontFamily: `"Roboto"`, fontWeight: 400, fontSize: 18, lineHeight: 1.5, letterSpacing: "2px" },
+            body1: { fontFamily: `"Roboto"`, fontWeight: 400, fontSize: 18, lineHeight: 1.5 },
             body2: { fontFamily: `"Roboto"`, fontSize: 16 },
         },
 

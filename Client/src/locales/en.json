@@ -13,5 +13,13 @@
     "contact": "Contact Us",
     "callUs": "Call Us",
     "mailUs": "Send Mail"
+  },
+  "stock": {
+    "stock": "Stock",
+    "add": "Add an Item",
+    "name": "Name",
+    "price": "Price",
+    "barCode": "BarCode",
+    "amount": "Amount"
   }
 }

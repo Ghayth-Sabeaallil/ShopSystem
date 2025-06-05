@@ -1,20 +1,14 @@
 import { Box, Typography, useTheme } from "@mui/material";
-
-import CloseBtn from "../../../shared/components/CloseBtn";
 import { SwitchMode } from "../Components/SwitchMode";
 import { SwitchLang } from "../Components/SwitchLang";
 import { useTranslation } from "react-i18next";
 
-type SupportViewProps = {
-  onClose: () => void;
-};
-const SettingsView = ({ onClose }: SupportViewProps) => {
+const SettingsView = () => {
   const theme = useTheme();
   const { t } = useTranslation();
 
   return (
     <Box>
-      <CloseBtn CloseModal={onClose} />
       <Box sx={{ display: "flex", gap: 3, flexDirection: "column" }}>
         <Box sx={{ display: "flex", gap: 1, flexDirection: "column" }}>
           <Typography

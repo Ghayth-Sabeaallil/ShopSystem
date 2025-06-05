@@ -69,13 +69,8 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
       {open && (
         <Typography
           variant="body2"
-          sx={{
-            mt: 1,
-            fontSize: 16,
-            fontWeight: 900,
-            textAlign: "center",
-            color: theme.palette.text.secondary,
-          }}
+          color={theme.palette.text.secondary}
+          sx={{ fontWeight: 900 }}
         >
           {label}
         </Typography>

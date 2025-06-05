@@ -1,10 +1,11 @@
 import { Backdrop, Box, Modal, Fade } from "@mui/material";
-//import NotificationsView from "./views/NotificationsView";
 import SupportView from "./views/SupportView";
 import { useTheme } from "@mui/material/styles";
 import { Suspense } from "react";
 import type { SidebarModalProps } from "./types/SidebarModalTypes";
 import SettingsView from "./views/SettingsView";
+import StockView from "./views/StockView";
+import { useTranslation } from "react-i18next";
 
 export default function SidebarModal({
   open,
@@ -12,26 +13,26 @@ export default function SidebarModal({
   currentView,
 }: SidebarModalProps) {
   const theme = useTheme();
-
-  {
-    /*
-        case "notifications":
-        return <NotificationsView onClose={onClose} />;
-        */
-  }
+  const { i18n } = useTranslation();
 
   const renderView = () => {
     switch (currentView) {
+      case "stock":
+        return (
+          <Suspense>
+            <StockView />
+          </Suspense>
+        );
       case "support":
         return (
           <Suspense>
-            <SupportView onClose={onClose} />
+            <SupportView />
           </Suspense>
         );
       case "settings":
         return (
           <Suspense>
-            <SettingsView onClose={onClose} />
+            <SettingsView />
           </Suspense>
         );
 
@@ -53,17 +54,18 @@ export default function SidebarModal({
       <Fade in={open}>
         <Box
           sx={{
+            direction: i18n.language == "ar" ? "rtl" : "ltr",
             position: "absolute",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            minWidth: "fit-content",
-            maxWidth: "100vw",
+            Width: "fit-content",
+            maxWidth: "100%",
             maxHeight: { xs: "100vh", md: "90vh" },
             bgcolor: theme.palette.background.default,
             boxShadow: theme.shadows[4],
             borderRadius: `${theme.shape.borderRadius}px`,
-            padding: 10,
+            padding: 5,
             overflowY: "auto",
             outline: "none",
           }}
