@@ -1,7 +1,7 @@
 import { Box, Switch } from "@mui/material";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
-import { useThemeModeContext } from "../../../shared/context/ThemeModeContext";
+import { useThemeModeContext } from "../../../shared/context/ThemeModeContext/ThemeModeContext";
 
 export const SwitchMode = () => {
   const { colorMode, toggleColorMode } = useThemeModeContext();
