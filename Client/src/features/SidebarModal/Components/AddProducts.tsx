@@ -14,7 +14,40 @@ const AddProduct = () => {
   const [buyingPrice, setbuyingPrice] = useState<number>(0);
   const [sellingPrice, setsellingPrice] = useState<number>(0);
   const [amount, setAmount] = useState<number>(0);
+  const [error, setError] = useState<string>();
+
   const { userId } = useAuth();
+
+  const addProduct = async () => {
+    setError(undefined);
+    try {
+      await productApi.add(
+        userId,
+        name,
+        barCode,
+        buyingPrice,
+        sellingPrice,
+        amount,
+        0
+      );
+
+      setBarCode("");
+      setName("");
+      setAmount(0);
+      setbuyingPrice(0);
+      setsellingPrice(0);
+    } catch (err: any) {
+      if (
+        err.response &&
+        err.response.status === 400 &&
+        err.response.data?.msg?.includes("already exists")
+      ) {
+        setError(t("stock.productExists")); // use a translated message if available
+      } else {
+        setError(t("stock.addError")); // generic error fallback
+      }
+    }
+  };
 
   return (
     <Box
@@ -67,6 +100,7 @@ const AddProduct = () => {
           onChange={(e) => setAmount(Number(e.target.value))}
         />
       </Box>
+      {error && <Box sx={{ color: "red", fontWeight: "bold" }}>{error}</Box>}
       <Btn
         text={t(`stock.add`)}
         icon={AddIcon}
@@ -75,17 +109,7 @@ const AddProduct = () => {
             ? false
             : true
         }
-        onClick={() =>
-          productApi.add(
-            userId,
-            name,
-            barCode,
-            buyingPrice,
-            sellingPrice,
-            amount,
-            0
-          )
-        }
+        onClick={addProduct}
       />
     </Box>
   );

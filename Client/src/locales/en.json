@@ -23,6 +23,8 @@
     "buyPrice": "Buying Price",
     "sellPrice": "Selling Price",
     "barCode": "BarCode",
-    "amount": "Amount"
+    "amount": "Amount",
+    "productExists": "This Product is alreday exists.",
+    "addError": "Something went Wrong, Please try again later."
   }
 }
