@@ -12,7 +12,9 @@ const Btn = ({ text, onClick, disabled, icon: Icon }: BtnProps) => {
   return (
     <Button
       sx={{
-        width: "50%",
+        width: "75%",
+        fontSize: 18,
+        fontWeight: 700,
       }}
       disabled={disabled}
       color="primary"

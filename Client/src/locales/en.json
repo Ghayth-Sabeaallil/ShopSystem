@@ -4,15 +4,17 @@
     "stock": "Stock",
     "discount": "Discount",
     "support": "Support",
-    "settings": "Settings",
-    "mode": "Mode",
-    "language": "Language"
+    "settings": "Settings"
   },
   "help": {
     "help": "Support",
     "contact": "Contact Us",
     "callUs": "Call Us",
     "mailUs": "Send Mail"
+  },
+  "settings": {
+    "title": "Settings",
+    "logout": "Logout"
   },
   "stock": {
     "stock": "Stock",

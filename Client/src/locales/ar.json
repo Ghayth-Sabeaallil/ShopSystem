@@ -4,15 +4,17 @@
     "stock": "المخزن",
     "discount": "العروض",
     "support": "الدعم",
-    "settings": "الاعدادات",
-    "mode": "الوضع",
-    "language": "اللغة"
+    "settings": "الاعدادات"
   },
   "help": {
     "help": "المساعدة",
     "callUs": "اتصل بنا",
     "contact": "تواصل معنا",
     "mailUs": "أرسل بريد الكتروني"
+  },
+  "settings": {
+    "title": "الاعدادات",
+    "logout": "تسجيل الخروج"
   },
   "stock": {
     "stock": "المخزن",
