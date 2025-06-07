@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { Box, TextField, Button, Typography, Paper } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import bg from "/assets/logo.svg";
-import { loginApi } from "./api";
-import { useAuth } from "../../shared/context/authContext/AuthContext ";
 import { useNavigate } from "react-router-dom";
+import { logApi } from "./api/loginApi";
+import { useAuth } from "../../shared/context/authContext/AuthContext ";
 
 const LoginPage = () => {
   const theme = useTheme();
@@ -19,30 +19,28 @@ const LoginPage = () => {
     setError(null);
   }, [username, password]);
 
-  const handleKeyDown = async (event: React.KeyboardEvent<HTMLFormElement>) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      try {
-        await loginApi.login(username, password);
-        await verifyAuth();
-        navigate("/");
-      } catch (err) {
-        setError("Login failed. Please try again.");
-      }
-    }
-  };
-
-  const onClickHandle = async () => {
+  const handleLogin = async () => {
     try {
       setLoading(true);
-      await loginApi.login(username, password);
+      await logApi.login(username, password);
       await verifyAuth();
       navigate("/");
     } catch (err) {
-      setError("Login failed.");
+      setError("Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleLogin();
+    }
+  };
+
+  const onClickHandle = () => {
+    handleLogin();
   };
 
   return (

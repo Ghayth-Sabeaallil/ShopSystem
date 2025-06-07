@@ -4,7 +4,7 @@ import { SwitchLang } from "../Components/SwitchLang";
 import { useTranslation } from "react-i18next";
 import Btn from "../../../shared/components/Btn";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { logoutApi } from "../api/api";
+import { logApi } from "../../loginPage/api/loginApi";
 
 const SettingsView = () => {
   const theme = useTheme();
@@ -37,7 +37,7 @@ const SettingsView = () => {
         text={t(`settings.logout`)}
         icon={LogoutIcon}
         disabled={false}
-        onClick={logoutApi.logout}
+        onClick={logApi.logout}
       />
     </Box>
   );

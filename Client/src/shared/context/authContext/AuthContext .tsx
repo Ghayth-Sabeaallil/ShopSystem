@@ -1,6 +1,6 @@
 // AuthContext.tsx
 import { createContext, useContext, useState, useEffect } from "react";
-import { loginApi } from "../../../features/loginPage/api";
+import { loginApi } from "../../../features/loginPage/api/loginApi";
 
 type AuthContextType = {
   isAuthenticated: boolean;
