@@ -6,16 +6,7 @@ const login = (username: string, password: string) =>
         password
     }, {
         withCredentials: true
-    })
-        .then(response => {
-            console.log('Login successful:', response.data);
-            return response.data;
-        })
-        .catch(error => {
-            console.error('Login failed:', error);
-            throw error;
-        });
-
+    });
 const logout = () => {
     return api.post(`/users/logout`, {}, {
         withCredentials: true
@@ -31,17 +22,26 @@ const logout = () => {
 
 const verifyAuth = async () => {
     try {
-        const { data } = await api.get<{ authenticated: boolean }>('/users/verify', {
+        const { data } = await api.get<{ authenticated: boolean, userId: string }>('/users/verify', {
             withCredentials: true,
         });
-        return data.authenticated;
+
+        return {
+            authenticated: data.authenticated,
+            userId: data.userId,
+        };
     } catch {
-        return false;
+        return {
+            authenticated: false,
+            userId: "",
+        };
     }
 };
+
 
 export const logApi = {
     login,
     logout,
     verifyAuth
 };
+

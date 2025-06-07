@@ -5,7 +5,7 @@ dotenv.config();
 
 const productRouter = express.Router();
 
-productRouter.post("/register", async (req, res) => {
+productRouter.post("/add", async (req, res) => {
     try {
         const newItem = new ProductsModel({
             ...req.body,

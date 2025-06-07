@@ -3,7 +3,7 @@ import Mongoose from "mongoose";
 interface Products {
     owner_id: string,
     name: string,
-    bar_code: number,
+    bar_code: string,
     buying_price: number,
     selling_price: number,
     buying_amount: number,
@@ -13,7 +13,7 @@ interface Products {
 const schema = new Mongoose.Schema<Products>({
     owner_id: { type: String, required: true },
     name: { type: String, required: true },
-    bar_code: { type: Number, required: true },
+    bar_code: { type: String, required: true },
     buying_price: { type: Number, required: true },
     selling_price: { type: Number, required: true },
     buying_amount: { type: Number, required: true },
