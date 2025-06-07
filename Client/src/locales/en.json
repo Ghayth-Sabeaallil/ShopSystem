@@ -18,7 +18,8 @@
     "stock": "Stock",
     "add": "Add an Item",
     "name": "Name",
-    "price": "Price",
+    "buyPrice": "Buying Price",
+    "sellPrice": "Selling Price",
     "barCode": "BarCode",
     "amount": "Amount"
   }

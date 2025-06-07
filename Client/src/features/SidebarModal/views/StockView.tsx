@@ -7,12 +7,19 @@ import Input from "../../../shared/components/Input";
 const StockView = () => {
   const { t } = useTranslation();
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 2,
+        textAlign: "center",
+      }}
+    >
       <Typography variant="body1">{t(`stock.stock`)}</Typography>
       <Box
         sx={{
           display: "flex",
-          width: "100%",
           gap: 1,
         }}
       >
@@ -22,17 +29,26 @@ const StockView = () => {
           value={""}
         />
         <Input text={t(`stock.name`)} label={t(`stock.name`)} value={""} />
-        <Input text={t(`stock.price`)} label={t(`stock.price`)} value={""} />
-        <Input text={t(`stock.amount`)} label={t(`stock.amount`)} value={""} />
-        <Btn
-          text={t(`stock.add`)}
-          icon={AddIcon}
-          disabled={true}
-          onClick={function (): void {
-            throw new Error("Function not implemented.");
-          }}
+        <Input
+          text={t(`stock.buyPrice`)}
+          label={t(`stock.buyPrice`)}
+          value={""}
         />
+        <Input
+          text={t(`stock.sellPrice`)}
+          label={t(`stock.sellPrice`)}
+          value={""}
+        />
+        <Input text={t(`stock.amount`)} label={t(`stock.amount`)} value={""} />
       </Box>
+      <Btn
+        text={t(`stock.add`)}
+        icon={AddIcon}
+        disabled={true}
+        onClick={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+      />
     </Box>
   );
 };

@@ -1,13 +1,22 @@
 import { Typography, Button, Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import wahtsappSVG from "/assets/WhatsAppButtonGreenLarge.svg";
 
 const SupportView = () => {
   const { t } = useTranslation();
 
   return (
-    <Box>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+      }}
+    >
       <Typography variant="body1">{t(`help.contact`)}</Typography>
-      <Typography variant="body1">0046 720 464 311</Typography>
+      <a aria-label="Chat on WhatsApp" href="https://wa.me/46720464311">
+        <img alt="Chat on WhatsApp" src={wahtsappSVG} />
+      </a>
       <Button
         variant="contained"
         color="primary"
@@ -15,7 +24,7 @@ const SupportView = () => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        {t(`help.mailUs`)}
+        <Typography variant="body1">{t(`help.mailUs`)}</Typography>
       </Button>
     </Box>
   );

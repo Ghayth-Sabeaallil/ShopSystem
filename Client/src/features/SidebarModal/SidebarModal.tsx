@@ -5,7 +5,6 @@ import { Suspense } from "react";
 import type { SidebarModalProps } from "./types/SidebarModalTypes";
 import SettingsView from "./views/SettingsView";
 import StockView from "./views/StockView";
-import { useTranslation } from "react-i18next";
 
 export default function SidebarModal({
   open,
@@ -13,7 +12,6 @@ export default function SidebarModal({
   currentView,
 }: SidebarModalProps) {
   const theme = useTheme();
-  const { i18n } = useTranslation();
 
   const renderView = () => {
     switch (currentView) {
@@ -54,7 +52,6 @@ export default function SidebarModal({
       <Fade in={open}>
         <Box
           sx={{
-            direction: i18n.language == "ar" ? "rtl" : "ltr",
             position: "absolute",
             top: "50%",
             left: "50%",
