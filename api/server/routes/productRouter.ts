@@ -23,6 +23,14 @@ productRouter.post("/add", async (req, res) => {
     }
 });
 
-
+productRouter.post("/getByOwner", async (req, res) => {
+    try {
+        const { ownerId } = req.body;
+        const event = await ProductsModel.find({ owner_id: ownerId }).exec();
+        res.status(200).json(event);
+    } catch (err) {
+        res.status(500).json({ message: "Error getting user products", err });
+    }
+});
 
 export default productRouter;

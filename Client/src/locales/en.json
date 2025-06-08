@@ -1,6 +1,6 @@
 {
   "sideBar": {
-    "casher": "Casher",
+    "add": "Add",
     "stock": "Stock",
     "discount": "Discount",
     "support": "Support",
@@ -26,5 +26,13 @@
     "amount": "Amount",
     "productExists": "This Product is alreday exists.",
     "addError": "Something went Wrong, Please try again later."
+  },
+  "table": {
+    "name": "Name",
+    "barCode": "Bar Code",
+    "buy": "Buy Price",
+    "sell": "Sell Price",
+    "amount": "Buying Amount",
+    "sellingAmount": "Selling Amount"
   }
 }

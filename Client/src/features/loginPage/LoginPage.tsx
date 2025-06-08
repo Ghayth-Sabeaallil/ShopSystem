@@ -4,7 +4,7 @@ import { useTheme } from "@mui/material/styles";
 import bg from "/assets/logo.svg";
 import { useNavigate } from "react-router-dom";
 import { logApi } from "./api/loginApi";
-import { useAuth } from "../../shared/context/authContext/AuthContext ";
+import { useAuth } from "../../shared/context/Context/AuthContext ";
 
 const LoginPage = () => {
   const theme = useTheme();

@@ -4,7 +4,7 @@ import Btn from "../../../shared/components/Btn";
 import AddIcon from "@mui/icons-material/Add";
 import Input from "../../../shared/components/Input";
 import { useState } from "react";
-import { useAuth } from "../../../shared/context/authContext/AuthContext ";
+import { useAuth } from "../../../shared/context/Context/AuthContext ";
 import { productApi } from "../api/productApi";
 
 const AddProduct = () => {

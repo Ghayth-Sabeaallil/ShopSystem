@@ -8,7 +8,6 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setAuthenticated] = useState<boolean>(false);
   const [userId, setUserId] = useState<string>("");
-
   const [loading, setLoading] = useState(true);
 
   const verifyAuth = async () => {

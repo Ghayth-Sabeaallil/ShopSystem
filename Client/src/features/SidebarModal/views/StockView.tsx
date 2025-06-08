@@ -1,10 +1,12 @@
 import { Typography, Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
-
-import AddProduct from "../Components/AddProducts";
+import { useProduct } from "../../../shared/context/Context/ProductContext";
+import StockTable from "../Components/StockTable";
 
 const StockView = () => {
   const { t } = useTranslation();
+  const { products } = useProduct();
+
   return (
     <Box
       sx={{
@@ -13,10 +15,11 @@ const StockView = () => {
         alignItems: "center",
         gap: 2,
         textAlign: "center",
+        width: "100%",
       }}
     >
       <Typography variant="body1">{t(`stock.stock`)}</Typography>
-      <AddProduct />
+      <StockTable products={products} />
     </Box>
   );
 };

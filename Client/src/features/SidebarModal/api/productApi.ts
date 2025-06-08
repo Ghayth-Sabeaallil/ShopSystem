@@ -1,4 +1,5 @@
 import api from "../../../shared/api/apiClient";
+import type { productResponse } from "../types/productType";
 
 const add = (owner_id: string,
     name: string,
@@ -28,8 +29,13 @@ const add = (owner_id: string,
             throw error;
         });
 
-
+const getProducts = (ownerId: string) => {
+    return api.post<productResponse[]>(`/products/getByOwner`, {
+        ownerId: ownerId,
+    });
+};
 
 export const productApi = {
-    add
+    add,
+    getProducts
 };

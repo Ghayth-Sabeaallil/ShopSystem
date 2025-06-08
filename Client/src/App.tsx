@@ -8,16 +8,16 @@ import theme from "./theme/theme";
 import Sidebar from "./features/sideBar/Sidebar";
 import LoginPage from "./features/loginPage/LoginPage";
 import { Navigate, Route, Routes, BrowserRouter } from "react-router-dom";
-import {
-  AuthProvider,
-  useAuth,
-} from "./shared/context/authContext/AuthContext ";
+import { AuthProvider, useAuth } from "./shared/context/Context/AuthContext ";
+import { ProductsProvider } from "./shared/context/Context/ProductContext";
 
 function App() {
   return (
     <ThemeModeProvider>
       <AuthProvider>
-        <AppWithTheme />
+        <ProductsProvider>
+          <AppWithTheme />
+        </ProductsProvider>
       </AuthProvider>
     </ThemeModeProvider>
   );
