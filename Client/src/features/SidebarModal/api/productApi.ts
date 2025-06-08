@@ -1,15 +1,14 @@
 import api from "../../../shared/api/apiClient";
 import type { productResponse } from "../types/productType";
 
-const addProduct = (owner_id: string,
+const addProduct = (
     name: string,
     bar_code: string,
     buying_price: number,
     selling_price: number,
     buying_amount: number,
     selling_amount: number) =>
-    api.post(`/products/add`, {
-        owner_id,
+    api.post<productResponse>(`/products/add`, {
         name,
         bar_code,
         buying_price,

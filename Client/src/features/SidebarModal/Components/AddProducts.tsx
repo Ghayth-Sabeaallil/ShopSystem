@@ -4,8 +4,8 @@ import Btn from "../../../shared/components/Btn";
 import AddIcon from "@mui/icons-material/Add";
 import Input from "../../../shared/components/Input";
 import { useState } from "react";
-import { useAuth } from "../../../shared/context/Context/AuthContext ";
 import { productApi } from "../api/productApi";
+import { useProduct } from "../../../shared/context/Context/ProductContext";
 
 const AddProduct = () => {
   const { t } = useTranslation();
@@ -15,14 +15,12 @@ const AddProduct = () => {
   const [sellingPrice, setsellingPrice] = useState<number>(0);
   const [amount, setAmount] = useState<number>(0);
   const [error, setError] = useState<string>();
-
-  const { userId } = useAuth();
+  const { products, setProducts } = useProduct();
 
   const addProduct = async () => {
     setError(undefined);
     try {
-      await productApi.addProduct(
-        userId,
+      const item = await productApi.addProduct(
         name,
         barCode,
         buyingPrice,
@@ -30,6 +28,7 @@ const AddProduct = () => {
         amount,
         0
       );
+      setProducts([...products, item]);
 
       setBarCode("");
       setName("");

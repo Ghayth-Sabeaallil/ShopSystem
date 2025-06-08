@@ -12,13 +12,15 @@ productRouter.post("/add", async (req, res) => {
         if (!token) {
             res.status(401).json({ message: 'Access denied. No token provided.' });
         } else {
-            const { owner_id, bar_code } = req.body;
-            const existingProduct = await ProductsModel.findOne({ owner_id, bar_code });
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const ownerId = decoded.userId;
+            const { bar_code } = req.body;
+            const existingProduct = await ProductsModel.findOne({ ownerId, bar_code });
             if (existingProduct) {
                 res.status(400).json({ msg: "Product with this owner_id and bar_code already exists." });
             }
             else {
-                const newItem = new ProductsModel({ ...req.body });
+                const newItem = new ProductsModel({ ...req.body, owner_id: ownerId });
                 await newItem.save();
                 res.send(newItem);
             }
