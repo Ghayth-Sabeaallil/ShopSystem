@@ -11,7 +11,6 @@ const StockView = () => {
   const { t } = useTranslation();
   const { products, setProducts } = useProduct();
   const { isAuthenticated } = useAuth();
-
   const theme = useTheme();
 
   useEffect(() => {

@@ -8,7 +8,7 @@ const productRouter = express.Router();
 
 productRouter.post("/add", async (req, res) => {
     try {
-        const token = req.cookies["token"]; // Replace with actual cookie name
+        const token = req.cookies["token"];
         if (!token) {
             res.status(401).json({ message: 'Access denied. No token provided.' });
         } else {
@@ -33,7 +33,7 @@ productRouter.post("/add", async (req, res) => {
 
 productRouter.get("/getByOwner", async (req, res) => {
     try {
-        const token = req.cookies.token;
+        const token = req.cookies["token"];
         if (token !== undefined) {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             const event = await ProductsModel.find({ owner_id: decoded.userId }).exec();
@@ -44,27 +44,34 @@ productRouter.get("/getByOwner", async (req, res) => {
     }
 });
 
-{/*
-    productRouter.delete("/delete", async (req, res) => {
+
+productRouter.delete("/delete", async (req, res) => {
     try {
-        const token = req.cookies["token"]; // Replace with actual cookie name
+        const token = req.cookies["token"];
         if (!token) {
             res.status(401).json({ message: 'Access denied. No token provided.' });
-        } else {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { userId: string };
-            req.user = decoded;
-            const _id = req.params._id;
-            const item = await ProductsModel.findById(_id);
-            if (item?.creator.toString() !== req.user.userId) {
-                res.status(403).json({ message: 'Not authorized to delete this item' });
-            }
-            await item!.deleteOne();
-            res.send(item);
         }
+        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { userId: string };
+        const userId = decoded.userId;
+        const { id: productId } = req.body;
+        if (!productId) {
+            res.status(400).json({ message: 'Product ID is required.' });
+        }
+        const product = await ProductsModel.findById(productId);
+        if (!product) {
+            res.status(404).json({ message: 'Product not found.' });
+            return;
+        }
+        if (product.owner_id.toString() !== userId) {
+            res.status(403).json({ message: 'Not authorized to delete this product.' });
+        }
+        await product.deleteOne();
+        res.status(200).json({ message: 'Product deleted successfully.' });
     } catch (error) {
-        console.error(error); // Log the error for debugging
-        res.status(500).json({ msg: 'Server error', error });
+        console.error('Server error while deleting product:', error);
+        res.status(500).json({ message: 'Server error', error });
     }
 });
-    */}
+
+
 export default productRouter;

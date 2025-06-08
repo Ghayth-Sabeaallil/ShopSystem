@@ -19,7 +19,6 @@ const addProduct = (
     }, {
         withCredentials: true
     }).then(response => {
-        console.log('Added successful:', response.data);
         return response.data;
     }).catch(error => {
         console.error('Added failed:', error);
@@ -32,16 +31,16 @@ const getProducts = async () => {
     });
 };
 
-const deleteProduct = (id: string) =>
-    api.delete(`/products/delete`, {
-        id,
-    }).then(response => {
-        console.log('Deleted successful:', response.data);
+const deleteProduct = async (id: string) =>
+    await api.delete(`/products/delete`, {
+        id
+    }, { withCredentials: true, }).then(response => {
         return response.data;
     }).catch(error => {
-        console.error('Deleted failed:', error);
+        console.error('Delete failed:', error);
         throw error;
     });
+
 
 export const productApi = {
     addProduct,

@@ -29,7 +29,6 @@ const AddProduct = () => {
         0
       );
       setProducts([...products, item]);
-
       setBarCode("");
       setName("");
       setAmount(0);

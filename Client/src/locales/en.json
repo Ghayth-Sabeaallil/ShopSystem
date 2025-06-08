@@ -37,5 +37,10 @@
     "actions": "Actions",
     "edit": "Edit",
     "delete": "Delete"
+  },
+  "alert": {
+    "msg": "Are you sure you want to Delete this product?",
+    "delete": "Delete",
+    "cancel": "Cancel"
   }
 }

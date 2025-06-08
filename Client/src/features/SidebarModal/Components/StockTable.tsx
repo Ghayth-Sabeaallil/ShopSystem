@@ -11,6 +11,10 @@ import i18n from "../../../utils/i18n";
 import { Box, IconButton, Tooltip } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Alert from "../../../shared/components/Alert";
+import { useState } from "react";
+import { useProduct } from "../../../shared/context/Context/ProductContext";
+import { productApi } from "../api/productApi";
 
 type StockTableProps = {
   products: productResponse[];
@@ -19,6 +23,16 @@ type StockTableProps = {
 const StockTable = ({ products }: StockTableProps) => {
   const { t } = useTranslation();
   const currentLocaleText = getDataGridLocale(i18n.language);
+  const [alertModal, setAlertModal] = useState<boolean>(false);
+  const [productId, setProductId] = useState<string>("");
+  const { setProducts } = useProduct();
+
+  const handleDelete = (productId: string) => {
+    productApi.deleteProduct(productId);
+    setProducts(
+      products.filter((item: productResponse) => item._id !== productId)
+    );
+  };
 
   const rows: GridRowsProp = products.map((product) => ({
     id: product._id,
@@ -73,7 +87,8 @@ const StockTable = ({ products }: StockTableProps) => {
               <IconButton
                 sx={{ padding: "5px" }}
                 onClick={() => {
-                  console.log(product);
+                  setAlertModal(true);
+                  setProductId(product._id);
                 }}
                 color="primary"
                 aria-label="delete"
@@ -106,6 +121,13 @@ const StockTable = ({ products }: StockTableProps) => {
         }}
         checkboxSelection
         disableRowSelectionOnClick
+      />
+      <Alert
+        setModalOpen={setAlertModal}
+        modalOpen={alertModal}
+        itemId={productId}
+        handleDelete={handleDelete}
+        text={t("alert.msg")}
       />
     </>
   );
