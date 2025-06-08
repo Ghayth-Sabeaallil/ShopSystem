@@ -1,4 +1,4 @@
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useProduct } from "../../../shared/context/Context/ProductContext";
 import StockTable from "../Components/StockTable";
@@ -6,6 +6,7 @@ import StockTable from "../Components/StockTable";
 const StockView = () => {
   const { t } = useTranslation();
   const { products } = useProduct();
+  const theme = useTheme();
 
   return (
     <Box
@@ -18,7 +19,17 @@ const StockView = () => {
         width: "100%",
       }}
     >
-      <Typography variant="body1">{t(`stock.stock`)}</Typography>
+      <Typography
+        variant="body1"
+        sx={{
+          color: theme.palette.text.primary,
+          letterSpacing: 0,
+          fontSize: 24,
+          fontWeight: 800,
+        }}
+      >
+        {t(`stock.stock`)}
+      </Typography>
       <StockTable products={products} />
     </Box>
   );

@@ -1,4 +1,5 @@
 export type productResponse = {
+    _id: string,
     name: string
     bar_code: string
     buying_price: number

@@ -16,7 +16,6 @@ const SettingsView = () => {
         display: "flex",
         gap: 3,
         flexDirection: "column",
-        width: 250,
         alignItems: "center",
       }}
     >

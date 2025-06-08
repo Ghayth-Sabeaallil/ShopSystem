@@ -61,6 +61,7 @@ const AddProduct = () => {
       <Box
         sx={{
           display: "flex",
+          flexDirection: { xs: "column", md: "row", lg: "row" },
           gap: 1,
         }}
       >

@@ -10,7 +10,7 @@ const StockTable = ({ products }: StockTableProps) => {
   const { t } = useTranslation();
 
   const rows: GridRowsProp = products.map((product) => ({
-    id: product.bar_code,
+    id: product._id,
     barCode: product.bar_code,
     name: product.name,
     buy: product.buying_price,
@@ -20,15 +20,15 @@ const StockTable = ({ products }: StockTableProps) => {
   }));
 
   const columns: GridColDef[] = [
-    { field: "barCode", headerName: t("table.barCode"), width: 120 },
-    { field: "name", headerName: t("table.name"), flex: 1, minWidth: 150 },
-    { field: "buy", headerName: t("table.buy"), width: 100 },
-    { field: "sell", headerName: t("table.sell"), width: 100 },
-    { field: "buyingamount", headerName: t("table.amount"), width: 100 },
+    { field: "barCode", headerName: t("table.barCode"), flex: 2 },
+    { field: "name", headerName: t("table.name"), flex: 4 },
+    { field: "buy", headerName: t("table.buy"), flex: 2 },
+    { field: "sell", headerName: t("table.sell"), flex: 2 },
+    { field: "buyingamount", headerName: t("table.amount"), flex: 2 },
     {
       field: "sellingAmount",
       headerName: t("table.sellingAmount"),
-      width: 120,
+      flex: 2,
     },
   ];
 
