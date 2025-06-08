@@ -1,8 +1,8 @@
-// AuthContext.tsx
 import { createContext, useContext, useState, useEffect } from "react";
 import type { ProductsContextType } from "../../types/AuthContextType";
 import type { productResponse } from "../../../features/SidebarModal/types/productType";
 import { productApi } from "../../../features/SidebarModal/api/productApi";
+import { useAuth } from "./AuthContext ";
 
 const ProductContext = createContext<ProductsContextType | null>(null);
 
@@ -12,6 +12,7 @@ export const ProductsProvider = ({
   children: React.ReactNode;
 }) => {
   const [products, setProducts] = useState<productResponse[]>([]);
+  const { isAuthenticated } = useAuth();
 
   const getProducts = async () => {
     try {
@@ -23,8 +24,8 @@ export const ProductsProvider = ({
   };
 
   useEffect(() => {
-    getProducts();
-  }, []);
+    if (isAuthenticated) getProducts();
+  }, [isAuthenticated]);
 
   return (
     <ProductContext.Provider
