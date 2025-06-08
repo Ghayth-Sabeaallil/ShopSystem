@@ -2,6 +2,7 @@ import { Typography, Box, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useProduct } from "../../../shared/context/Context/ProductContext";
 import StockTable from "../Components/StockTable";
+import AddProduct from "../Components/AddProducts";
 
 const StockView = () => {
   const { t } = useTranslation();
@@ -14,7 +15,7 @@ const StockView = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: 2,
+        gap: 3,
         textAlign: "center",
         width: "100%",
       }}
@@ -30,6 +31,7 @@ const StockView = () => {
       >
         {t(`stock.stock`)}
       </Typography>
+      <AddProduct />
       <StockTable products={products} />
     </Box>
   );

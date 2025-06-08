@@ -5,8 +5,6 @@ export type AuthContextType = {
     loading: boolean;
     setAuthenticated: (value: boolean) => void;
     verifyAuth: () => Promise<void>;
-    userId: string;
-    setUserId: (id: string) => void;
 };
 
 export type ProductsContextType = {

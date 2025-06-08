@@ -7,14 +7,12 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setAuthenticated] = useState<boolean>(false);
-  const [userId, setUserId] = useState<string>("");
   const [loading, setLoading] = useState(true);
 
   const verifyAuth = async () => {
     try {
       const isAuth = await logApi.verifyAuth();
       setAuthenticated(isAuth.authenticated);
-      setUserId(isAuth.userId);
     } finally {
       setLoading(false); // Always end loading, even if verify fails
     }
@@ -31,8 +29,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setAuthenticated,
         verifyAuth,
         loading,
-        userId,
-        setUserId,
       }}
     >
       {children}

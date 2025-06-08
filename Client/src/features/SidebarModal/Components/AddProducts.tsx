@@ -21,7 +21,7 @@ const AddProduct = () => {
   const addProduct = async () => {
     setError(undefined);
     try {
-      await productApi.add(
+      await productApi.addProduct(
         userId,
         name,
         barCode,

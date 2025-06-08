@@ -1,6 +1,16 @@
 import { useTranslation } from "react-i18next";
 import type { productResponse } from "../types/productType";
-import { DataGrid, type GridRowsProp, type GridColDef } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  type GridRowsProp,
+  type GridColDef,
+  type GridRenderCellParams,
+} from "@mui/x-data-grid";
+import { getDataGridLocale } from "../../../utils/getDataGridLocale";
+import i18n from "../../../utils/i18n";
+import { Box, IconButton, Tooltip } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 type StockTableProps = {
   products: productResponse[];
@@ -8,6 +18,7 @@ type StockTableProps = {
 
 const StockTable = ({ products }: StockTableProps) => {
   const { t } = useTranslation();
+  const currentLocaleText = getDataGridLocale(i18n.language);
 
   const rows: GridRowsProp = products.map((product) => ({
     id: product._id,
@@ -30,18 +41,67 @@ const StockTable = ({ products }: StockTableProps) => {
       headerName: t("table.sellingAmount"),
       flex: 2,
     },
+    {
+      field: "actions",
+      headerName: t("table.actions"),
+      headerAlign: "center",
+      flex: 2,
+      renderCell: (params: GridRenderCellParams) => {
+        const product = products.find((b) => b._id === params.row.id);
+        if (!product) return null;
+
+        return (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: 1,
+            }}
+          >
+            <Tooltip title={t("table.edit")}>
+              <IconButton
+                sx={{ padding: "5px" }}
+                onClick={() => {}}
+                color="primary"
+                aria-label="edit"
+              >
+                <EditIcon fontSize="medium" color="primary" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title={t("table.delete")}>
+              <IconButton
+                sx={{ padding: "5px" }}
+                onClick={() => {
+                  console.log(product);
+                }}
+                color="primary"
+                aria-label="delete"
+              >
+                <DeleteIcon fontSize="medium" color="error" />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        );
+      },
+    },
   ];
 
   return (
     <>
       <DataGrid
-        sx={{ width: "100%", height: 400 }}
+        showToolbar
+        localeText={currentLocaleText}
+        sx={{
+          width: "100%",
+          height: 700,
+        }}
         rows={rows}
         columns={columns}
-        pageSizeOptions={[5, 10, 20]}
+        pageSizeOptions={[5, 10, 15]}
         initialState={{
           pagination: {
-            paginationModel: { pageSize: 20 },
+            paginationModel: { pageSize: 10 },
           },
         }}
         checkboxSelection

@@ -33,6 +33,9 @@
     "buy": "Buy Price",
     "sell": "Sell Price",
     "amount": "Buying Amount",
-    "sellingAmount": "Selling Amount"
+    "sellingAmount": "Selling Amount",
+    "actions": "Actions",
+    "edit": "Edit",
+    "delete": "Delete"
   }
 }

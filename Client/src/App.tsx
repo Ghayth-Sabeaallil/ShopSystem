@@ -14,11 +14,11 @@ import { ProductsProvider } from "./shared/context/Context/ProductContext";
 function App() {
   return (
     <ThemeModeProvider>
-      <AuthProvider>
-        <ProductsProvider>
+      <ProductsProvider>
+        <AuthProvider>
           <AppWithTheme />
-        </ProductsProvider>
-      </AuthProvider>
+        </AuthProvider>
+      </ProductsProvider>
     </ThemeModeProvider>
   );
 }

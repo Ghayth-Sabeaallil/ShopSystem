@@ -5,7 +5,6 @@ import { Suspense } from "react";
 import type { SidebarModalProps } from "./types/SidebarModalTypes";
 import SettingsView from "./views/SettingsView";
 import StockView from "./views/StockView";
-import AddView from "./views/AddView";
 
 export default function SidebarModal({
   open,
@@ -20,12 +19,6 @@ export default function SidebarModal({
         return (
           <Suspense>
             <StockView />
-          </Suspense>
-        );
-      case "add":
-        return (
-          <Suspense>
-            <AddView />
           </Suspense>
         );
       case "support":

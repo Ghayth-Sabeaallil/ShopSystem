@@ -7,6 +7,7 @@ const login = (username: string, password: string) =>
     }, {
         withCredentials: true
     });
+
 const logout = () => {
     return api.post(`/users/logout`, {}, {
         withCredentials: true
@@ -22,13 +23,12 @@ const logout = () => {
 
 const verifyAuth = async () => {
     try {
-        const { data } = await api.get<{ authenticated: boolean, userId: string }>('/users/verify', {
+        const { data } = await api.get<{ authenticated: boolean }>('/users/verify', {
             withCredentials: true,
         });
 
         return {
             authenticated: data.authenticated,
-            userId: data.userId,
         };
     } catch {
         return {

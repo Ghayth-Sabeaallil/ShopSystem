@@ -5,8 +5,6 @@ import jwt from "jsonwebtoken";
 
 const userRouter = express.Router();
 
-
-
 userRouter.post("/register", async (req, res) => {
     try {
         const newUser = new UserModel(req.body);
@@ -26,13 +24,12 @@ userRouter.post("/register", async (req, res) => {
     }
 });
 
-
 userRouter.get('/verify', async (req, res) => {
     try {
         const token = req.cookies.token;
         if (token !== undefined) {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            res.status(200).json({ authenticated: true, userId: (decoded as any).userId })
+            res.status(200).json({ authenticated: true })
         } else {
             res.status(401).json({ authenticated: false });
         }
