@@ -9,8 +9,9 @@ import {
 
 import { useTheme } from "@mui/material/styles";
 import { useTranslation } from "react-i18next";
-import type { productRequest } from "../types/productType";
+import type { productRequest, productResponse } from "../types/productType";
 import { productApi } from "../api/productApi";
+import { useProduct } from "../../../shared/context/Context/ProductContext";
 
 type EditProductProps = {
   id: string;
@@ -29,6 +30,7 @@ export default function EditProduct({
 }: EditProductProps) {
   const theme = useTheme();
   const { t } = useTranslation();
+  const { products, setProducts } = useProduct();
 
   return (
     <>
@@ -159,7 +161,6 @@ export default function EditProduct({
                 }))
               }
             />
-
             <DialogActions
               sx={{
                 display: "flex",
@@ -169,7 +170,14 @@ export default function EditProduct({
             >
               <Button
                 onClick={() => {
-                  // productApi.updateProduct(id);
+                  productApi.updateProduct(id, product);
+
+                  setProducts(
+                    products.map((item: productResponse) =>
+                      item._id === id ? { ...item, ...product } : item
+                    )
+                  );
+
                   setOpenEditDialog(false);
                 }}
                 color="primary"
@@ -182,7 +190,6 @@ export default function EditProduct({
               >
                 {t("common.save")}
               </Button>
-
               <Button
                 onClick={() => {
                   setOpenEditDialog(false);

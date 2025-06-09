@@ -73,5 +73,56 @@ productRouter.delete("/delete", async (req, res) => {
     }
 });
 
+productRouter.put("/update", async (req, res) => {
+    try {
+        const token = req.cookies["token"];
+        if (!token) {
+            res.status(401).json({ message: 'Access denied. No token provided.' });
+        }
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { userId: string };
+        const userId = decoded.userId;
+
+        const { id: productId, name, bar_code, buying_price, selling_price, buying_amount, selling_amount } = req.body;
+
+        if (!productId) {
+            res.status(400).json({ message: 'Product ID is required.' });
+        }
+
+        // Basic validation: you can improve this by using a schema validator
+        if (!name || !bar_code || buying_price == null || selling_price == null || buying_amount == null || selling_amount == null) {
+            res.status(400).json({ message: 'All product fields are required.' });
+        }
+
+        const product = await ProductsModel.findById(productId);
+
+        if (!product) {
+            res.status(404).json({ message: 'Product not found.' });
+            return;
+        }
+
+        if (product.owner_id.toString() !== userId) {
+            res.status(403).json({ message: 'Not authorized to update this product.' });
+            return;
+        }
+
+        // Update fields
+        product.name = name;
+        product.bar_code = bar_code;
+        product.buying_price = buying_price;
+        product.selling_price = selling_price;
+        product.buying_amount = buying_amount;
+        product.selling_amount = selling_amount;
+
+        await product.save();
+
+        res.status(200).json({ message: 'Product updated successfully.', product });
+    } catch (error) {
+        console.error('Server error while updating product:', error);
+        res.status(500).json({ message: 'Server error', error });
+    }
+});
+
+
 
 export default productRouter;

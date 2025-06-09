@@ -27,15 +27,17 @@ const deleteProduct = async (id: string) =>
         throw error;
     });
 
-const updateProduct = async (id: string) =>
-    await api.put(`/products/delete`, {
-        id
-    }, { withCredentials: true, }).then(response => {
+const updateProduct = async (id: string, product: productRequest) =>
+    await api.put(`/products/update`, {
+        id,
+        ...product
+    }, { withCredentials: true }).then(response => {
         return response.data;
     }).catch(error => {
-        console.error('Delete failed:', error);
+        console.error('Update failed:', error);
         throw error;
     });
+
 
 
 export const productApi = {
