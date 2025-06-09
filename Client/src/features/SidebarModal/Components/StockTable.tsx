@@ -15,6 +15,7 @@ import Alert from "../../../shared/components/Alert";
 import { useState } from "react";
 import { useProduct } from "../../../shared/context/Context/ProductContext";
 import { productApi } from "../api/productApi";
+import EditProduct from "./EditProduct";
 
 type StockTableProps = {
   products: productResponse[];
@@ -24,6 +25,12 @@ const StockTable = ({ products }: StockTableProps) => {
   const { t } = useTranslation();
   const currentLocaleText = getDataGridLocale(i18n.language);
   const [alertModal, setAlertModal] = useState<boolean>(false);
+  const [editModal, setEditModal] = useState<boolean>(false);
+  const [barCode, setBarCode] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [buyingPrice, setbuyingPrice] = useState<number>(0);
+  const [sellingPrice, setsellingPrice] = useState<number>(0);
+  const [amount, setAmount] = useState<number>(0);
   const [productId, setProductId] = useState<string>("");
   const { setProducts } = useProduct();
 
@@ -45,19 +52,19 @@ const StockTable = ({ products }: StockTableProps) => {
   }));
 
   const columns: GridColDef[] = [
-    { field: "barCode", headerName: t("table.barCode"), flex: 2 },
-    { field: "name", headerName: t("table.name"), flex: 4 },
-    { field: "buy", headerName: t("table.buy"), flex: 2 },
-    { field: "sell", headerName: t("table.sell"), flex: 2 },
-    { field: "buyingamount", headerName: t("table.amount"), flex: 2 },
+    { field: "barCode", headerName: t("common.barCode"), flex: 2 },
+    { field: "name", headerName: t("common.name"), flex: 4 },
+    { field: "buy", headerName: t("common.buy"), flex: 2 },
+    { field: "sell", headerName: t("common.sell"), flex: 2 },
+    { field: "buyingamount", headerName: t("common.amount"), flex: 2 },
     {
       field: "sellingAmount",
-      headerName: t("table.sellingAmount"),
+      headerName: t("common.sellingAmount"),
       flex: 2,
     },
     {
       field: "actions",
-      headerName: t("table.actions"),
+      headerName: t("common.actions"),
       headerAlign: "center",
       flex: 2,
       renderCell: (params: GridRenderCellParams) => {
@@ -73,17 +80,25 @@ const StockTable = ({ products }: StockTableProps) => {
               padding: 1,
             }}
           >
-            <Tooltip title={t("table.edit")}>
+            <Tooltip title={t("common.edit")}>
               <IconButton
                 sx={{ padding: "5px" }}
-                onClick={() => {}}
+                onClick={() => {
+                  setEditModal(true);
+                  setName(product.name);
+                  setBarCode(product.bar_code);
+                  setbuyingPrice(product.buying_price);
+                  setsellingPrice(product.selling_price);
+                  setAmount(product.buying_amount);
+                  setProductId(product._id);
+                }}
                 color="primary"
                 aria-label="edit"
               >
                 <EditIcon fontSize="medium" color="primary" />
               </IconButton>
             </Tooltip>
-            <Tooltip title={t("table.delete")}>
+            <Tooltip title={t("common.delete")}>
               <IconButton
                 sx={{ padding: "5px" }}
                 onClick={() => {
@@ -119,8 +134,22 @@ const StockTable = ({ products }: StockTableProps) => {
             paginationModel: { pageSize: 10 },
           },
         }}
-        checkboxSelection
         disableRowSelectionOnClick
+      />
+      <EditProduct
+        id={productId}
+        name={name}
+        setName={setName}
+        openEditDialog={editModal}
+        setOpenEditDialog={setEditModal}
+        barCode={barCode}
+        setBarCode={setBarCode}
+        buyingPrice={buyingPrice}
+        setbuyingPrice={setbuyingPrice}
+        sellingPrice={sellingPrice}
+        setsellingPrice={setsellingPrice}
+        amount={amount}
+        setAmount={setAmount}
       />
       <Alert
         setModalOpen={setAlertModal}

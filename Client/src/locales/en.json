@@ -19,28 +19,25 @@
   "stock": {
     "stock": "Stock",
     "add": "Add an Item",
-    "name": "Name",
-    "buyPrice": "Buying Price",
-    "sellPrice": "Selling Price",
-    "barCode": "BarCode",
-    "amount": "Amount",
     "productExists": "This Product is alreday exists.",
     "addError": "Something went Wrong, Please try again later."
   },
-  "table": {
+  "alert": {
+    "msg": "Are you sure you want to Delete this product?",
+    "delete": "Delete",
+    "cancel": "Cancel"
+  },
+  "common": {
     "name": "Name",
     "barCode": "Bar Code",
     "buy": "Buy Price",
     "sell": "Sell Price",
     "amount": "Buying Amount",
     "sellingAmount": "Selling Amount",
-    "actions": "Actions",
-    "edit": "Edit",
-    "delete": "Delete"
-  },
-  "alert": {
-    "msg": "Are you sure you want to Delete this product?",
     "delete": "Delete",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "actions": "Actions"
   }
 }

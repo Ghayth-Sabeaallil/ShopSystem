@@ -64,36 +64,36 @@ const AddProduct = () => {
         }}
       >
         <Input
-          text={t(`stock.barCode`)}
-          label={t(`stock.barCode`)}
+          text={t(`common.barCode`)}
+          label={t(`common.barCode`)}
           type="string"
           value={barCode}
           onChange={(e) => setBarCode(e.target.value)}
         />
         <Input
-          text={t(`stock.name`)}
-          label={t(`stock.name`)}
+          text={t(`common.name`)}
+          label={t(`common.name`)}
           type="string"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
         <Input
-          text={t(`stock.buyPrice`)}
-          label={t(`stock.buyPrice`)}
+          text={t(`common.buy`)}
+          label={t(`common.buy`)}
           type="number"
           value={buyingPrice}
           onChange={(e) => setbuyingPrice(Number(e.target.value))}
         />
         <Input
-          text={t(`stock.sellPrice`)}
-          label={t(`stock.sellPrice`)}
+          text={t(`common.sell`)}
+          label={t(`common.sell`)}
           type="number"
           value={sellingPrice}
           onChange={(e) => setsellingPrice(Number(e.target.value))}
         />
         <Input
-          text={t(`stock.amount`)}
-          label={t(`stock.amount`)}
+          text={t(`common.amount`)}
+          label={t(`common.amount`)}
           type="number"
           value={amount}
           onChange={(e) => setAmount(Number(e.target.value))}
