@@ -6,34 +6,35 @@ import Input from "../../../shared/components/Input";
 import { useState } from "react";
 import { productApi } from "../api/productApi";
 import { useProduct } from "../../../shared/context/Context/ProductContext";
+import type { productRequest } from "../types/productType";
 
 const AddProduct = () => {
   const { t } = useTranslation();
-  const [barCode, setBarCode] = useState<string>("");
-  const [name, setName] = useState<string>("");
-  const [buyingPrice, setbuyingPrice] = useState<number>(0);
-  const [sellingPrice, setsellingPrice] = useState<number>(0);
-  const [amount, setAmount] = useState<number>(0);
+
   const [error, setError] = useState<string>();
   const { products, setProducts } = useProduct();
+  const [product, setProduct] = useState<productRequest>({
+    name: "",
+    bar_code: "",
+    buying_price: 0,
+    selling_price: 0,
+    buying_amount: 0,
+    selling_amount: 0,
+  });
 
   const addProduct = async () => {
     setError(undefined);
     try {
-      const item = await productApi.addProduct(
-        name,
-        barCode,
-        buyingPrice,
-        sellingPrice,
-        amount,
-        0
-      );
+      const item = await productApi.addProduct(product);
       setProducts([...products, item]);
-      setBarCode("");
-      setName("");
-      setAmount(0);
-      setbuyingPrice(0);
-      setsellingPrice(0);
+      setProduct({
+        name: "",
+        bar_code: "",
+        buying_price: 0,
+        selling_price: 0,
+        buying_amount: 0,
+        selling_amount: 0,
+      });
     } catch (err: any) {
       if (
         err.response &&
@@ -67,36 +68,61 @@ const AddProduct = () => {
           text={t(`common.barCode`)}
           label={t(`common.barCode`)}
           type="string"
-          value={barCode}
-          onChange={(e) => setBarCode(e.target.value)}
+          value={product.bar_code}
+          onChange={(e) =>
+            setProduct((prev) => ({
+              ...prev,
+              bar_code: e.target.value,
+            }))
+          }
         />
         <Input
           text={t(`common.name`)}
           label={t(`common.name`)}
           type="string"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={product.name}
+          onChange={(e) =>
+            setProduct((prev) => ({
+              ...prev,
+              name: e.target.value,
+            }))
+          }
         />
         <Input
           text={t(`common.buy`)}
           label={t(`common.buy`)}
           type="number"
-          value={buyingPrice}
-          onChange={(e) => setbuyingPrice(Number(e.target.value))}
+          value={product.buying_price}
+          onChange={(e) =>
+            setProduct((prev) => ({
+              ...prev,
+              buying_price: Number(e.target.value),
+            }))
+          }
         />
         <Input
           text={t(`common.sell`)}
           label={t(`common.sell`)}
           type="number"
-          value={sellingPrice}
-          onChange={(e) => setsellingPrice(Number(e.target.value))}
+          value={product.selling_price}
+          onChange={(e) =>
+            setProduct((prev) => ({
+              ...prev,
+              selling_price: Number(e.target.value),
+            }))
+          }
         />
         <Input
           text={t(`common.amount`)}
           label={t(`common.amount`)}
           type="number"
-          value={amount}
-          onChange={(e) => setAmount(Number(e.target.value))}
+          value={product.buying_amount}
+          onChange={(e) =>
+            setProduct((prev) => ({
+              ...prev,
+              buying_amount: Number(e.target.value),
+            }))
+          }
         />
       </Box>
       {error && <Box sx={{ color: "red", fontWeight: "bold" }}>{error}</Box>}
@@ -104,7 +130,11 @@ const AddProduct = () => {
         text={t(`stock.add`)}
         icon={AddIcon}
         disabled={
-          barCode && name && buyingPrice && sellingPrice && amount
+          product.bar_code &&
+          product.name &&
+          product.buying_price &&
+          product.selling_price &&
+          product.buying_amount
             ? false
             : true
         }

@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import type { productResponse } from "../types/productType";
+import type { productRequest, productResponse } from "../types/productType";
 import {
   DataGrid,
   type GridRowsProp,
@@ -26,11 +26,14 @@ const StockTable = ({ products }: StockTableProps) => {
   const currentLocaleText = getDataGridLocale(i18n.language);
   const [alertModal, setAlertModal] = useState<boolean>(false);
   const [editModal, setEditModal] = useState<boolean>(false);
-  const [barCode, setBarCode] = useState<string>("");
-  const [name, setName] = useState<string>("");
-  const [buyingPrice, setbuyingPrice] = useState<number>(0);
-  const [sellingPrice, setsellingPrice] = useState<number>(0);
-  const [amount, setAmount] = useState<number>(0);
+  const [product, setProduct] = useState<productRequest>({
+    name: "",
+    bar_code: "",
+    buying_price: 0,
+    selling_price: 0,
+    buying_amount: 0,
+    selling_amount: 0,
+  });
   const [productId, setProductId] = useState<string>("");
   const { setProducts } = useProduct();
 
@@ -85,11 +88,14 @@ const StockTable = ({ products }: StockTableProps) => {
                 sx={{ padding: "5px" }}
                 onClick={() => {
                   setEditModal(true);
-                  setName(product.name);
-                  setBarCode(product.bar_code);
-                  setbuyingPrice(product.buying_price);
-                  setsellingPrice(product.selling_price);
-                  setAmount(product.buying_amount);
+                  setProduct({
+                    name: product.name,
+                    bar_code: product.bar_code,
+                    buying_price: product.buying_price,
+                    selling_price: product.selling_price,
+                    buying_amount: product.buying_amount,
+                    selling_amount: product.selling_amount,
+                  });
                   setProductId(product._id);
                 }}
                 color="primary"
@@ -120,6 +126,7 @@ const StockTable = ({ products }: StockTableProps) => {
   return (
     <>
       <DataGrid
+        disableVirtualization
         showToolbar
         localeText={currentLocaleText}
         sx={{
@@ -138,18 +145,10 @@ const StockTable = ({ products }: StockTableProps) => {
       />
       <EditProduct
         id={productId}
-        name={name}
-        setName={setName}
+        product={product}
+        setProduct={setProduct}
         openEditDialog={editModal}
         setOpenEditDialog={setEditModal}
-        barCode={barCode}
-        setBarCode={setBarCode}
-        buyingPrice={buyingPrice}
-        setbuyingPrice={setbuyingPrice}
-        sellingPrice={sellingPrice}
-        setsellingPrice={setsellingPrice}
-        amount={amount}
-        setAmount={setAmount}
       />
       <Alert
         setModalOpen={setAlertModal}

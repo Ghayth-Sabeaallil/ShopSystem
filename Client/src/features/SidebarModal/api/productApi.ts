@@ -1,22 +1,8 @@
 import api from "../../../shared/api/apiClient";
-import type { productResponse } from "../types/productType";
+import type { productRequest, productResponse } from "../types/productType";
 
-const addProduct = (
-    name: string,
-    bar_code: string,
-    buying_price: number,
-    selling_price: number,
-    buying_amount: number,
-    selling_amount: number) =>
-    api.post<productResponse>(`/products/add`, {
-        name,
-        bar_code,
-        buying_price,
-        selling_price,
-        buying_amount,
-        selling_amount
-
-    }, {
+const addProduct = (product: productRequest) =>
+    api.post<productResponse>(`/products/add`, product, {
         withCredentials: true
     }).then(response => {
         return response.data;
@@ -41,9 +27,20 @@ const deleteProduct = async (id: string) =>
         throw error;
     });
 
+const updateProduct = async (id: string) =>
+    await api.put(`/products/delete`, {
+        id
+    }, { withCredentials: true, }).then(response => {
+        return response.data;
+    }).catch(error => {
+        console.error('Delete failed:', error);
+        throw error;
+    });
+
 
 export const productApi = {
     addProduct,
     getProducts,
-    deleteProduct
+    deleteProduct,
+    updateProduct
 };

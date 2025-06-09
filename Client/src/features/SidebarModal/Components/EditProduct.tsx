@@ -9,35 +9,21 @@ import {
 
 import { useTheme } from "@mui/material/styles";
 import { useTranslation } from "react-i18next";
+import type { productRequest } from "../types/productType";
+import { productApi } from "../api/productApi";
 
 type EditProductProps = {
   id: string;
-  name: string;
-  setName: React.Dispatch<React.SetStateAction<string>>;
-  barCode: string;
-  setBarCode: React.Dispatch<React.SetStateAction<string>>;
-  buyingPrice: number;
-  setbuyingPrice: React.Dispatch<React.SetStateAction<number>>;
-  sellingPrice: number;
-  setsellingPrice: React.Dispatch<React.SetStateAction<number>>;
-  amount: number;
-  setAmount: React.Dispatch<React.SetStateAction<number>>;
+  product: productRequest;
+  setProduct: React.Dispatch<React.SetStateAction<productRequest>>;
   openEditDialog: boolean;
   setOpenEditDialog: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function EditProduct({
   id,
-  name,
-  setName,
-  barCode,
-  setBarCode,
-  buyingPrice,
-  setbuyingPrice,
-  sellingPrice,
-  setsellingPrice,
-  amount,
-  setAmount,
+  product,
+  setProduct,
   openEditDialog,
   setOpenEditDialog,
 }: EditProductProps) {
@@ -84,11 +70,15 @@ export default function EditProduct({
               label={t("common.barCode")}
               fullWidth
               variant="outlined"
-              value={barCode}
-              onChange={(e) => {
-                setBarCode(e.target.value);
-              }}
+              value={product.bar_code}
+              onChange={(e) =>
+                setProduct((prev) => ({
+                  ...prev,
+                  bar_code: e.target.value,
+                }))
+              }
             />
+
             <TextField
               required
               autoFocus
@@ -96,10 +86,13 @@ export default function EditProduct({
               label={t("common.name")}
               fullWidth
               variant="outlined"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
+              value={product.name}
+              onChange={(e) =>
+                setProduct((prev) => ({
+                  ...prev,
+                  name: e.target.value,
+                }))
+              }
             />
 
             <TextField
@@ -110,10 +103,13 @@ export default function EditProduct({
               fullWidth
               type="number"
               variant="outlined"
-              value={buyingPrice}
-              onChange={(e) => {
-                setbuyingPrice(Number(e.target.value));
-              }}
+              value={product.buying_price}
+              onChange={(e) =>
+                setProduct((prev) => ({
+                  ...prev,
+                  buying_price: Number(e.target.value),
+                }))
+              }
             />
             <TextField
               required
@@ -123,10 +119,13 @@ export default function EditProduct({
               fullWidth
               type="number"
               variant="outlined"
-              value={sellingPrice}
-              onChange={(e) => {
-                setsellingPrice(Number(e.target.value));
-              }}
+              value={product.selling_price}
+              onChange={(e) =>
+                setProduct((prev) => ({
+                  ...prev,
+                  selling_price: Number(e.target.value),
+                }))
+              }
             />
             <TextField
               required
@@ -134,11 +133,31 @@ export default function EditProduct({
               margin="dense"
               label={t("common.amount")}
               fullWidth
+              type="number"
               variant="outlined"
-              value={amount}
-              onChange={(e) => {
-                setAmount(Number(e.target.value));
-              }}
+              value={product.buying_amount}
+              onChange={(e) =>
+                setProduct((prev) => ({
+                  ...prev,
+                  buying_amount: Number(e.target.value),
+                }))
+              }
+            />
+            <TextField
+              required
+              autoFocus
+              margin="dense"
+              label={t("common.amount")}
+              fullWidth
+              type="number"
+              variant="outlined"
+              value={product.selling_amount}
+              onChange={(e) =>
+                setProduct((prev) => ({
+                  ...prev,
+                  selling_amount: Number(e.target.value),
+                }))
+              }
             />
 
             <DialogActions
@@ -150,6 +169,7 @@ export default function EditProduct({
             >
               <Button
                 onClick={() => {
+                  // productApi.updateProduct(id);
                   setOpenEditDialog(false);
                 }}
                 color="primary"
