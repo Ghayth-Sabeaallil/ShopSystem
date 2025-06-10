@@ -83,7 +83,6 @@ export default function EditProduct({
 
             <TextField
               required
-              autoFocus
               margin="dense"
               label={t("common.name")}
               fullWidth
@@ -99,7 +98,6 @@ export default function EditProduct({
 
             <TextField
               required
-              autoFocus
               margin="dense"
               label={t("common.buy")}
               fullWidth
@@ -115,7 +113,6 @@ export default function EditProduct({
             />
             <TextField
               required
-              autoFocus
               margin="dense"
               label={t("common.sell")}
               fullWidth
@@ -131,7 +128,6 @@ export default function EditProduct({
             />
             <TextField
               required
-              autoFocus
               margin="dense"
               label={t("common.amount")}
               fullWidth
@@ -147,7 +143,6 @@ export default function EditProduct({
             />
             <TextField
               required
-              autoFocus
               margin="dense"
               label={t("common.amount")}
               fullWidth
