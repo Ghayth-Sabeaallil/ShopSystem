@@ -1,10 +1,10 @@
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
-
-import AddProduct from "../Components/AddProducts";
 
 const ReceiptView = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
+
   return (
     <Box
       sx={{
@@ -15,8 +15,17 @@ const ReceiptView = () => {
         textAlign: "center",
       }}
     >
-      <Typography variant="body1">{t(`sideBar.receipt`)}</Typography>
-      <AddProduct />
+      <Typography
+        variant="body1"
+        sx={{
+          color: theme.palette.text.primary,
+          letterSpacing: 0,
+          fontSize: 24,
+          fontWeight: 800,
+        }}
+      >
+        {t(`sideBar.receipt`)}
+      </Typography>
     </Box>
   );
 };

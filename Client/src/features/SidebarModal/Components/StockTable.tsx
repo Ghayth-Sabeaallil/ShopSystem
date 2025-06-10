@@ -17,6 +17,7 @@ import { useProduct } from "../../../shared/context/Context/ProductContext";
 import { productApi } from "../api/productApi";
 import EditProduct from "./EditProduct";
 import PercentIcon from "@mui/icons-material/Percent";
+import Sales from "./Sales";
 
 type StockTableProps = {
   products: productResponse[];
@@ -27,6 +28,10 @@ const StockTable = ({ products }: StockTableProps) => {
   const currentLocaleText = getDataGridLocale(i18n.language);
   const [alertModal, setAlertModal] = useState<boolean>(false);
   const [editModal, setEditModal] = useState<boolean>(false);
+  const [saleModal, setSaleModal] = useState<boolean>(false);
+  const [salePrice, setSalePrice] = useState<number>(0);
+  const [sellPrice, setSellPrice] = useState<number>(0);
+
   const [product, setProduct] = useState<productRequest>({
     name: "",
     bar_code: "",
@@ -109,8 +114,9 @@ const StockTable = ({ products }: StockTableProps) => {
               <IconButton
                 sx={{ padding: "5px" }}
                 onClick={() => {
-                  setAlertModal(true);
+                  setSaleModal(true);
                   setProductId(product._id);
+                  setSellPrice(product.selling_price);
                 }}
                 color="primary"
                 aria-label="delete"
@@ -170,6 +176,14 @@ const StockTable = ({ products }: StockTableProps) => {
         itemId={productId}
         handleDelete={handleDelete}
         text={t("alert.msg")}
+      />
+      <Sales
+        id={productId}
+        sellingPrice={sellPrice}
+        salePrice={salePrice}
+        setSalePrice={setSalePrice}
+        openEditDialog={saleModal}
+        setOpenEditDialog={setSaleModal}
       />
     </>
   );
