@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import AddProduct from "../Components/AddProducts";
 
-const AddView = () => {
+const ReceiptView = () => {
   const { t } = useTranslation();
   return (
     <Box
@@ -15,10 +15,10 @@ const AddView = () => {
         textAlign: "center",
       }}
     >
-      <Typography variant="body1">{t(`stock.add`)}</Typography>
+      <Typography variant="body1">{t(`sideBar.receipt`)}</Typography>
       <AddProduct />
     </Box>
   );
 };
 
-export default AddView;
+export default ReceiptView;

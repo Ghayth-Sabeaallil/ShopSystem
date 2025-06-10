@@ -16,6 +16,7 @@ import { useState } from "react";
 import { useProduct } from "../../../shared/context/Context/ProductContext";
 import { productApi } from "../api/productApi";
 import EditProduct from "./EditProduct";
+import PercentIcon from "@mui/icons-material/Percent";
 
 type StockTableProps = {
   products: productResponse[];
@@ -101,7 +102,20 @@ const StockTable = ({ products }: StockTableProps) => {
                 color="primary"
                 aria-label="edit"
               >
-                <EditIcon fontSize="medium" color="primary" />
+                <EditIcon fontSize="medium" color="success" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title={t("common.sale")}>
+              <IconButton
+                sx={{ padding: "5px" }}
+                onClick={() => {
+                  setAlertModal(true);
+                  setProductId(product._id);
+                }}
+                color="primary"
+                aria-label="delete"
+              >
+                <PercentIcon fontSize="medium" color="info" />
               </IconButton>
             </Tooltip>
             <Tooltip title={t("common.delete")}>

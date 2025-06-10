@@ -1,8 +1,7 @@
 {
   "sideBar": {
-    "add": "Add",
     "stock": "Stock",
-    "discount": "Discount",
+    "receipt": "receipt",
     "support": "Support",
     "settings": "Settings"
   },
@@ -37,6 +36,7 @@
     "cancel": "Cancel",
     "save": "Save",
     "edit": "Edit",
-    "actions": "Actions"
+    "actions": "Actions",
+    "sale": "Sale"
   }
 }
