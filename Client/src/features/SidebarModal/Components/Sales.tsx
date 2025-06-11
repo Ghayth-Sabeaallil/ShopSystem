@@ -74,6 +74,7 @@ export default function Sales({
           <TextField
             required
             margin="dense"
+            label={t("common.sale")}
             fullWidth
             variant="outlined"
             value={procentValue === 0 ? sellingPrice : salePrice}
