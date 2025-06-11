@@ -29,7 +29,6 @@ const StockTable = ({ products }: StockTableProps) => {
   const [alertModal, setAlertModal] = useState<boolean>(false);
   const [editModal, setEditModal] = useState<boolean>(false);
   const [saleModal, setSaleModal] = useState<boolean>(false);
-  const [salePrice, setSalePrice] = useState<number>(0);
   const [sellPrice, setSellPrice] = useState<number>(0);
 
   const [product, setProduct] = useState<productRequest>({
@@ -180,8 +179,6 @@ const StockTable = ({ products }: StockTableProps) => {
       <Sales
         id={productId}
         sellingPrice={sellPrice}
-        salePrice={salePrice}
-        setSalePrice={setSalePrice}
         openEditDialog={saleModal}
         setOpenEditDialog={setSaleModal}
       />

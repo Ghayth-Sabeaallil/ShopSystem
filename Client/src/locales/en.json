@@ -18,7 +18,8 @@
     "stock": "Stock",
     "add": "Add an Item",
     "productExists": "This Product is alreday exists.",
-    "addError": "Something went Wrong, Please try again later."
+    "addError": "Something went Wrong, Please try again later.",
+    "days": "Number of days"
   },
   "alert": {
     "msg": "Are you sure you want to Delete this product?",

@@ -44,167 +44,164 @@ export default function EditProduct({
         <Box
           sx={{
             padding: 3,
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: theme.palette.background.default,
             boxShadow: theme.shadows[3],
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 2,
           }}
         >
-          <Box
+          <Typography
+            variant="body1"
             sx={{
-              padding: 3,
-              backgroundColor: theme.palette.background.paper,
-              boxShadow: theme.shadows[3],
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 2,
+              color: theme.palette.text.primary,
+              letterSpacing: 0,
+              fontSize: 24,
+              fontWeight: 800,
             }}
           >
-            <Typography
-              variant="body1"
-              sx={{ marginBottom: 3, textAlign: "center" }}
-            >
-              {t("EditProduct")}
-            </Typography>
-            <TextField
-              required
-              autoFocus
-              margin="dense"
-              label={t("common.barCode")}
-              fullWidth
-              variant="outlined"
-              value={product.bar_code}
-              onChange={(e) =>
-                setProduct((prev) => ({
-                  ...prev,
-                  bar_code: e.target.value,
-                }))
-              }
-            />
+            {t("common.edit")}
+          </Typography>
+          <TextField
+            required
+            autoFocus
+            margin="dense"
+            label={t("common.barCode")}
+            fullWidth
+            variant="outlined"
+            value={product.bar_code}
+            onChange={(e) =>
+              setProduct((prev) => ({
+                ...prev,
+                bar_code: e.target.value,
+              }))
+            }
+          />
 
-            <TextField
-              required
-              margin="dense"
-              label={t("common.name")}
-              fullWidth
-              variant="outlined"
-              value={product.name}
-              onChange={(e) =>
-                setProduct((prev) => ({
-                  ...prev,
-                  name: e.target.value,
-                }))
-              }
-            />
+          <TextField
+            required
+            margin="dense"
+            label={t("common.name")}
+            fullWidth
+            variant="outlined"
+            value={product.name}
+            onChange={(e) =>
+              setProduct((prev) => ({
+                ...prev,
+                name: e.target.value,
+              }))
+            }
+          />
 
-            <TextField
-              required
-              margin="dense"
-              label={t("common.buy")}
-              fullWidth
-              type="number"
-              variant="outlined"
-              value={product.buying_price}
-              onChange={(e) =>
-                setProduct((prev) => ({
-                  ...prev,
-                  buying_price: Number(e.target.value),
-                }))
-              }
-            />
-            <TextField
-              required
-              margin="dense"
-              label={t("common.sell")}
-              fullWidth
-              type="number"
-              variant="outlined"
-              value={product.selling_price}
-              onChange={(e) =>
-                setProduct((prev) => ({
-                  ...prev,
-                  selling_price: Number(e.target.value),
-                }))
-              }
-            />
-            <TextField
-              required
-              margin="dense"
-              label={t("common.amount")}
-              fullWidth
-              type="number"
-              variant="outlined"
-              value={product.buying_amount}
-              onChange={(e) =>
-                setProduct((prev) => ({
-                  ...prev,
-                  buying_amount: Number(e.target.value),
-                }))
-              }
-            />
-            <TextField
-              required
-              margin="dense"
-              label={t("common.amount")}
-              fullWidth
-              type="number"
-              variant="outlined"
-              value={product.selling_amount}
-              onChange={(e) =>
-                setProduct((prev) => ({
-                  ...prev,
-                  selling_amount: Number(e.target.value),
-                }))
-              }
-            />
-            <DialogActions
+          <TextField
+            required
+            margin="dense"
+            label={t("common.buy")}
+            fullWidth
+            type="number"
+            variant="outlined"
+            value={product.buying_price}
+            onChange={(e) =>
+              setProduct((prev) => ({
+                ...prev,
+                buying_price: Number(e.target.value),
+              }))
+            }
+          />
+          <TextField
+            required
+            margin="dense"
+            label={t("common.sell")}
+            fullWidth
+            type="number"
+            variant="outlined"
+            value={product.selling_price}
+            onChange={(e) =>
+              setProduct((prev) => ({
+                ...prev,
+                selling_price: Number(e.target.value),
+              }))
+            }
+          />
+          <TextField
+            required
+            margin="dense"
+            label={t("common.amount")}
+            fullWidth
+            type="number"
+            variant="outlined"
+            value={product.buying_amount}
+            onChange={(e) =>
+              setProduct((prev) => ({
+                ...prev,
+                buying_amount: Number(e.target.value),
+              }))
+            }
+          />
+          <TextField
+            required
+            margin="dense"
+            label={t("common.amount")}
+            fullWidth
+            type="number"
+            variant="outlined"
+            value={product.selling_amount}
+            onChange={(e) =>
+              setProduct((prev) => ({
+                ...prev,
+                selling_amount: Number(e.target.value),
+              }))
+            }
+          />
+          <DialogActions
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              onClick={() => {
+                productApi.updateProduct(id, product);
+
+                setProducts(
+                  products.map((item: productResponse) =>
+                    item._id === id ? { ...item, ...product } : item
+                  )
+                );
+
+                setOpenEditDialog(false);
+              }}
+              color="primary"
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                letterSpacing: 0,
+                fontSize: 18,
+                fontWeight: 600,
+              }}
+              variant="contained"
+            >
+              {t("common.save")}
+            </Button>
+            <Button
+              onClick={() => {
+                setOpenEditDialog(false);
+              }}
+              variant="text"
+              sx={{
+                color: (theme) => theme.palette.text.primary,
+                letterSpacing: 0,
+                fontSize: 20,
+                fontWeight: 600,
+                "&:hover": {
+                  textDecoration: "underline",
+                  backgroundColor: "transparent",
+                },
               }}
             >
-              <Button
-                onClick={() => {
-                  productApi.updateProduct(id, product);
-
-                  setProducts(
-                    products.map((item: productResponse) =>
-                      item._id === id ? { ...item, ...product } : item
-                    )
-                  );
-
-                  setOpenEditDialog(false);
-                }}
-                color="primary"
-                sx={{
-                  letterSpacing: 0,
-                  fontSize: 18,
-                  fontWeight: 600,
-                }}
-                variant="contained"
-              >
-                {t("common.save")}
-              </Button>
-              <Button
-                onClick={() => {
-                  setOpenEditDialog(false);
-                }}
-                variant="text"
-                sx={{
-                  color: (theme) => theme.palette.text.primary,
-                  letterSpacing: 0,
-                  fontSize: 20,
-                  fontWeight: 600,
-                  "&:hover": {
-                    textDecoration: "underline",
-                    backgroundColor: "transparent",
-                  },
-                }}
-              >
-                {t("alert.cancel")}
-              </Button>
-            </DialogActions>
-          </Box>
+              {t("alert.cancel")}
+            </Button>
+          </DialogActions>
         </Box>
       </Dialog>
     </>
