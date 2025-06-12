@@ -27,7 +27,7 @@ const StockTable = () => {
   const [saleModal, setSaleModal] = useState<boolean>(false);
   const [sellPrice, setSellPrice] = useState<number>(0);
   const [salePrice, setSalePrice] = useState<number>(0);
-
+  const [numberOfDays, setNumberOfDays] = useState<Date>();
   const [product, setProduct] = useState<productRequest>({
     name: "",
     bar_code: "",
@@ -143,11 +143,10 @@ const StockTable = () => {
                   setSaleModal(true);
                   setProductId(product._id);
                   setSellPrice(product.selling_price);
-                  setSalePrice(
-                    product.sale_price
-                      ? product.sale_price
-                      : product.selling_price
-                  );
+                  if (product.sale_price) {
+                    setSalePrice(product.sale_price);
+                    setNumberOfDays(product.sale_expires_at);
+                  }
                 }}
                 color="primary"
                 aria-label="delete"

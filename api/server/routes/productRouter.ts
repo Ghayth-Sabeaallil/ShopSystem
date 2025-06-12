@@ -53,6 +53,11 @@ productRouter.delete("/delete", async (req, res) => {
         }
         const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { userId: string };
         const userId = decoded.userId;
+        const user = await ProductsModel.findById(userId);
+        if (!user) {
+            res.status(404).json({ message: 'No User Found' });
+            return;
+        }
         const { id: productId } = req.body;
         if (!productId) {
             res.status(400).json({ message: 'Product ID is required.' });
