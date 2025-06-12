@@ -6,6 +6,8 @@ export type productResponse = {
     selling_price: number
     buying_amount: number
     selling_amount: number
+    sale_price?: number
+    sale_expires_at?: Date
 };
 
 export type productRequest = {

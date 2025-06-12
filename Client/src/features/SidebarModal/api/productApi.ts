@@ -38,11 +38,24 @@ const updateProduct = async (id: string, product: productRequest) =>
         throw error;
     });
 
+const updateSale = async (id: string, sale_price: number, sale_expires_at: Date) =>
+    await api.put(`/products/sale`,
+        {
+            id: id,
+            sale_price: sale_price,
+            sale_expires_at: sale_expires_at
 
+        }, { withCredentials: true }).then(response => {
+            return response.data;
+        }).catch(error => {
+            console.error('Update failed:', error);
+            throw error;
+        });
 
 export const productApi = {
     addProduct,
     getProducts,
     deleteProduct,
-    updateProduct
+    updateProduct,
+    updateSale
 };

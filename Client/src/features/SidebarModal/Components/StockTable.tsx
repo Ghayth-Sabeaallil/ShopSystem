@@ -8,7 +8,7 @@ import {
 } from "@mui/x-data-grid";
 import { getDataGridLocale } from "../../../utils/getDataGridLocale";
 import i18n from "../../../utils/i18n";
-import { Box, IconButton, Tooltip } from "@mui/material";
+import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Alert from "../../../shared/components/Alert";
@@ -63,7 +63,37 @@ const StockTable = ({ products }: StockTableProps) => {
     { field: "barCode", headerName: t("common.barCode"), flex: 2 },
     { field: "name", headerName: t("common.name"), flex: 4 },
     { field: "buy", headerName: t("common.buy"), flex: 2 },
-    { field: "sell", headerName: t("common.sell"), flex: 2 },
+    {
+      field: "sell",
+      headerName: t("common.sell"),
+      flex: 2,
+      renderCell: (params: GridRenderCellParams) => {
+        const product = products.find((b) => b._id === params.row.id);
+        if (!product) return null;
+
+        if (product.sale_price && product.sale_price < product.selling_price) {
+          return (
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1,
+                alignItems: "center",
+                height: "100%",
+              }}
+            >
+              <Typography
+                sx={{ textDecoration: "line-through", color: "gray" }}
+              >
+                {product.selling_price}
+              </Typography>
+              <Typography sx={{ color: "red", fontWeight: "bold" }}>
+                {product.sale_price}
+              </Typography>
+            </Box>
+          );
+        }
+      },
+    },
     { field: "buyingamount", headerName: t("common.amount"), flex: 2 },
     {
       field: "sellingAmount",

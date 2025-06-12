@@ -138,7 +138,7 @@ productRouter.put("/sale", async (req, res) => {
         product.sale_price = sale_price;
         product.sale_expires_at = sale_expires_at;
         await product.save();
-        res.status(200).json({ message: 'Product updated successfully.', product });
+        res.status(200).json({ message: 'Product updated successfully.' });
     } catch (error) {
         console.error('Server error while updating product:', error);
         res.status(500).json({ message: 'Server error', error });

@@ -11,6 +11,7 @@ import {
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { productApi } from "../api/productApi";
 
 type EditProductProps = {
   id: string;
@@ -27,9 +28,16 @@ export default function Sales({
 }: EditProductProps) {
   const theme = useTheme();
   const { t } = useTranslation();
-  const [salePrice, setSalePrice] = useState<number>();
+  const [salePrice, setSalePrice] = useState<number>(0);
   const [procentValue, setProcentValue] = useState<number>(0);
   const [numberOfDays, setNumberOfDays] = useState<number>(1);
+
+  const updateSale = (id: string, salePrice: number, numberOfDays: number) => {
+    const saleExpiresAt = new Date(
+      Date.now() + numberOfDays * 24 * 60 * 60 * 1000
+    );
+    productApi.updateSale(id, salePrice, saleExpiresAt);
+  };
 
   return (
     <>
@@ -81,7 +89,7 @@ export default function Sales({
             disabled
           />
           <Slider
-            defaultValue={procentValue}
+            value={procentValue} // Controlled: use value instead of defaultValue
             aria-label="Default"
             valueLabelDisplay="auto"
             color="primary"
@@ -92,6 +100,7 @@ export default function Sales({
               setSalePrice(sellingPrice - sellingPrice * (percent / 100));
             }}
           />
+
           <TextField
             label={t("stock.days")}
             type="number"
@@ -107,7 +116,11 @@ export default function Sales({
             }}
           >
             <Button
-              onClick={() => {}}
+              onClick={() => {
+                updateSale(id, salePrice, numberOfDays);
+                setProcentValue(0);
+                setOpenEditDialog(false);
+              }}
               color="primary"
               sx={{
                 letterSpacing: 0,
