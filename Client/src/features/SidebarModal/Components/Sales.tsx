@@ -12,6 +12,8 @@ import { useTheme } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { productApi } from "../api/productApi";
+import { useProduct } from "../../../shared/context/Context/ProductContext";
+import type { productResponse } from "../types/productType";
 
 type EditProductProps = {
   id: string;
@@ -34,6 +36,7 @@ export default function Sales({
   const { t } = useTranslation();
   const [procentValue, setProcentValue] = useState<number>(0);
   const [numberOfDays, setNumberOfDays] = useState<number>(1);
+  const { products, setProducts } = useProduct();
 
   useEffect(() => {
     setProcentValue(((sellingPrice - salePrice) / sellingPrice) * 100);
@@ -44,6 +47,13 @@ export default function Sales({
       Date.now() + numberOfDays * 24 * 60 * 60 * 1000
     );
     productApi.updateSale(id, salePrice, saleExpiresAt);
+    setProducts(
+      products.map((item: productResponse) =>
+        item._id === id
+          ? { ...item, sale_price: salePrice, sale_expires_at: saleExpiresAt }
+          : item
+      )
+    );
   };
 
   return (
