@@ -9,7 +9,7 @@ import { productApi } from "../api/productApi";
 
 const StockView = () => {
   const { t } = useTranslation();
-  const { products, setProducts } = useProduct();
+  const { setProducts } = useProduct();
   const { isAuthenticated } = useAuth();
   const theme = useTheme();
 
@@ -46,7 +46,7 @@ const StockView = () => {
         {t(`stock.stock`)}
       </Typography>
       <AddProduct />
-      <StockTable products={products} />
+      <StockTable />
     </Box>
   );
 };

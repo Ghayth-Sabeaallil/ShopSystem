@@ -19,17 +19,14 @@ import EditProduct from "./EditProduct";
 import PercentIcon from "@mui/icons-material/Percent";
 import Sales from "./Sales";
 
-type StockTableProps = {
-  products: productResponse[];
-};
-
-const StockTable = ({ products }: StockTableProps) => {
+const StockTable = () => {
   const { t } = useTranslation();
   const currentLocaleText = getDataGridLocale(i18n.language);
   const [alertModal, setAlertModal] = useState<boolean>(false);
   const [editModal, setEditModal] = useState<boolean>(false);
   const [saleModal, setSaleModal] = useState<boolean>(false);
   const [sellPrice, setSellPrice] = useState<number>(0);
+  const [salePrice, setSalePrice] = useState<number>(0);
 
   const [product, setProduct] = useState<productRequest>({
     name: "",
@@ -40,7 +37,7 @@ const StockTable = ({ products }: StockTableProps) => {
     selling_amount: 0,
   });
   const [productId, setProductId] = useState<string>("");
-  const { setProducts } = useProduct();
+  const { products, setProducts } = useProduct();
 
   const handleDelete = (productId: string) => {
     productApi.deleteProduct(productId);
@@ -146,6 +143,11 @@ const StockTable = ({ products }: StockTableProps) => {
                   setSaleModal(true);
                   setProductId(product._id);
                   setSellPrice(product.selling_price);
+                  setSalePrice(
+                    product.sale_price
+                      ? product.sale_price
+                      : product.selling_price
+                  );
                 }}
                 color="primary"
                 aria-label="delete"
@@ -208,6 +210,8 @@ const StockTable = ({ products }: StockTableProps) => {
       />
       <Sales
         id={productId}
+        salePrice={salePrice}
+        setSalePrice={setSalePrice}
         sellingPrice={sellPrice}
         openEditDialog={saleModal}
         setOpenEditDialog={setSaleModal}

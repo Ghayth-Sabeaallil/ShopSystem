@@ -9,13 +9,15 @@ import {
 } from "@mui/material";
 
 import { useTheme } from "@mui/material/styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { productApi } from "../api/productApi";
 
 type EditProductProps = {
   id: string;
   sellingPrice: number;
+  salePrice: number;
+  setSalePrice: React.Dispatch<React.SetStateAction<number>>;
   openEditDialog: boolean;
   setOpenEditDialog: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -23,14 +25,19 @@ type EditProductProps = {
 export default function Sales({
   id,
   sellingPrice,
+  salePrice,
+  setSalePrice,
   openEditDialog,
   setOpenEditDialog,
 }: EditProductProps) {
   const theme = useTheme();
   const { t } = useTranslation();
-  const [salePrice, setSalePrice] = useState<number>(0);
   const [procentValue, setProcentValue] = useState<number>(0);
   const [numberOfDays, setNumberOfDays] = useState<number>(1);
+
+  useEffect(() => {
+    setProcentValue(((sellingPrice - salePrice) / sellingPrice) * 100);
+  }, [salePrice]);
 
   const updateSale = (id: string, salePrice: number, numberOfDays: number) => {
     const saleExpiresAt = new Date(
@@ -85,7 +92,7 @@ export default function Sales({
             label={t("common.sale")}
             fullWidth
             variant="outlined"
-            value={procentValue === 0 ? sellingPrice : salePrice}
+            value={salePrice === 0 ? sellingPrice : salePrice}
             disabled
           />
           <Slider
