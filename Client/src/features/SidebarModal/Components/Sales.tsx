@@ -40,7 +40,7 @@ export default function Sales({
 
   useEffect(() => {
     setProcentValue(((sellingPrice - salePrice) / sellingPrice) * 100);
-  }, [salePrice]);
+  }, [salePrice, products]);
 
   const updateSale = (id: string, salePrice: number, numberOfDays: number) => {
     const saleExpiresAt = new Date(
@@ -117,8 +117,8 @@ export default function Sales({
               setSalePrice(sellingPrice - sellingPrice * (percent / 100));
             }}
           />
-
           <TextField
+            disabled={procentValue > 0 ? false : true}
             label={t("stock.days")}
             type="number"
             value={numberOfDays}
