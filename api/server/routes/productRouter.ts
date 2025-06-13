@@ -44,7 +44,6 @@ productRouter.get("/getByOwner", async (req, res) => {
     }
 });
 
-
 productRouter.delete("/delete", async (req, res) => {
     try {
         const token = req.cookies["token"];
@@ -156,7 +155,5 @@ productRouter.put("/sale", async (req, res) => {
         res.status(500).json({ message: 'Server error', error });
     }
 });
-
-
 
 export default productRouter;

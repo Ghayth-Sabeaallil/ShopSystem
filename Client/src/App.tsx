@@ -1,4 +1,4 @@
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import { useMemo } from "react";
 import {
   ThemeModeProvider,
@@ -10,6 +10,7 @@ import LoginPage from "./features/loginPage/LoginPage";
 import { Navigate, Route, Routes, BrowserRouter } from "react-router-dom";
 import { AuthProvider, useAuth } from "./shared/context/Context/AuthContext ";
 import { ProductsProvider } from "./shared/context/Context/ProductContext";
+import Cashier from "./features/Cashier/Cashier";
 
 function App() {
   return (
@@ -39,7 +40,16 @@ function AppWithTheme() {
         <Routes>
           <Route
             path="/"
-            element={isAuthenticated ? <Sidebar /> : <Navigate to="/login" />}
+            element={
+              isAuthenticated ? (
+                <Box sx={{ display: "flex" }}>
+                  <Sidebar />
+                  <Cashier />
+                </Box>
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
           />
           <Route
             path="/login"

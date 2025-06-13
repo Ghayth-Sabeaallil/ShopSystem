@@ -14,8 +14,6 @@ import {
 } from "../../shared/lib/SideBarButtons";
 import SideBarIcon from "./components/SideBarIcon";
 
-const drawerWidth = 97;
-
 export default function Sidebar() {
   const theme = useTheme();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -52,8 +50,8 @@ export default function Sidebar() {
 
       <Box
         sx={{
-          width: drawerWidth,
-          height: "100%",
+          width: 97,
+          height: "100vh",
           backgroundColor: theme.palette.secondary.main,
           color: theme.palette.text.primary,
           display: { xs: "none", sm: "flex" },
@@ -63,10 +61,6 @@ export default function Sidebar() {
           padding: theme.spacing(2),
           overflow: "hidden",
           boxShadow: theme.shadows[4],
-          position: "fixed",
-          top: 0,
-          left: 0,
-          zIndex: 510,
         }}
       >
         <Box
@@ -122,7 +116,7 @@ export default function Sidebar() {
       >
         <Box
           sx={{
-            width: drawerWidth,
+            width: 97,
             height: "100%",
             display: "flex",
             flexDirection: "column",
