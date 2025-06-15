@@ -35,6 +35,7 @@ const StockTable = () => {
     selling_price: 0,
     buying_amount: 0,
     selling_amount: 0,
+    minimum_amount: 0,
   });
   const [productId, setProductId] = useState<string>("");
   const { products, setProducts } = useProduct();
@@ -127,6 +128,7 @@ const StockTable = () => {
                     selling_price: product.selling_price,
                     buying_amount: product.buying_amount,
                     selling_amount: product.selling_amount,
+                    minimum_amount: product.minimum_amount,
                   });
                   setProductId(product._id);
                 }}
@@ -182,6 +184,12 @@ const StockTable = () => {
         sx={{
           width: "100%",
           height: 700,
+          "& .low-stock": {
+            backgroundColor: "rgba(255, 238, 0, 0.29)",
+            "&:hover": {
+              backgroundColor: "rgba(251, 255, 0, 0.12)",
+            },
+          },
         }}
         rows={rows}
         columns={columns}
@@ -192,7 +200,19 @@ const StockTable = () => {
           },
         }}
         disableRowSelectionOnClick
+        getRowClassName={(params) => {
+          const product = products.find((p) => p._id === params.row.id);
+          if (
+            product &&
+            product.buying_amount - product.selling_amount <=
+              product.minimum_amount
+          ) {
+            return "low-stock";
+          }
+          return "";
+        }}
       />
+
       <EditProduct
         id={productId}
         product={product}

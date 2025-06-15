@@ -67,7 +67,7 @@ const AddProduct = () => {
         }}
       >
         <Input
-          text={t(`common.barCode`)}
+          name={t(`common.barCode`)}
           label={t(`common.barCode`)}
           type="string"
           value={product.bar_code}
@@ -79,7 +79,7 @@ const AddProduct = () => {
           }
         />
         <Input
-          text={t(`common.name`)}
+          name={t(`common.name`)}
           label={t(`common.name`)}
           type="string"
           value={product.name}
@@ -91,7 +91,7 @@ const AddProduct = () => {
           }
         />
         <Input
-          text={t(`common.buy`)}
+          name={t(`common.buy`)}
           label={t(`common.buy`)}
           type="number"
           value={product.buying_price}
@@ -103,7 +103,7 @@ const AddProduct = () => {
           }
         />
         <Input
-          text={t(`common.sell`)}
+          name={t(`common.sell`)}
           label={t(`common.sell`)}
           type="number"
           value={product.selling_price}
@@ -115,7 +115,7 @@ const AddProduct = () => {
           }
         />
         <Input
-          text={t(`common.amount`)}
+          name={t(`common.amount`)}
           label={t(`common.amount`)}
           type="number"
           value={product.buying_amount}
@@ -127,7 +127,7 @@ const AddProduct = () => {
           }
         />
         <Input
-          text={t(`common.minimum`)}
+          name={t(`common.minimum`)}
           label={t(`common.minimum`)}
           type="number"
           value={product.minimum_amount}

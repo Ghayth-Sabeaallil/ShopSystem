@@ -142,7 +142,7 @@ export default function EditProduct({
           <TextField
             required
             margin="dense"
-            label={t("common.amount")}
+            label={t("common.sellingAmount")}
             fullWidth
             type="number"
             variant="outlined"
@@ -151,6 +151,21 @@ export default function EditProduct({
               setProduct((prev) => ({
                 ...prev,
                 selling_amount: Number(e.target.value),
+              }))
+            }
+          />
+          <TextField
+            required
+            margin="dense"
+            label={t("common.minimum")}
+            fullWidth
+            type="number"
+            variant="outlined"
+            value={product.minimum_amount}
+            onChange={(e) =>
+              setProduct((prev) => ({
+                ...prev,
+                minimum_amount: Number(e.target.value),
               }))
             }
           />
