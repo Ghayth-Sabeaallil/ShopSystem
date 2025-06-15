@@ -20,6 +20,7 @@ const AddProduct = () => {
     selling_price: 0,
     buying_amount: 0,
     selling_amount: 0,
+    minimum_amount: 0,
   });
 
   const addProduct = async () => {
@@ -34,6 +35,7 @@ const AddProduct = () => {
         selling_price: 0,
         buying_amount: 0,
         selling_amount: 0,
+        minimum_amount: 0,
       });
     } catch (err: any) {
       if (
@@ -124,6 +126,18 @@ const AddProduct = () => {
             }))
           }
         />
+        <Input
+          text={t(`common.minimum`)}
+          label={t(`common.minimum`)}
+          type="number"
+          value={product.minimum_amount}
+          onChange={(e) =>
+            setProduct((prev) => ({
+              ...prev,
+              minimum_amount: Number(e.target.value),
+            }))
+          }
+        />
       </Box>
       {error && <Box sx={{ color: "red", fontWeight: "bold" }}>{error}</Box>}
       <Btn
@@ -134,7 +148,8 @@ const AddProduct = () => {
           product.name &&
           product.buying_price &&
           product.selling_price &&
-          product.buying_amount
+          product.buying_amount &&
+          product.minimum_amount
             ? false
             : true
         }

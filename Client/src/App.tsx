@@ -42,7 +42,7 @@ function AppWithTheme() {
             path="/"
             element={
               isAuthenticated ? (
-                <Box sx={{ display: "flex" }}>
+                <Box sx={{ display: "flex", gap: 2 }}>
                   <Sidebar />
                   <Cashier />
                 </Box>

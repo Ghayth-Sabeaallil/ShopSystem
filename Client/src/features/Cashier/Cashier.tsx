@@ -9,7 +9,6 @@ const Cashier = () => {
       sx={{
         display: "flex",
         width: "40%",
-
         minHeight: "100vh",
         backgroundColor: theme.palette.primary.light,
       }}

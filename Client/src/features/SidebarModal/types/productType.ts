@@ -16,5 +16,6 @@ export type productRequest = {
     buying_price: number,
     selling_price: number,
     buying_amount: number,
-    selling_amount: number
+    selling_amount: number,
+    minimum_amount: number,
 };

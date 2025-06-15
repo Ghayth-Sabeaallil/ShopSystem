@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { ProductsModel } from '../models/products';
 import jwt from "jsonwebtoken";
+import UserModel from '../models/users';
 dotenv.config();
 
 const productRouter = express.Router();
@@ -52,7 +53,9 @@ productRouter.delete("/delete", async (req, res) => {
         }
         const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { userId: string };
         const userId = decoded.userId;
-        const user = await ProductsModel.findById(userId);
+        const user = await UserModel.findById(userId);
+        console.log(userId);
+        console.log(user);
         if (!user) {
             res.status(404).json({ message: 'No User Found' });
             return;
