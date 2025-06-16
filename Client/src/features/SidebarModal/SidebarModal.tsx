@@ -63,7 +63,7 @@ export default function SidebarModal({
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            minWidth: { xs: "100vw", md: "70vw", lg: "60vw" },
+            width: "fit-content",
             maxWidth: "100vw",
             maxHeight: { xs: "100vh", md: "90vh" },
             bgcolor: theme.palette.background.default,

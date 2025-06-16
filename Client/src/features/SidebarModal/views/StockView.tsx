@@ -31,7 +31,7 @@ const StockView = () => {
         alignItems: "center",
         gap: 3,
         textAlign: "center",
-        width: "100%",
+        width: "80vw",
       }}
     >
       <Typography

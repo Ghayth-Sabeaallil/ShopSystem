@@ -12,6 +12,7 @@ const SupportView = () => {
         display: "flex",
         justifyContent: "center",
         flexDirection: "column",
+        width: 400,
         gap: 2,
       }}
     >

@@ -17,6 +17,7 @@ const SettingsView = () => {
         gap: 3,
         flexDirection: "column",
         alignItems: "center",
+        width: 400,
       }}
     >
       <Typography
