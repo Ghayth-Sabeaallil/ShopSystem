@@ -1,4 +1,9 @@
-import { Box, CssBaseline, ThemeProvider } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  CssBaseline,
+  ThemeProvider,
+} from "@mui/material";
 import { useMemo } from "react";
 import {
   ThemeModeProvider,
@@ -31,7 +36,18 @@ function AppWithTheme() {
   const muiTheme = useMemo(() => theme(colorMode), [colorMode]);
   const { isAuthenticated, loading } = useAuth();
   if (loading) {
-    return <div>Loading...</div>; // ⏳ show while verifying auth
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress size={"4rem"} />
+      </Box>
+    );
   }
   return (
     <ThemeProvider theme={muiTheme}>

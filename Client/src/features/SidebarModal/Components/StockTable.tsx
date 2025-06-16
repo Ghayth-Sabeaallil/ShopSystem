@@ -185,10 +185,7 @@ const StockTable = () => {
           width: "100%",
           height: 700,
           "& .low-stock": {
-            backgroundColor: "rgba(255, 238, 0, 0.29)",
-            "&:hover": {
-              backgroundColor: "rgba(251, 255, 0, 0.12)",
-            },
+            backgroundColor: "rgba(255, 30, 0, 0.24)",
           },
         }}
         rows={rows}
@@ -202,11 +199,7 @@ const StockTable = () => {
         disableRowSelectionOnClick
         getRowClassName={(params) => {
           const product = products.find((p) => p._id === params.row.id);
-          if (
-            product &&
-            product.buying_amount - product.selling_amount <=
-              product.minimum_amount
-          ) {
+          if (product && product.buying_amount <= product.minimum_amount) {
             return "low-stock";
           }
           return "";
