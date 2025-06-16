@@ -106,7 +106,7 @@ export default function Sales({
             disabled
           />
           <Slider
-            value={procentValue} // Controlled: use value instead of defaultValue
+            value={procentValue}
             aria-label="Default"
             valueLabelDisplay="auto"
             color="primary"

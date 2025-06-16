@@ -43,9 +43,9 @@ const AddProduct = () => {
         err.response.status === 400 &&
         err.response.data?.msg?.includes("already exists")
       ) {
-        setError(t("stock.productExists")); // use a translated message if available
+        setError(t("stock.productExists"));
       } else {
-        setError(t("stock.addError")); // generic error fallback
+        setError(t("stock.addError"));
       }
     }
   };

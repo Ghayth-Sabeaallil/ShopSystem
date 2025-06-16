@@ -1,10 +1,10 @@
 import { TextField } from "@mui/material";
 
 type InputProps = {
-  name: string; // More semantic than 'text'
+  name: string;
   label: string;
   value: string | number;
-  onChange: React.ChangeEventHandler<HTMLInputElement>; // Make required for consistency
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
   type: string;
 };
 
@@ -17,7 +17,7 @@ const Input = ({ name, label, value, type, onChange }: InputProps) => {
       name={name}
       value={value}
       required
-      fullWidth // optional: makes the field responsive
+      fullWidth
     />
   );
 };

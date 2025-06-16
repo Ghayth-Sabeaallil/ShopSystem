@@ -17,7 +17,7 @@ export const ProductsProvider = ({
   const getProducts = async () => {
     try {
       const response = await productApi.getProducts();
-      setProducts(response.data); // Adjust 'data' if the actual field is different
+      setProducts(response.data);
     } catch (error) {
       setProducts([]);
     }

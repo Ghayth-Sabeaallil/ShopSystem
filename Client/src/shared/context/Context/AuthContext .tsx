@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const isAuth = await logApi.verifyAuth();
       setAuthenticated(isAuth.authenticated);
     } finally {
-      setLoading(false); // Always end loading, even if verify fails
+      setLoading(false);
     }
   };
 
