@@ -135,17 +135,6 @@ const LoginPage = () => {
           >
             {loading ? "Logging in..." : "Logga in"}
           </Button>
-          <Button
-            sx={{
-              marginTop: 2,
-              height: 50,
-              borderRadius: "8px",
-              fontSize: "16px",
-              fontWeight: "bold",
-            }}
-          >
-            Glömt lösenord?
-          </Button>
         </form>
       </Paper>
     </Box>
