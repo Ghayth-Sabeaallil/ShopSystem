@@ -40,5 +40,11 @@
     "actions": "Actions",
     "sale": "Sale",
     "minimum": "Minimum Amount"
+  },
+  "cashier": {
+    "product": "Product",
+    "finish": "Finish",
+    "cancel": "Cancel",
+    "discount": "Discount"
   }
 }

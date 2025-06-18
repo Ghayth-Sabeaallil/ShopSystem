@@ -41,5 +41,11 @@
     "cancel": "الغاء",
     "sale": "تخفيضات",
     "minimum": "الحد الأدنى"
+  },
+  "cashier": {
+    "product": "المنتج",
+    "finish": "اكمال",
+    "cancel": "انهاء",
+    "discount": "تخفيض"
   }
 }

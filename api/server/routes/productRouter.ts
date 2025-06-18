@@ -14,14 +14,14 @@ productRouter.post("/add", async (req, res) => {
             res.status(401).json({ message: 'Access denied. No token provided.' });
         } else {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            const ownerId = decoded.userId;
+            const owner_id = decoded.userId;
             const { bar_code } = req.body;
-            const existingProduct = await ProductsModel.findOne({ ownerId, bar_code });
+            const existingProduct = await ProductsModel.findOne({ owner_id, bar_code });
             if (existingProduct) {
                 res.status(400).json({ msg: "Product with this owner_id and bar_code already exists." });
             }
             else {
-                const newItem = new ProductsModel({ ...req.body, owner_id: ownerId });
+                const newItem = new ProductsModel({ ...req.body, owner_id: owner_id });
                 await newItem.save();
                 res.send(newItem);
             }
@@ -54,8 +54,6 @@ productRouter.delete("/delete", async (req, res) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { userId: string };
         const userId = decoded.userId;
         const user = await UserModel.findById(userId);
-        console.log(userId);
-        console.log(user);
         if (!user) {
             res.status(404).json({ message: 'No User Found' });
             return;
