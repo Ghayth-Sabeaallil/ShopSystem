@@ -178,12 +178,13 @@ const Cashier = () => {
             disabled={cashierProduct.length === 0}
             onClick={() => {}}
           />
+          {/*
           <Btn
             text={t("cashier.discount")}
             icon={DiscountIcon}
             disabled={cashierProduct.length === 0}
             onClick={() => {}}
-          />
+          />*/}
         </Box>
       </Box>
     </Box>

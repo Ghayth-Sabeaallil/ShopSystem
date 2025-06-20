@@ -27,8 +27,8 @@ const deleteProduct = async (id: string) =>
         throw error;
     });
 
-const updateProduct = async (id: string, product: productRequest) =>
-    await api.put(`/products/update`, {
+const editProduct = async (id: string, product: productRequest) =>
+    await api.put(`/products/edit`, {
         id,
         ...product
     }, { withCredentials: true }).then(response => {
@@ -56,6 +56,6 @@ export const productApi = {
     addProduct,
     getProducts,
     deleteProduct,
-    updateProduct,
+    editProduct,
     updateSale
 };

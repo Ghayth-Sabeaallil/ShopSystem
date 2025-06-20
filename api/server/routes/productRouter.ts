@@ -78,7 +78,7 @@ productRouter.delete("/delete", async (req, res) => {
     }
 });
 
-productRouter.put("/update", async (req, res) => {
+productRouter.put("/edit", async (req, res) => {
     try {
         const token = req.cookies["token"];
         if (!token) {

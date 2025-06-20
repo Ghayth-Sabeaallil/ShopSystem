@@ -178,7 +178,7 @@ export default function EditProduct({
           >
             <Button
               onClick={() => {
-                productApi.updateProduct(id, product);
+                productApi.editProduct(id, product);
 
                 setProducts(
                   products.map((item: productResponse) =>
