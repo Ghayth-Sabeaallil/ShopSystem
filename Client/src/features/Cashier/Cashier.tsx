@@ -17,6 +17,7 @@ import {
 import { getDataGridLocale } from "../../utils/getDataGridLocale";
 import i18n from "../../utils/i18n";
 import i18next from "../../utils/i18n";
+import { productApi } from "./api/productApi";
 const Cashier = () => {
   const theme = useTheme();
   const { products } = useProduct();
@@ -176,7 +177,10 @@ const Cashier = () => {
             text={t("cashier.finish")}
             icon={PrintIcon}
             disabled={cashierProduct.length === 0}
-            onClick={() => {}}
+            onClick={() => {
+              productApi.updateProduct(cashierProduct);
+              setCashierProduct([]);
+            }}
           />
           {/*
           <Btn

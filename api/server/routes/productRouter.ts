@@ -86,11 +86,11 @@ productRouter.put("/edit", async (req, res) => {
         }
         const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { userId: string };
         const userId = decoded.userId;
-        const { id: productId, name, bar_code, buying_price, selling_price, buying_amount, selling_amount } = req.body;
+        const { id: productId, name, bar_code, buying_price, selling_price, buying_amount, selling_amount, minimum_amount } = req.body;
         if (!productId) {
             res.status(400).json({ message: 'Product ID is required.' });
         }
-        if (!name || !bar_code || buying_price == null || selling_price == null || buying_amount == null || selling_amount == null) {
+        if (!name || !bar_code || buying_price == null || selling_price == null || buying_amount == null || selling_amount == null || minimum_amount == null) {
             res.status(400).json({ message: 'All product fields are required.' });
         }
         const product = await ProductsModel.findById(productId);
@@ -108,6 +108,7 @@ productRouter.put("/edit", async (req, res) => {
         product.selling_price = selling_price;
         product.buying_amount = buying_amount;
         product.selling_amount = selling_amount;
+        product.minimum_amount = minimum_amount;
         await product.save();
         res.status(200).json({ message: 'Product updated successfully.', product });
     } catch (error) {
@@ -156,5 +157,41 @@ productRouter.put("/sale", async (req, res) => {
         res.status(500).json({ message: 'Server error', error });
     }
 });
+
+productRouter.put("/update", async (req, res) => {
+    try {
+        const token = req.cookies["token"];
+        if (!token) {
+            res.status(401).json({ message: 'Access denied. No token provided.' });
+        }
+        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { userId: string };
+        const userId = decoded.userId;
+        const productsToUpdate = req.body;
+        if (!Array.isArray(productsToUpdate) || productsToUpdate.length === 0) {
+            res.status(400).json({ message: 'No products provided for update.' });
+        }
+        for (const productData of productsToUpdate) {
+            const { id: productId, amount } = productData;
+            if (!productId) {
+                continue;
+            }
+            const product = await ProductsModel.findById(productId);
+            if (!product) {
+                continue;
+            }
+            if (product.owner_id.toString() !== userId) {
+                continue;
+            }
+            product.buying_amount = (product.buying_amount || 0) - amount;
+            product.selling_amount = (product.selling_amount || 0) + amount;
+            await product.save();
+        }
+        res.status(200).json({ message: 'Products updated successfully.' });
+    } catch (error) {
+        console.error('Server error while updating products:', error);
+        res.status(500).json({ message: 'Server error', error });
+    }
+});
+
 
 export default productRouter;
