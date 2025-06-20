@@ -1,4 +1,4 @@
-import { Box, TextField } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import PrintIcon from "@mui/icons-material/Print";
 import { useProduct } from "../../shared/context/Context/ProductContext";
@@ -8,20 +8,102 @@ import { useTranslation } from "react-i18next";
 import DiscountIcon from "@mui/icons-material/Discount";
 import { useState } from "react";
 import type { CashierProduct } from "./types/CashierType";
+import {
+  DataGrid,
+  type GridColDef,
+  type GridRenderCellParams,
+  type GridRowsProp,
+} from "@mui/x-data-grid";
+import { getDataGridLocale } from "../../utils/getDataGridLocale";
+import i18n from "../../utils/i18n";
+import i18next from "../../utils/i18n";
 const Cashier = () => {
   const theme = useTheme();
   const { products } = useProduct();
   const [cashierProduct, setCashierProduct] = useState<CashierProduct[]>([]);
   const [barCode, setBarCode] = useState<string>("");
   const { t } = useTranslation();
+  const currentLocaleText = getDataGridLocale(i18n.language);
+
+  const rows: GridRowsProp = cashierProduct.map((product) => ({
+    id: product.id,
+    name: product.name,
+    sell: product.sale_price ? product.sale_price : product.selling_price,
+    amount: product.amount,
+  }));
+
+  const columns: GridColDef[] = [
+    { field: "name", headerName: t("common.name"), flex: 4 },
+    {
+      field: "sell",
+      headerName: t("common.sell"),
+      flex: 2,
+      renderCell: (params: GridRenderCellParams) => {
+        const product = products.find((b) => b._id === params.row.id);
+        if (!product) return null;
+
+        if (product.sale_price && product.sale_price < product.selling_price) {
+          return (
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1,
+                alignItems: "center",
+                height: "100%",
+              }}
+            >
+              <Typography
+                sx={{ textDecoration: "line-through", color: "gray" }}
+              >
+                {product.selling_price}
+              </Typography>
+              <Typography sx={{ color: "red", fontWeight: "bold" }}>
+                {product.sale_price}
+              </Typography>
+            </Box>
+          );
+        }
+      },
+    },
+    { field: "amount", headerName: t("common.amount"), flex: 2 },
+  ];
 
   const getProduct = (event: React.KeyboardEvent<HTMLFormElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
       const pro = products.find((product) => product.bar_code === barCode);
+      if (pro) {
+        setCashierProduct((prev) => {
+          const existingProduct = prev.find((item) => item.id === pro._id);
+          if (existingProduct) {
+            return prev.map((item) =>
+              item.id === pro._id ? { ...item, amount: item.amount + 1 } : item
+            );
+          } else {
+            return [
+              ...prev,
+              {
+                id: pro._id,
+                name: pro.name,
+                selling_price: pro.selling_price,
+                sale_price: pro.sale_price,
+                amount: 1,
+              },
+            ];
+          }
+        });
+
+        setBarCode("");
+      }
       if (pro) setBarCode("");
-      console.log(pro);
     }
+  };
+
+  const calculateTotal = () => {
+    return cashierProduct.reduce((total, item) => {
+      const price = item.sale_price ?? item.selling_price;
+      return total + price * item.amount;
+    }, 0);
   };
 
   return (
@@ -32,26 +114,38 @@ const Cashier = () => {
         justifyContent: "center",
         justifyItems: "center",
         justifySelf: "center",
+        gap: 2,
         width: "40%",
         height: "95vh",
         backgroundColor: theme.palette.secondary.dark,
         padding: 2,
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          height: "100%",
-          backgroundColor: theme.palette.secondary.light,
-        }}
-      ></Box>
+      <DataGrid
+        localeText={currentLocaleText}
+        rows={rows}
+        columns={columns}
+        hideFooter
+        sx={{ height: 200 }}
+      />
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
-          height: "15%",
         }}
       >
+        <Typography
+          variant="body1"
+          dir={i18next.language === "ar" ? "rtl" : "ltr"}
+          sx={{
+            color: theme.palette.text.primary,
+            letterSpacing: 0,
+            fontSize: 24,
+            fontWeight: 800,
+          }}
+        >
+          {t("common.total")} : {calculateTotal()}
+        </Typography>
         <form onKeyDown={getProduct}>
           <TextField
             margin="dense"
