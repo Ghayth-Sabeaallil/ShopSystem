@@ -170,7 +170,7 @@ const Cashier = () => {
             text={t("cashier.cancel")}
             icon={CancelIcon}
             disabled={cashierProduct.length === 0}
-            onClick={() => {}}
+            onClick={() => setCashierProduct([])}
           />
           <Btn
             text={t("cashier.finish")}
