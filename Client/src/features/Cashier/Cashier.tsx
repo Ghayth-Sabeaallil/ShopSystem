@@ -20,7 +20,7 @@ import i18next from "../../utils/i18n";
 import { productApi } from "./api/productApi";
 const Cashier = () => {
   const theme = useTheme();
-  const { products } = useProduct();
+  const { products, setProducts } = useProduct();
   const [cashierProduct, setCashierProduct] = useState<CashierProduct[]>([]);
   const [barCode, setBarCode] = useState<string>("");
   const { t } = useTranslation();
@@ -107,6 +107,26 @@ const Cashier = () => {
     }, 0);
   };
 
+  const updateDb = () => {
+    productApi.updateProduct(cashierProduct);
+    setProducts(
+      products.map((product) => {
+        const update = cashierProduct.find(
+          (p: CashierProduct) => p.id === product._id
+        );
+        if (update) {
+          return {
+            ...product,
+            selling_amount: (product.selling_amount ?? 0) + update.amount,
+            buying_amount: (product.buying_amount ?? 0) - update.amount,
+          };
+        }
+        return product;
+      })
+    );
+    setCashierProduct([]);
+  };
+
   return (
     <Box
       sx={{
@@ -177,10 +197,7 @@ const Cashier = () => {
             text={t("cashier.finish")}
             icon={PrintIcon}
             disabled={cashierProduct.length === 0}
-            onClick={() => {
-              productApi.updateProduct(cashierProduct);
-              setCashierProduct([]);
-            }}
+            onClick={updateDb}
           />
           {/*
           <Btn

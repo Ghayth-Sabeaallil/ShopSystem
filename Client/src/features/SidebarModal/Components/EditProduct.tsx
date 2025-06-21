@@ -179,7 +179,6 @@ export default function EditProduct({
             <Button
               onClick={() => {
                 productApi.editProduct(id, product);
-
                 setProducts(
                   products.map((item: productResponse) =>
                     item._id === id ? { ...item, ...product } : item
