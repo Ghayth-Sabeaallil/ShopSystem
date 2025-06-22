@@ -176,7 +176,7 @@ const Cashier = () => {
         justifyItems: "center",
         justifySelf: "center",
         gap: 2,
-        width: "40%",
+        width: "50%",
         height: "95vh",
         backgroundColor: theme.palette.secondary.dark,
         padding: 2,
