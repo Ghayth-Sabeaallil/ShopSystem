@@ -1,4 +1,5 @@
 import api from "../../../shared/api/apiClient";
+import type { receiptResponse } from "../../SidebarModal/types/receiptType";
 import type { CashierProduct } from "../types/CashierType";
 
 const updateProduct = async (product: CashierProduct[]) =>
@@ -17,7 +18,13 @@ const addReceipt = async (items: CashierProduct[], bar_code: string) =>
             throw error;
         });
 
+const getReceipts = async () => {
+    return await api.get<receiptResponse[]>('/receipts/getByOwner', {
+        withCredentials: true,
+    });
+};
+
 
 export const cashierApi = {
-    updateProduct, addReceipt
+    updateProduct, addReceipt, getReceipts
 };

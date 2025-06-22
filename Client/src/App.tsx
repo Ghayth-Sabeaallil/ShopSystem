@@ -16,13 +16,17 @@ import { Navigate, Route, Routes, BrowserRouter } from "react-router-dom";
 import { AuthProvider, useAuth } from "./shared/context/Context/AuthContext ";
 import { ProductsProvider } from "./shared/context/Context/ProductContext";
 import Cashier from "./features/Cashier/Cashier";
+import SellCharts from "./features/SellCharts/SellCharts";
+import { ReceiptsProvider } from "./shared/context/Context/ReceiptContext";
 
 function App() {
   return (
     <ThemeModeProvider>
       <AuthProvider>
         <ProductsProvider>
-          <AppWithTheme />
+          <ReceiptsProvider>
+            <AppWithTheme />
+          </ReceiptsProvider>
         </ProductsProvider>
       </AuthProvider>
     </ThemeModeProvider>
@@ -61,6 +65,7 @@ function AppWithTheme() {
                 <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
                   <Sidebar />
                   <Cashier />
+                  <SellCharts />
                 </Box>
               ) : (
                 <Navigate to="/login" />

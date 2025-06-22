@@ -1,4 +1,5 @@
 import type { productResponse } from "../../features/SidebarModal/types/productType";
+import type { receiptResponse } from "../../features/SidebarModal/types/receiptType";
 
 export type AuthContextType = {
     isAuthenticated: boolean;
@@ -10,4 +11,9 @@ export type AuthContextType = {
 export type ProductsContextType = {
     products: productResponse[];
     setProducts: (value: productResponse[]) => void;
+};
+
+export type ReceiptsContextType = {
+    receipts: receiptResponse[];
+    setReceipts: React.Dispatch<React.SetStateAction<receiptResponse[]>>
 };

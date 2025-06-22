@@ -24,4 +24,17 @@ receiptRouter.post("/add", async (req, res) => {
     }
 });
 
+receiptRouter.get("/getByOwner", async (req, res) => {
+    try {
+        const token = req.cookies["token"];
+        if (token !== undefined) {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const event = await ReceiptsModel.find({ owner_id: decoded.userId }).exec();
+            res.status(200).json(event);
+        }
+    } catch (err) {
+        res.status(500).json({ message: "Error getting user products", err });
+    }
+});
+
 export default receiptRouter;
