@@ -1,10 +1,11 @@
-import { Typography, Button, Box } from "@mui/material";
+import { Typography, Button, Box, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import EmailIcon from "@mui/icons-material/Email";
 
 const SupportView = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
 
   return (
     <Box
@@ -12,11 +13,22 @@ const SupportView = () => {
         display: "flex",
         justifyContent: "center",
         flexDirection: "column",
+        textAlign: "center",
         width: 400,
         gap: 2,
       }}
     >
-      <Typography variant="body1">{t(`help.contact`)}</Typography>
+      <Typography
+        variant="body1"
+        sx={{
+          color: theme.palette.text.primary,
+          letterSpacing: 0,
+          fontSize: 24,
+          fontWeight: 800,
+        }}
+      >
+        {t(`help.contact`)}
+      </Typography>
 
       <Button
         variant="contained"

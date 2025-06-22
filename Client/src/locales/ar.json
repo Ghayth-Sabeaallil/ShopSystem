@@ -45,7 +45,7 @@
   },
   "cashier": {
     "product": "المنتج",
-    "finish": "اكمال",
+    "pay": "ادفع",
     "cancel": "انهاء",
     "discount": "تخفيض"
   }

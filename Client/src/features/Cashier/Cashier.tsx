@@ -234,7 +234,7 @@ const Cashier = () => {
             onClick={() => setCashierProduct([])}
           />
           <Btn
-            text={t("cashier.finish")}
+            text={t("cashier.pay")}
             icon={PrintIcon}
             disabled={cashierProduct.length === 0}
             onClick={updateDb}

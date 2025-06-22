@@ -44,7 +44,7 @@
   },
   "cashier": {
     "product": "Product",
-    "finish": "Finish",
+    "pay": "Pay",
     "cancel": "Cancel",
     "discount": "Discount"
   }
