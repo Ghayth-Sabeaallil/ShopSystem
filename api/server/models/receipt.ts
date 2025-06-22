@@ -1,16 +1,30 @@
 import Mongoose from "mongoose";
 
-interface Receipts {
-    date_create: string,
-    time: string,
-    items: string[],
-    bar_code: number,
+interface Items {
+    id: string;
+    name: string;
+    selling_price: number;
+    sale_price?: number;
+    amount: number;
 }
 
+interface Receipts {
+    items: Items[];
+    bar_code: number;
+}
+
+// Define a Mongoose schema for Items
+const ItemSchema = new Mongoose.Schema<Items>({
+    id: { type: String, required: true },
+    name: { type: String, required: true },
+    selling_price: { type: Number, required: true },
+    sale_price: { type: Number, required: false },
+    amount: { type: Number, required: true },
+});
+
+// Use ItemSchema inside Receipts schema
 const schema = new Mongoose.Schema<Receipts>({
-    date_create: { type: String, required: true },
-    time: { type: String, required: true },
-    items: { type: [String], required: true },
+    items: { type: [ItemSchema], required: true },
     bar_code: { type: Number, required: true },
 });
 

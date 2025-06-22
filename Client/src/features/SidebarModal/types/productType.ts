@@ -8,7 +8,6 @@ export type productResponse = {
     selling_amount: number
     minimum_amount: number
     sale_price?: number
-    sale_expires_at?: Date
 };
 
 export type productRequest = {

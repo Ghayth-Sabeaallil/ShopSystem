@@ -144,11 +144,9 @@ productRouter.put("/sale", async (req, res) => {
         if (product.selling_price === sale_price) {
             // Remove sale price and expiration
             product.sale_price = undefined;
-            product.sale_expires_at = undefined;
         } else {
             // Set sale price and expiration
             product.sale_price = sale_price;
-            product.sale_expires_at = sale_expires_at;
         }
         await product.save();
         res.status(200).json({ message: 'Product updated successfully.' });

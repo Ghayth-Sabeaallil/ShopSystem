@@ -35,23 +35,17 @@ export default function Sales({
   const theme = useTheme();
   const { t } = useTranslation();
   const [procentValue, setProcentValue] = useState<number>(0);
-  const [numberOfDays, setNumberOfDays] = useState<number>(1);
   const { products, setProducts } = useProduct();
 
   useEffect(() => {
     setProcentValue(((sellingPrice - salePrice) / sellingPrice) * 100);
   }, [salePrice, products]);
 
-  const updateSale = (id: string, salePrice: number, numberOfDays: number) => {
-    const saleExpiresAt = new Date(
-      Date.now() + numberOfDays * 24 * 60 * 60 * 1000
-    );
-    productApi.updateSale(id, salePrice, saleExpiresAt);
+  const updateSale = (id: string, salePrice: number) => {
+    productApi.updateSale(id, salePrice);
     setProducts(
       products.map((item: productResponse) =>
-        item._id === id
-          ? { ...item, sale_price: salePrice, sale_expires_at: saleExpiresAt }
-          : item
+        item._id === id ? { ...item, sale_price: salePrice } : item
       )
     );
   };
@@ -117,14 +111,6 @@ export default function Sales({
               setSalePrice(sellingPrice - sellingPrice * (percent / 100));
             }}
           />
-          <TextField
-            disabled={procentValue > 0 ? false : true}
-            label={t("stock.days")}
-            type="number"
-            value={numberOfDays}
-            onChange={(e) => setNumberOfDays(Number(e.target.value))}
-            InputProps={{ inputProps: { min: 1 } }}
-          />
           <DialogActions
             sx={{
               display: "flex",
@@ -134,7 +120,7 @@ export default function Sales({
           >
             <Button
               onClick={() => {
-                updateSale(id, salePrice, numberOfDays);
+                updateSale(id, salePrice);
                 setProcentValue(0);
                 setOpenEditDialog(false);
               }}
