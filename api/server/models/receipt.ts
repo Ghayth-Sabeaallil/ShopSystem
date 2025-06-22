@@ -10,7 +10,7 @@ interface Items {
 
 interface Receipts {
     items: Items[];
-    bar_code: number;
+    bar_code: string;
 }
 
 // Define a Mongoose schema for Items
@@ -25,7 +25,7 @@ const ItemSchema = new Mongoose.Schema<Items>({
 // Use ItemSchema inside Receipts schema
 const schema = new Mongoose.Schema<Receipts>({
     items: { type: [ItemSchema], required: true },
-    bar_code: { type: Number, required: true },
+    bar_code: { type: String, required: true },
 });
 
 const ReceiptsModel = Mongoose.model("receipts", schema);

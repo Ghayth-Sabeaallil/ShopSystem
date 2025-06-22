@@ -17,7 +17,8 @@ import {
 import { getDataGridLocale } from "../../utils/getDataGridLocale";
 import i18n from "../../utils/i18n";
 import i18next from "../../utils/i18n";
-import { productApi } from "./api/productApi";
+import { cashierApi } from "./api/cashierApi";
+import { getFormattedTimestamp } from "../../utils/getReceiptBarcode";
 const Cashier = () => {
   const theme = useTheme();
   const { products, setProducts } = useProduct();
@@ -108,7 +109,8 @@ const Cashier = () => {
   };
 
   const updateDb = () => {
-    productApi.updateProduct(cashierProduct);
+    cashierApi.updateProduct(cashierProduct);
+    cashierApi.addReceipt(cashierProduct, getFormattedTimestamp());
     setProducts(
       products.map((product) => {
         const update = cashierProduct.find(
