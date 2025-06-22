@@ -5,7 +5,6 @@ import { useProduct } from "../../shared/context/Context/ProductContext";
 import CancelIcon from "@mui/icons-material/Cancel";
 import Btn from "../../shared/components/Btn";
 import { useTranslation } from "react-i18next";
-import DiscountIcon from "@mui/icons-material/Discount";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import { useState } from "react";
@@ -240,13 +239,6 @@ const Cashier = () => {
             disabled={cashierProduct.length === 0}
             onClick={updateDb}
           />
-          {/*
-          <Btn
-            text={t("cashier.discount")}
-            icon={DiscountIcon}
-            disabled={cashierProduct.length === 0}
-            onClick={() => {}}
-          />*/}
         </Box>
       </Box>
     </Box>
