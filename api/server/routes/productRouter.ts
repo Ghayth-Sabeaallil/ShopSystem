@@ -125,11 +125,11 @@ productRouter.put("/sale", async (req, res) => {
         }
         const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { userId: string };
         const userId = decoded.userId;
-        const { id: productId, sale_price, sale_expires_at } = req.body;
+        const { id: productId, sale_price } = req.body;
         if (!productId) {
             res.status(400).json({ message: 'Product ID is required.' });
         }
-        if (sale_price == null || sale_expires_at == null) {
+        if (sale_price == null) {
             res.status(400).json({ message: 'All product fields are required.' });
         }
         const product = await ProductsModel.findById(productId);
