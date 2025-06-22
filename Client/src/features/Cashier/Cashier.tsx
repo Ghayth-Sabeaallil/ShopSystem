@@ -1,4 +1,4 @@
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, IconButton, TextField, Tooltip, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import PrintIcon from "@mui/icons-material/Print";
 import { useProduct } from "../../shared/context/Context/ProductContext";
@@ -6,6 +6,8 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import Btn from "../../shared/components/Btn";
 import { useTranslation } from "react-i18next";
 import DiscountIcon from "@mui/icons-material/Discount";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 import { useState } from "react";
 import type { CashierProduct } from "./types/CashierType";
 import {
@@ -68,6 +70,43 @@ const Cashier = () => {
       },
     },
     { field: "amount", headerName: t("common.amount"), flex: 2 },
+    {
+      field: "actions",
+      headerName: t("common.actions"),
+      headerAlign: "center",
+      flex: 2,
+      renderCell: (params: GridRenderCellParams) => {
+        const product = products.find((b) => b._id === params.row.id);
+        if (!product) return null;
+
+        return (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: 1,
+            }}
+          >
+            <Tooltip title={t("common.delete")}>
+              <IconButton
+                sx={{ padding: "5px" }}
+                onClick={() => {
+                  setCashierProduct((prev) =>
+                    prev.filter((item) => item.id !== product._id)
+                  );
+                  setBarCode("");
+                }}
+                color="primary"
+                aria-label="delete"
+              >
+                <DeleteIcon fontSize="medium" color="error" />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        );
+      },
+    },
   ];
 
   const getProduct = (event: React.KeyboardEvent<HTMLFormElement>) => {
