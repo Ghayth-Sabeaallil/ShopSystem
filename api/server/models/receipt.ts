@@ -9,6 +9,7 @@ interface Items {
 }
 
 interface Receipts {
+    owner_id: string,
     items: Items[];
     bar_code: string;
 }
@@ -24,6 +25,7 @@ const ItemSchema = new Mongoose.Schema<Items>({
 
 // Use ItemSchema inside Receipts schema
 const schema = new Mongoose.Schema<Receipts>({
+    owner_id: { type: String, required: true },
     items: { type: [ItemSchema], required: true },
     bar_code: { type: String, required: true },
 });
