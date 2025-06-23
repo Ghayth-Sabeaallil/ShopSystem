@@ -3,11 +3,15 @@ import { BarChart } from "@mui/x-charts/BarChart";
 import { useTheme } from "@mui/material/styles";
 import { useTranslation } from "react-i18next";
 import { Box, Typography } from "@mui/material";
+import { getReceiptsPerDay, getTopSellingItems } from "../../utils/chartsData";
+import { PieChart } from "@mui/x-charts";
 
 const SellCharts = () => {
   const { receipts } = useReceipt();
   const theme = useTheme();
   const { t } = useTranslation();
+  const receiptsPerDay = getReceiptsPerDay(receipts);
+  const topSellingItems = getTopSellingItems(receipts);
 
   return (
     <Box
@@ -42,14 +46,14 @@ const SellCharts = () => {
             textAlign: "center",
           }}
         >
-          الأرباح
+          {t("cashier.receiptsPerDay")}{" "}
         </Typography>
         <BarChart
-          xAxis={[{ data: ["group A", "group B", "group C"] }]}
+          xAxis={[{ data: receiptsPerDay.xData }]}
           series={[
-            { data: [4, 3, 5] },
-            { data: [1, 6, 3] },
-            { data: [2, 5, 6] },
+            {
+              data: receiptsPerDay.yData,
+            },
           ]}
           height={300}
         />
@@ -72,16 +76,16 @@ const SellCharts = () => {
             textAlign: "center",
           }}
         >
-          المبيعات
+          {t("cashier.topSelling")}
         </Typography>
-        <BarChart
-          xAxis={[{ data: ["group A", "group B", "group C"] }]}
+        <PieChart
           series={[
-            { data: [4, 3, 5] },
-            { data: [1, 6, 3] },
-            { data: [2, 5, 6] },
+            {
+              data: topSellingItems,
+            },
           ]}
-          height={300}
+          width={400}
+          height={400}
         />
       </Box>
     </Box>

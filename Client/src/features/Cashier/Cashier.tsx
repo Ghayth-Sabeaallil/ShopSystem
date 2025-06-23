@@ -20,9 +20,11 @@ import i18n from "../../utils/i18n";
 import i18next from "../../utils/i18n";
 import { cashierApi } from "./api/cashierApi";
 import { getFormattedTimestamp } from "../../utils/getReceiptBarcode";
+import { useReceipt } from "../../shared/context/Context/ReceiptContext";
 const Cashier = () => {
   const theme = useTheme();
   const { products, setProducts } = useProduct();
+  const { receipts, setReceipts } = useReceipt();
   const [cashierProduct, setCashierProduct] = useState<CashierProduct[]>([]);
   const [barCode, setBarCode] = useState<string>("");
   const { t } = useTranslation();
@@ -146,10 +148,16 @@ const Cashier = () => {
     }, 0);
   };
 
-  const updateDb = () => {
+  const updateDb = async () => {
     const expireAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     cashierApi.updateProduct(cashierProduct);
-    cashierApi.addReceipt(cashierProduct, getFormattedTimestamp(), expireAt);
+    const receipt = await cashierApi.addReceipt(
+      cashierProduct,
+      getFormattedTimestamp(),
+      expireAt
+    );
+    setReceipts([...receipts, receipt]);
+
     setProducts(
       products.map((product) => {
         const update = cashierProduct.find(

@@ -46,6 +46,8 @@
     "product": "Product",
     "pay": "Pay",
     "cancel": "Cancel",
-    "discount": "Discount"
+    "discount": "Discount",
+    "topSelling": "Top Selling",
+    "receiptsPerDay": "Receipts Per Day"
   }
 }

@@ -11,10 +11,11 @@ const updateProduct = async (product: CashierProduct[]) =>
         });
 
 const addReceipt = async (items: CashierProduct[], bar_code: string, expire_at: Date) =>
-    await api.post(`/receipts/add`, { items, bar_code, expire_at }, { withCredentials: true })
-        .then(response => response.data)
-        .catch(error => {
-            console.error('Add failed:', error);
+    await api.post<receiptResponse>(`/receipts/add`, { items, bar_code, expire_at }, { withCredentials: true })
+        .then(response => {
+            return response.data;
+        }).catch(error => {
+            console.error('Added failed:', error);
             throw error;
         });
 

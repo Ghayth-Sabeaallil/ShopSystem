@@ -47,6 +47,8 @@
     "product": "المنتج",
     "pay": "ادفع",
     "cancel": "انهاء",
-    "discount": "تخفيض"
+    "discount": "تخفيض",
+    "topSelling": "الأكثر مبيعاً",
+    "receiptsPerDay": "عدد المبيعات اليومية"
   }
 }
