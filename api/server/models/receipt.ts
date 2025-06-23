@@ -12,6 +12,7 @@ interface Receipts {
     owner_id: string,
     items: Items[];
     bar_code: string;
+    expire_at?: Date
 }
 
 // Define a Mongoose schema for Items
@@ -28,7 +29,10 @@ const schema = new Mongoose.Schema<Receipts>({
     owner_id: { type: String, required: true },
     items: { type: [ItemSchema], required: true },
     bar_code: { type: String, required: true },
+    expire_at: { type: Date, required: true }
 });
+
+schema.index({ expire_at: 1 }, { expireAfterSeconds: 0 });
 
 const ReceiptsModel = Mongoose.model("receipts", schema);
 

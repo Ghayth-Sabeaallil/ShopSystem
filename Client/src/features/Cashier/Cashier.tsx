@@ -147,8 +147,9 @@ const Cashier = () => {
   };
 
   const updateDb = () => {
+    const expireAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     cashierApi.updateProduct(cashierProduct);
-    cashierApi.addReceipt(cashierProduct, getFormattedTimestamp());
+    cashierApi.addReceipt(cashierProduct, getFormattedTimestamp(), expireAt);
     setProducts(
       products.map((product) => {
         const update = cashierProduct.find(
