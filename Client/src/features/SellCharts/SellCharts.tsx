@@ -18,9 +18,7 @@ const SellCharts = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
-        justifyItems: "center",
-        justifySelf: "center",
+        alignItems: "center",
         gap: 2,
         width: "50%",
         height: "95vh",
@@ -28,11 +26,14 @@ const SellCharts = () => {
         padding: 2,
       }}
     >
+      {/* First Chart Container */}
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           width: "100%",
+          height: "50%",
+          justifyContent: "center",
           gap: 2,
         }}
       >
@@ -40,29 +41,28 @@ const SellCharts = () => {
           variant="body1"
           sx={{
             color: theme.palette.text.primary,
-            letterSpacing: 0,
             fontSize: 24,
             fontWeight: 800,
             textAlign: "center",
           }}
         >
-          {t("cashier.receiptsPerDay")}{" "}
+          {t("cashier.receiptsPerDay")}
         </Typography>
         <BarChart
           xAxis={[{ data: receiptsPerDay.xData }]}
-          series={[
-            {
-              data: receiptsPerDay.yData,
-            },
-          ]}
+          series={[{ data: receiptsPerDay.yData }]}
           height={300}
         />
       </Box>
+
+      {/* Second Chart Container */}
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           width: "100%",
+          height: "50%",
+          justifyContent: "center",
           gap: 2,
         }}
       >
@@ -70,7 +70,6 @@ const SellCharts = () => {
           variant="body1"
           sx={{
             color: theme.palette.text.primary,
-            letterSpacing: 0,
             fontSize: 24,
             fontWeight: 800,
             textAlign: "center",
@@ -79,13 +78,10 @@ const SellCharts = () => {
           {t("cashier.topSelling")}
         </Typography>
         <PieChart
-          series={[
-            {
-              data: topSellingItems,
-            },
-          ]}
-          width={400}
-          height={400}
+          series={[{ data: topSellingItems }]}
+          width={300}
+          height={300}
+          sx={{ mx: "auto" }} // <-- center the PieChart
         />
       </Box>
     </Box>

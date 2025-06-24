@@ -64,8 +64,9 @@ const LoginPage = () => {
           left: "50%",
           transform: "translate(-50%, -50%)",
           opacity: 0.12,
-          width: 700,
-          height: 700,
+          width: "80vw", // or any suitable value
+          maxWidth: 700,
+          height: "auto",
           zIndex: 1,
         }}
       />
