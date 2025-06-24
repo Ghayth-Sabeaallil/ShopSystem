@@ -2,13 +2,13 @@
   "sideBar": {
     "stock": "المخزن",
     "receipt": "الفواتير",
-    "support": "الدعم",
+    "support": "الدعم الفني",
     "settings": "الاعدادات"
   },
   "help": {
-    "whatsApp": "واتساب",
+    "whatsApp": "تواصل معنا عبر الواتساب",
     "contact": "تواصل معنا",
-    "mailUs": "أرسل بريد الكتروني"
+    "mailUs": "ارسل لنا رسالة"
   },
   "settings": {
     "title": "الاعدادات",
@@ -29,12 +29,12 @@
   },
   "common": {
     "name": "الاسم",
-    "barCode": "الكود",
+    "barCode": "الباركود",
     "buy": "سعر الشراء",
     "sell": "سعر المبيع",
     "amount": "كمية الشراء",
     "sellingAmount": "كمية المبيع",
-    "actions": "الاجراءات",
+    "actions": "العمليات",
     "edit": "تعديل",
     "delete": "حذف",
     "save": "حفظ",
@@ -45,9 +45,9 @@
   },
   "cashier": {
     "product": "المنتج",
-    "pay": "ادفع",
-    "cancel": "انهاء",
-    "discount": "تخفيض",
+    "pay": "الدفع",
+    "cancel": "الغاء",
+    "discount": "التخفيض",
     "topSelling": "الأكثر مبيعاً",
     "receiptsPerDay": "عدد المبيعات اليومية"
   }

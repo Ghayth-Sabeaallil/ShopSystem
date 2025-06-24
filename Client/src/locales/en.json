@@ -1,14 +1,14 @@
 {
   "sideBar": {
     "stock": "Stock",
-    "receipt": "receipt",
+    "receipt": "Receipts",
     "support": "Support",
     "settings": "Settings"
   },
   "help": {
-    "whatsApp": "whatsApp",
+    "whatsApp": "Contact Us via WhatsApp",
     "callUs": "Call Us",
-    "mailUs": "Send Mail"
+    "mailUs": "Mail Us"
   },
   "settings": {
     "title": "Settings",
@@ -16,9 +16,9 @@
   },
   "stock": {
     "stock": "Stock",
-    "add": "Add an Item",
-    "productExists": "This Product is alreday exists.",
-    "addError": "Something went Wrong, Please try again later.",
+    "add": "Add Product",
+    "productExists": "This Product is alreday exists",
+    "addError": "Something went Wrong, Please try again later",
     "days": "Number of days"
   },
   "alert": {
