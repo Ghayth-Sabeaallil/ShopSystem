@@ -40,7 +40,9 @@
     "actions": "Actions",
     "sale": "Sale",
     "minimum": "Minimum Amount",
-    "total": "Total"
+    "total": "Total",
+    "add": "Add",
+    "remove": "Remove"
   },
   "cashier": {
     "product": "Product",

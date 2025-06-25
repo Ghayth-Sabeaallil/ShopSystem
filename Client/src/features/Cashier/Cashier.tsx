@@ -6,7 +6,8 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import Btn from "../../shared/components/Btn";
 import { useTranslation } from "react-i18next";
 import DeleteIcon from "@mui/icons-material/Delete";
-
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useState } from "react";
 import type { CashierProduct } from "./types/CashierType";
 import {
@@ -89,6 +90,26 @@ const Cashier = () => {
               padding: 1,
             }}
           >
+            <Tooltip title={t("common.remove")}>
+              <IconButton
+                sx={{ padding: "5px" }}
+                onClick={() => setAmount(product._id, "remove")}
+                color="primary"
+                aria-label="Remove"
+              >
+                <RemoveCircleOutlineIcon fontSize="medium" color="warning" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title={t("common.add")}>
+              <IconButton
+                sx={{ padding: "5px" }}
+                onClick={() => setAmount(product._id, "add")}
+                color="primary"
+                aria-label="Add"
+              >
+                <AddCircleOutlineIcon fontSize="medium" color="success" />
+              </IconButton>
+            </Tooltip>
             <Tooltip title={t("common.delete")}>
               <IconButton
                 sx={{ padding: "5px" }}
@@ -134,11 +155,30 @@ const Cashier = () => {
             ];
           }
         });
-
         setBarCode("");
       }
       if (pro) setBarCode("");
     }
+  };
+
+  const setAmount = (id: string, action: string) => {
+    setCashierProduct((prev) => {
+      const existingProduct = prev.find((item) => item.id === id);
+      if (existingProduct) {
+        if (action === "remove") {
+          return prev.map((item) =>
+            item.id === id && item.amount > 1
+              ? { ...item, amount: item.amount - 1 }
+              : item
+          );
+        } else {
+          return prev.map((item) =>
+            item.id === id ? { ...item, amount: item.amount + 1 } : item
+          );
+        }
+      }
+      return prev;
+    });
   };
 
   const calculateTotal = () => {
