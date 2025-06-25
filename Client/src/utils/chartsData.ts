@@ -17,6 +17,7 @@ export function getReceiptsPerDay(receipts: receiptResponse[]) {
 
 export function getTopSellingItems(receipts: receiptResponse[]) {
     const itemCounts: { [key: string]: number } = {};
+
     receipts.forEach(receipt => {
         receipt.items.forEach(item => {
             const itemName = item.name;
@@ -24,6 +25,7 @@ export function getTopSellingItems(receipts: receiptResponse[]) {
             itemCounts[itemName] = (itemCounts[itemName] || 0) + itemAmount;
         });
     });
+
     const data = Object.entries(itemCounts)
         .map(([name, totalSold], index) => ({
             id: index,
@@ -32,6 +34,7 @@ export function getTopSellingItems(receipts: receiptResponse[]) {
         }))
         .sort((a, b) => b.value - a.value);
 
-    return data;
+    return data.slice(0, 5);
 }
+
 

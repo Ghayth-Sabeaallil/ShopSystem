@@ -26,7 +26,6 @@ const SellCharts = () => {
         padding: 2,
       }}
     >
-      {/* First Chart Container */}
       <Box
         sx={{
           display: "flex",
@@ -54,8 +53,6 @@ const SellCharts = () => {
           height={300}
         />
       </Box>
-
-      {/* Second Chart Container */}
       <Box
         sx={{
           display: "flex",
@@ -81,7 +78,7 @@ const SellCharts = () => {
           series={[{ data: topSellingItems }]}
           width={300}
           height={300}
-          sx={{ mx: "auto" }} // <-- center the PieChart
+          sx={{ mx: "auto" }}
         />
       </Box>
     </Box>
