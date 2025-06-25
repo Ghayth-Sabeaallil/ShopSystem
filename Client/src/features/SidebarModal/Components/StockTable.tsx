@@ -173,6 +173,26 @@ const StockTable = () => {
     },
   ];
 
+  function CustomNoRowsOverlay() {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100%",
+        }}
+      >
+        <img
+          src="/assets/stock.svg"
+          alt="Logo"
+          style={{ width: 100, opacity: 0.5 }}
+        />
+      </Box>
+    );
+  }
+
   return (
     <>
       <DataGrid
@@ -185,6 +205,9 @@ const StockTable = () => {
           "& .low-stock": {
             backgroundColor: "rgba(255, 30, 0, 0.24)",
           },
+        }}
+        slots={{
+          noRowsOverlay: CustomNoRowsOverlay,
         }}
         rows={rows}
         columns={columns}

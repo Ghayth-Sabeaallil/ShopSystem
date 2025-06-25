@@ -216,6 +216,26 @@ const Cashier = () => {
     setCashierProduct([]);
   };
 
+  function CustomNoRowsOverlay() {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100%",
+        }}
+      >
+        <img
+          src="/assets/logo.svg"
+          alt="Logo"
+          style={{ width: 100, opacity: 0.5 }}
+        />
+      </Box>
+    );
+  }
+
   return (
     <Box
       sx={{
@@ -237,6 +257,9 @@ const Cashier = () => {
         columns={columns}
         hideFooter
         sx={{ height: 200 }}
+        slots={{
+          noRowsOverlay: CustomNoRowsOverlay,
+        }}
       />
       <Box
         sx={{
