@@ -43,7 +43,8 @@
     "minimum": "الحد الأدنى",
     "total": "المجموع",
     "add": "اضافة",
-    "remove": "ازالة"
+    "remove": "ازالة",
+    "receipt": "الفاتورة"
   },
   "cashier": {
     "product": "المنتج",

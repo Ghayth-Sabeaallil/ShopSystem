@@ -1,5 +1,6 @@
 import { Typography, Box, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import ReceiptTable from "../Components/ReceiptTable";
 
 const ReceiptView = () => {
   const { t } = useTranslation();
@@ -11,8 +12,10 @@ const ReceiptView = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: 2,
+        gap: 3,
         textAlign: "center",
+        width: "80vw",
+        height: "65vh",
       }}
     >
       <Typography
@@ -26,6 +29,7 @@ const ReceiptView = () => {
       >
         {t(`sideBar.receipt`)}
       </Typography>
+      <ReceiptTable />
     </Box>
   );
 };

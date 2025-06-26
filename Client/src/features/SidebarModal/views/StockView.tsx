@@ -32,6 +32,7 @@ const StockView = () => {
         gap: 3,
         textAlign: "center",
         width: "80vw",
+        height: "65vh",
       }}
     >
       <Typography

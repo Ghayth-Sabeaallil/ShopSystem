@@ -42,7 +42,8 @@
     "minimum": "Minimum Amount",
     "total": "Total",
     "add": "Add",
-    "remove": "Remove"
+    "remove": "Remove",
+    "receipt": "Receipt"
   },
   "cashier": {
     "product": "Product",
