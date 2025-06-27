@@ -44,7 +44,8 @@
     "total": "المجموع",
     "add": "اضافة",
     "remove": "ازالة",
-    "receipt": "الفاتورة"
+    "receipt": "الفاتورة",
+    "print": "طباعة"
   },
   "cashier": {
     "product": "المنتج",

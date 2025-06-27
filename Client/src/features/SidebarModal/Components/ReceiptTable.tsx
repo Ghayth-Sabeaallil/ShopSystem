@@ -218,12 +218,29 @@ const ReceiptTable = () => {
           noRowsOverlay: CustomNoRowsOverlay,
         }}
       />
-      <Btn
-        text={t("common.save")}
-        icon={SaveIcon}
-        disabled={receiptProduct.length === 0}
-        onClick={updateDb}
-      />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+          gap: 2,
+        }}
+      >
+        ¨
+        <Btn
+          text={t("common.print")}
+          icon={SaveIcon}
+          disabled={receiptProduct.length === 0}
+          onClick={updateDb}
+        />
+        <Btn
+          text={t("common.save")}
+          icon={SaveIcon}
+          disabled={receiptProduct.length === 0}
+          onClick={updateDb}
+        />
+      </Box>
     </>
   );
 };

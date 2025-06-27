@@ -43,7 +43,8 @@
     "total": "Total",
     "add": "Add",
     "remove": "Remove",
-    "receipt": "Receipt"
+    "receipt": "Receipt",
+    "print": "Print"
   },
   "cashier": {
     "product": "Product",
