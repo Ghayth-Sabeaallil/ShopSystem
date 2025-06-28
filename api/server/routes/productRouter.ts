@@ -159,12 +159,13 @@ productRouter.put("/sale", async (req, res) => {
 productRouter.put("/update", async (req, res) => {
     try {
         const token = req.cookies["token"];
+        console.log(req.body.action);
         if (!token) {
             res.status(401).json({ message: 'Access denied. No token provided.' });
         }
         const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { userId: string };
         const userId = decoded.userId;
-        const productsToUpdate = req.body;
+        const productsToUpdate = req.body.product;
         if (!Array.isArray(productsToUpdate) || productsToUpdate.length === 0) {
             res.status(400).json({ message: 'No products provided for update.' });
         }
@@ -180,8 +181,16 @@ productRouter.put("/update", async (req, res) => {
             if (product.owner_id.toString() !== userId) {
                 continue;
             }
-            product.buying_amount = (product.buying_amount || 0) - amount;
-            product.selling_amount = (product.selling_amount || 0) + amount;
+            if (req.body.action === 'return') {
+
+                product.buying_amount = (product.buying_amount || 0) + amount;
+                product.selling_amount = (product.selling_amount || 0) - amount;
+            }
+            else {
+                product.buying_amount = (product.buying_amount || 0) - amount;
+                product.selling_amount = (product.selling_amount || 0) + amount;
+            }
+
             await product.save();
         }
         res.status(200).json({ message: 'Products updated successfully.' });

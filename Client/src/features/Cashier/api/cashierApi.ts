@@ -2,8 +2,8 @@ import api from "../../../shared/api/apiClient";
 import type { receiptResponse } from "../../SidebarModal/types/receiptType";
 import type { CashierProduct } from "../types/CashierType";
 
-const updateProduct = async (product: CashierProduct[]) =>
-    await api.put(`/products/update`, product, { withCredentials: true })
+const updateProduct = async (product: CashierProduct[], action: string) =>
+    await api.put(`/products/update`, { product, action }, { withCredentials: true })
         .then(response => response.data)
         .catch(error => {
             console.error('Update failed:', error);

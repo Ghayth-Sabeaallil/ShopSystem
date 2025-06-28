@@ -18,6 +18,7 @@ import { getDataGridLocale } from "../../../utils/getDataGridLocale";
 import i18n from "../../../utils/i18n";
 import { useReceipt } from "../../../shared/context/Context/ReceiptContext";
 import Btn from "../../../shared/components/Btn";
+import { cashierApi } from "../../Cashier/api/cashierApi";
 
 const ReceiptTable = () => {
   const theme = useTheme();
@@ -88,26 +89,20 @@ const ReceiptTable = () => {
               padding: 1,
             }}
           >
-            <Tooltip title={t("common.remove")}>
-              <IconButton
-                sx={{ padding: "5px" }}
-                onClick={() => setAmount(product._id, "remove")}
-                color="primary"
-                aria-label="Remove"
-              >
-                <RemoveCircleOutlineIcon fontSize="medium" color="warning" />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title={t("common.add")}>
-              <IconButton
-                sx={{ padding: "5px" }}
-                onClick={() => setAmount(product._id, "add")}
-                color="primary"
-                aria-label="Add"
-              >
-                <AddCircleOutlineIcon fontSize="medium" color="success" />
-              </IconButton>
-            </Tooltip>
+            {(receiptProduct.find((item) => item.id === product._id)?.amount ??
+              0) > 1 && (
+              <Tooltip title={t("common.remove")}>
+                <IconButton
+                  sx={{ padding: "5px" }}
+                  onClick={() => setAmount(product._id, "remove")}
+                  color="primary"
+                  aria-label="Remove"
+                >
+                  <RemoveCircleOutlineIcon fontSize="medium" color="warning" />
+                </IconButton>
+              </Tooltip>
+            )}
+
             <Tooltip title={t("common.delete")}>
               <IconButton
                 sx={{ padding: "5px" }}
@@ -168,7 +163,9 @@ const ReceiptTable = () => {
     });
   };
 
-  const updateDb = async () => {};
+  const updateDb = async () => {
+    cashierApi.updateProduct(receiptProduct, "return");
+  };
 
   function CustomNoRowsOverlay() {
     return (
@@ -227,13 +224,6 @@ const ReceiptTable = () => {
           gap: 2,
         }}
       >
-        ¨
-        <Btn
-          text={t("common.print")}
-          icon={SaveIcon}
-          disabled={receiptProduct.length === 0}
-          onClick={updateDb}
-        />
         <Btn
           text={t("common.save")}
           icon={SaveIcon}

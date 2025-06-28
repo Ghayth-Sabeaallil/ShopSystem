@@ -190,7 +190,7 @@ const Cashier = () => {
 
   const updateDb = async () => {
     const expireAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-    cashierApi.updateProduct(cashierProduct);
+    cashierApi.updateProduct(cashierProduct, "selling");
     const receipt = await cashierApi.addReceipt(
       cashierProduct,
       getFormattedTimestamp(),
