@@ -1,9 +1,7 @@
 import { Box, IconButton, TextField, Tooltip, Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 import { useTranslation } from "react-i18next";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useState } from "react";
 import SaveIcon from "@mui/icons-material/Save";
 import {
@@ -18,13 +16,12 @@ import { getDataGridLocale } from "../../../utils/getDataGridLocale";
 import i18n from "../../../utils/i18n";
 import { useReceipt } from "../../../shared/context/Context/ReceiptContext";
 import Btn from "../../../shared/components/Btn";
+import { receiptApi } from "../api/receiptApi";
 import { cashierApi } from "../../Cashier/api/cashierApi";
 
 const ReceiptTable = () => {
-  const theme = useTheme();
   const { products } = useProduct();
   const { receipts, setReceipts } = useReceipt();
-
   const [receiptProduct, setReceiptProduct] = useState<CashierProduct[]>([]);
   const [barCode, setBarCode] = useState<string>("");
   const { t } = useTranslation();
@@ -110,7 +107,6 @@ const ReceiptTable = () => {
                   setReceiptProduct((prev) =>
                     prev.filter((item) => item.id !== product._id)
                   );
-                  setBarCode("");
                 }}
                 color="primary"
                 aria-label="delete"
@@ -138,7 +134,6 @@ const ReceiptTable = () => {
             amount: item.amount,
           }))
         );
-        setBarCode("");
       }
     }
   };
@@ -163,8 +158,25 @@ const ReceiptTable = () => {
     });
   };
 
-  const updateDb = async () => {
-    cashierApi.updateProduct(receiptProduct, "return");
+  const updateDb = async (items: CashierProduct[], code: string) => {
+    const receipt = await receiptApi.updateReceipt(items, code);
+    cashierApi.updateProduct(items, "return");
+    setReceipts((prevReceipts) => {
+      if (items.length === 0) {
+        return prevReceipts.filter((r) => r.bar_code !== receipt.bar_code);
+      }
+
+      const index = prevReceipts.findIndex(
+        (r) => r.bar_code === receipt.bar_code
+      );
+      if (index !== -1) {
+        const updatedReceipts = [...prevReceipts];
+        updatedReceipts[index] = receipt;
+        return updatedReceipts;
+      } else {
+        return [...prevReceipts, receipt];
+      }
+    });
   };
 
   function CustomNoRowsOverlay() {
@@ -227,8 +239,17 @@ const ReceiptTable = () => {
         <Btn
           text={t("common.save")}
           icon={SaveIcon}
-          disabled={receiptProduct.length === 0}
-          onClick={updateDb}
+          disabled={false}
+          onClick={async () => {
+            const currentProducts = [...receiptProduct];
+            const currentBarCode = barCode;
+
+            await updateDb(currentProducts, currentBarCode);
+
+            // Now that context is updated, clear the UI
+            setReceiptProduct([]);
+            setBarCode("");
+          }}
         />
       </Box>
     </>

@@ -37,4 +37,51 @@ receiptRouter.get("/getByOwner", async (req, res) => {
     }
 });
 
+receiptRouter.put("/update", async (req, res) => {
+    try {
+        const token = req.cookies["token"];
+        if (!token) {
+            res.status(401).json({ message: 'Access denied. No token provided.' });
+        } else {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { userId: string };
+            const userId = decoded.userId;
+            const { items, barCode } = req.body;
+
+            if (!barCode) {
+                res.status(400).json({ message: 'barCode is required.' });
+            } else {
+                const receipt = await ReceiptsModel.findOne({ bar_code: barCode });
+
+                if (!receipt) {
+                    res.status(404).json({ message: 'Receipt not found.' });
+                } else {
+                    if (receipt.owner_id.toString() !== userId) {
+                        res.status(403).json({ message: 'Not authorized to update this product.' });
+                    } else {
+                        if (Array.isArray(items) && items.length === 0) {
+                            await receipt.deleteOne();
+                            res.status(200).json(receipt);
+                        } else if (Array.isArray(items) && items.length !== 0) {
+                            receipt.items = items;
+                            receipt.bar_code = barCode;
+                            await receipt.save();
+                            res.status(200).json(receipt);
+                        } else {
+                            // If items is not an array at all
+                            res.status(400).json({ message: 'Invalid items format.' });
+                        }
+                    }
+                }
+            }
+        }
+    } catch (error) {
+        console.error('Server error while updating product:', error);
+        res.status(500).json({ message: 'Server error', error });
+    }
+});
+
+
+
+
+
 export default receiptRouter;

@@ -159,7 +159,6 @@ productRouter.put("/sale", async (req, res) => {
 productRouter.put("/update", async (req, res) => {
     try {
         const token = req.cookies["token"];
-        console.log(req.body.action);
         if (!token) {
             res.status(401).json({ message: 'Access denied. No token provided.' });
         }
