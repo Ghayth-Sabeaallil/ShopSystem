@@ -181,7 +181,6 @@ productRouter.put("/update", async (req, res) => {
                 continue;
             }
             if (req.body.action === 'return') {
-
                 product.buying_amount = (product.buying_amount || 0) + amount;
                 product.selling_amount = (product.selling_amount || 0) - amount;
             }
@@ -189,7 +188,6 @@ productRouter.put("/update", async (req, res) => {
                 product.buying_amount = (product.buying_amount || 0) - amount;
                 product.selling_amount = (product.selling_amount || 0) + amount;
             }
-
             await product.save();
         }
         res.status(200).json({ message: 'Products updated successfully.' });

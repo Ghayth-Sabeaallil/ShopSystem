@@ -18,11 +18,16 @@ import { useReceipt } from "../../../shared/context/Context/ReceiptContext";
 import Btn from "../../../shared/components/Btn";
 import { receiptApi } from "../api/receiptApi";
 import { cashierApi } from "../../Cashier/api/cashierApi";
+import { getRemovedAndReducedItems } from "../../../utils/compareRecipets";
 
 const ReceiptTable = () => {
   const { products } = useProduct();
   const { receipts, setReceipts } = useReceipt();
   const [receiptProduct, setReceiptProduct] = useState<CashierProduct[]>([]);
+  const [orgReceiptProduct, setOrgReceiptProduct] = useState<CashierProduct[]>(
+    []
+  );
+
   const [barCode, setBarCode] = useState<string>("");
   const { t } = useTranslation();
   const currentLocaleText = getDataGridLocale(i18n.language);
@@ -134,6 +139,15 @@ const ReceiptTable = () => {
             amount: item.amount,
           }))
         );
+        setOrgReceiptProduct(
+          (res.items as CashierProduct[]).map((item) => ({
+            id: item.id,
+            name: item.name,
+            selling_price: item.selling_price,
+            sale_price: item.sale_price,
+            amount: item.amount,
+          }))
+        );
       }
     }
   };
@@ -160,7 +174,10 @@ const ReceiptTable = () => {
 
   const updateDb = async (items: CashierProduct[], code: string) => {
     const receipt = await receiptApi.updateReceipt(items, code);
-    cashierApi.updateProduct(items, "return");
+    await cashierApi.updateProduct(
+      getRemovedAndReducedItems(orgReceiptProduct, items),
+      "return"
+    );
     setReceipts((prevReceipts) => {
       if (items.length === 0) {
         return prevReceipts.filter((r) => r.bar_code !== receipt.bar_code);
