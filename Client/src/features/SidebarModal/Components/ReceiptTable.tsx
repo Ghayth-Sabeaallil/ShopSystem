@@ -91,19 +91,32 @@ const ReceiptTable = () => {
               padding: 1,
             }}
           >
-            {(receiptProduct.find((item) => item.id === product._id)?.amount ??
-              0) > 1 && (
-              <Tooltip title={t("common.remove")}>
-                <IconButton
-                  sx={{ padding: "5px" }}
-                  onClick={() => setAmount(product._id, "remove")}
-                  color="primary"
-                  aria-label="Remove"
-                >
-                  <RemoveCircleOutlineIcon fontSize="medium" color="warning" />
-                </IconButton>
-              </Tooltip>
-            )}
+            <Tooltip title={t("common.remove")}>
+              <IconButton
+                sx={{
+                  padding: "5px",
+                  opacity:
+                    (receiptProduct.find((item) => item.id === product._id)
+                      ?.amount ?? 0) <= 1
+                      ? 0.5
+                      : 1,
+                  pointerEvents:
+                    (receiptProduct.find((item) => item.id === product._id)
+                      ?.amount ?? 0) <= 1
+                      ? "none"
+                      : "auto",
+                }}
+                onClick={() => setAmount(product._id, "remove")}
+                color="primary"
+                aria-label="Remove"
+                disabled={
+                  (receiptProduct.find((item) => item.id === product._id)
+                    ?.amount ?? 0) <= 1
+                }
+              >
+                <RemoveCircleOutlineIcon fontSize="medium" color="warning" />
+              </IconButton>
+            </Tooltip>
 
             <Tooltip title={t("common.delete")}>
               <IconButton
