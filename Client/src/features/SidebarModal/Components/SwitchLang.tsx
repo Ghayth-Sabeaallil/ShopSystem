@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import { Box, MenuItem, Select } from "@mui/material";
 import { useTranslation } from "react-i18next";
 

@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import type { CashierProduct } from "../features/Cashier/types/CashierType";
 
 export function getRemovedAndReducedItems(

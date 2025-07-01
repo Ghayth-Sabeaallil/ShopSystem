@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import { Box, IconButton, TextField, Tooltip, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import PrintIcon from "@mui/icons-material/Print";

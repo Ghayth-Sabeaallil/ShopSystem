@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import { Box, IconButton, TextField, Tooltip, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import DeleteIcon from "@mui/icons-material/Delete";

@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import type { receiptResponse } from "../features/SidebarModal/types/receiptType";
 import { parseBarcodeDate } from "./getReceiptBarcode";
 

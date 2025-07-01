@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";

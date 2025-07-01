@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import api from "../../../shared/api/apiClient";
 import type { receiptResponse } from "../../SidebarModal/types/receiptType";
 import type { CashierProduct } from "../types/CashierType";

@@ -1,4 +1,6 @@
-// AuthContext.tsx
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import { createContext, useContext, useState, useEffect } from "react";
 import { logApi } from "../../../features/loginPage/api/loginApi";
 import type { AuthContextType } from "../../types/AuthContextType";

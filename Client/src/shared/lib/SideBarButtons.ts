@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import HelpIcon from "@mui/icons-material/Help";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import SettingsIcon from "@mui/icons-material/Settings";

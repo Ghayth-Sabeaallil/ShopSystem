@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import { useTranslation } from "react-i18next";
 import type { productRequest, productResponse } from "../types/productType";
 import {

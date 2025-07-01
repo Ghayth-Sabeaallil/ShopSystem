@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import { useState } from "react";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";

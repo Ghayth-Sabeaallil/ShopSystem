@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import { createContext, useContext, useState, useEffect } from "react";
 import { useAuth } from "./AuthContext ";
 import type { receiptResponse } from "../../../features/SidebarModal/types/receiptType";

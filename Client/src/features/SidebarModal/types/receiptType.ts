@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 export type receiptResponse = {
     _id: string,
     items: Items[];

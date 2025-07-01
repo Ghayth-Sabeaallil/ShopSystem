@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 export function getFormattedTimestamp() {
     const now = new Date();
     const year = String(now.getFullYear());

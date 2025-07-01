@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -7,7 +10,6 @@ import { useTheme } from "@mui/material/styles";
 import Logo from "./components/Logo";
 import SidebarModal from "../SidebarModal/SidebarModal";
 import type { SidebarView } from "../SidebarModal/types/SidebarModalTypes";
-
 import {
   PrimarySideBarButtons,
   SecondarySideBarButtons,

@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import { Backdrop, Box, Modal, Fade } from "@mui/material";
 import SupportView from "./views/SupportView";
 import { useTheme } from "@mui/material/styles";

@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import { Button } from "@mui/material";
 import type { SvgIconComponent } from "@mui/icons-material";
 

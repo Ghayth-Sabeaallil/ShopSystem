@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import { createTheme, type Theme } from "@mui/material/styles";
 
 const theme = (mode: "light" | "dark"): Theme =>

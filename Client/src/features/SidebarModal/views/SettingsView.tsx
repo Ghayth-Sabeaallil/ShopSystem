@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import { Box, Typography, useTheme } from "@mui/material";
 import { SwitchMode } from "../Components/SwitchMode";
 import { SwitchLang } from "../Components/SwitchLang";

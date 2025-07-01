@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import { arSD, enUS } from "@mui/x-data-grid/locales";
 
 export const dataGridLocales: Record<string, typeof arSD.components.MuiDataGrid.defaultProps.localeText> = {

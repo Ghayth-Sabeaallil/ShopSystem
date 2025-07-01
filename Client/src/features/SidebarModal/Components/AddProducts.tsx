@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import Btn from "../../../shared/components/Btn";

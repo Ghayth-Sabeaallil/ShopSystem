@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import { createContext, useContext, useState, useEffect } from "react";
 import type { ProductsContextType } from "../../types/AuthContextType";
 import type { productResponse } from "../../../features/SidebarModal/types/productType";

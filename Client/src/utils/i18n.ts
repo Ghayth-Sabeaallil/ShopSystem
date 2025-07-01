@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Ghayth Sabeaallil
+// All rights reserved.
+
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import ar from "../locales/ar.json"
