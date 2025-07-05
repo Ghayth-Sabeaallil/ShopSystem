@@ -12,8 +12,9 @@ import { useAuth } from "../../shared/context/Context/AuthContext ";
 const LoginPage = () => {
   const theme = useTheme();
   const { verifyAuth } = useAuth();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [marketId, setMarketId] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const LoginPage = () => {
   const handleLogin = async () => {
     try {
       setLoading(true);
-      await logApi.login(username, password);
+      await logApi.login(marketId, username, password);
       await verifyAuth();
       navigate("/");
     } catch (err) {
@@ -97,7 +98,34 @@ const LoginPage = () => {
           <TextField
             required
             fullWidth
-            label="E-post"
+            label="Market Id"
+            variant="outlined"
+            margin="normal"
+            type="number"
+            value={marketId}
+            onChange={(e) => {
+              setMarketId(e.target.value);
+            }}
+            sx={{
+              // Hide arrows in Chrome, Safari, Edge
+              "& input::-webkit-outer-spin-button": {
+                WebkitAppearance: "none",
+                margin: 0,
+              },
+              "& input::-webkit-inner-spin-button": {
+                WebkitAppearance: "none",
+                margin: 0,
+              },
+              // Hide arrows in Firefox
+              "& input[type=number]": {
+                MozAppearance: "textfield",
+              },
+            }}
+          />
+          <TextField
+            required
+            fullWidth
+            label="Username"
             variant="outlined"
             margin="normal"
             value={username}
@@ -108,7 +136,7 @@ const LoginPage = () => {
           <TextField
             required
             fullWidth
-            label="Lösenord"
+            label="Password"
             variant="outlined"
             type="password"
             margin="normal"
@@ -123,7 +151,7 @@ const LoginPage = () => {
             variant="contained"
             color="primary"
             onClick={onClickHandle}
-            disabled={!username || !password}
+            disabled={!username || !password || !marketId}
             sx={{
               marginTop: 2,
               height: 50,

@@ -3,8 +3,9 @@
 
 import api from "../../../shared/api/apiClient";
 
-const login = (username: string, password: string) =>
+const login = (marketId: string, username: string, password: string) =>
     api.post(`/users/login`, {
+        marketId,
         username,
         password
     }, {

@@ -7,16 +7,25 @@ const userRouter = express.Router();
 
 userRouter.post("/register", async (req, res) => {
     try {
-        const newUser = new UserModel(req.body);
-        const existingUser = await UserModel.findOne({ username: newUser.username });
-        if (!existingUser) {
-            const hashedPassword = await bcrypt.hash(newUser.password, 10);
-            const newUserRegister = new UserModel({ username: newUser.username, password: hashedPassword });
-            await newUserRegister.save();
-            res.status(200).json({ msg: 'User created successfully' });
-        }
-        else {
-            res.status(400).json({ msg: 'User already exists' });
+        const { marketId, username, password } = req.body;
+        let user = await UserModel.findOne({ marketId });
+        const hashedPassword = await bcrypt.hash(password, 10);
+        if (!user) {
+            const newUser = new UserModel({
+                marketId,
+                employees: [{ username, password: hashedPassword }]
+            });
+            await newUser.save();
+            res.status(200).json({ msg: 'User and market created successfully' });
+        } else {
+            const existingEmployee = user.employees.find(emp => emp.username === username);
+            if (existingEmployee) {
+                res.status(400).json({ msg: 'User already exists in this market' });
+            } else {
+                user.employees.push({ username, password: hashedPassword });
+                await user.save();
+                res.status(200).json({ msg: 'Employee added successfully' });
+            }
         }
     } catch (error) {
         console.error(error); // Log the error for debugging
@@ -40,20 +49,27 @@ userRouter.get('/verify', async (req, res) => {
 
 userRouter.post('/login', async (req, res) => {
     try {
-        const { username, password } = req.body;
-        const user = await UserModel.findOne({ username });
+        const { marketId, username, password } = req.body;
+        const user = await UserModel.findOne({
+            marketId,
+            'employees.username': username
+        });
         if (user) {
-            const isMatch = await bcrypt.compare(password, user.password);
-            if (isMatch) {
-                const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-                res.cookie('token', token, { httpOnly: true, secure: true, sameSite: "none" });
-                res.cookie('username', username, { secure: true, sameSite: "none" });
-            }
-            else {
+            const employee = user.employees.find(emp => emp.username === username);
+            if (employee) {
+                const isMatch = await bcrypt.compare(password, employee.password);
+                if (isMatch) {
+                    const token = jwt.sign({ marketId, username, userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+                    res.cookie('token', token, { httpOnly: true, secure: true, sameSite: "none" });
+                    res.cookie('username', username, { secure: true, sameSite: "none" });
+                    res.status(200).json({ msg: 'Login successful' });
+                } else {
+                    res.status(401).json({ msg: 'Wrong password or username' });
+                }
+            } else {
                 res.status(401).json({ msg: 'Wrong password or username' });
             }
-        }
-        else {
+        } else {
             res.status(401).json({ msg: 'Wrong password or username' });
         }
     } catch (error) {
