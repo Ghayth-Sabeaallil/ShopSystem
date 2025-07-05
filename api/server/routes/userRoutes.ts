@@ -7,13 +7,13 @@ const userRouter = express.Router();
 
 userRouter.post("/register", async (req, res) => {
     try {
-        const { marketId, username, password } = req.body;
+        const { marketId, username, password, role } = req.body;
         let user = await UserModel.findOne({ marketId });
         const hashedPassword = await bcrypt.hash(password, 10);
         if (!user) {
             const newUser = new UserModel({
                 marketId,
-                employees: [{ username, password: hashedPassword }]
+                employees: [{ username, password: hashedPassword, role }]
             });
             await newUser.save();
             res.status(200).json({ msg: 'User and market created successfully' });
@@ -22,7 +22,7 @@ userRouter.post("/register", async (req, res) => {
             if (existingEmployee) {
                 res.status(400).json({ msg: 'User already exists in this market' });
             } else {
-                user.employees.push({ username, password: hashedPassword });
+                user.employees.push({ username, password: hashedPassword, role });
                 await user.save();
                 res.status(200).json({ msg: 'Employee added successfully' });
             }
@@ -36,16 +36,20 @@ userRouter.post("/register", async (req, res) => {
 userRouter.get('/verify', async (req, res) => {
     try {
         const token = req.cookies.token;
-        if (token !== undefined) {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            res.status(200).json({ authenticated: true })
-        } else {
+        if (!token) {
             res.status(401).json({ authenticated: false });
         }
+        else {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            res.status(200).json({ authenticated: true, user: decoded.username });
+
+        }
+
     } catch (error) {
-        res.status(500).json({ msg: 'Server error', error });
+        res.status(401).json({ authenticated: false, msg: 'Invalid token' });
     }
 });
+
 
 userRouter.post('/login', async (req, res) => {
     try {
@@ -59,9 +63,10 @@ userRouter.post('/login', async (req, res) => {
             if (employee) {
                 const isMatch = await bcrypt.compare(password, employee.password);
                 if (isMatch) {
-                    const token = jwt.sign({ marketId, username, userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+                    const token = jwt.sign({ marketId, username, userId: user._id, role: employee.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
                     res.cookie('token', token, { httpOnly: true, secure: true, sameSite: "none" });
                     res.cookie('username', username, { secure: true, sameSite: "none" });
+                    res.cookie('role', employee.role, { secure: true, sameSite: "none" });
                     res.status(200).json({ msg: 'Login successful' });
                 } else {
                     res.status(401).json({ msg: 'Wrong password or username' });
@@ -79,6 +84,11 @@ userRouter.post('/login', async (req, res) => {
 
 userRouter.post('/logout', ({ res }: any) => {
     res.clearCookie('token', {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+    });
+    res.clearCookie('role', {
         httpOnly: true,
         secure: true,
         sameSite: "none",
