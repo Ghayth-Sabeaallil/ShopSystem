@@ -1,7 +1,7 @@
 // Copyright (c) 2025 Ghayth Sabeaallil
 // All rights reserved.
 
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Link, Typography, useTheme } from "@mui/material";
 
 const Footer = () => {
   const theme = useTheme();
@@ -17,7 +17,17 @@ const Footer = () => {
       }}
     >
       <Typography variant="body2" color={theme.palette.text.primary}>
-        © 2025 Ghayth Sabeaallil. All rights reserved.
+        © 2025{" "}
+        <Link
+          href="https://www.linkedin.com/in/ghayth-sabeaallil"
+          target="_blank"
+          rel="noopener noreferrer"
+          underline="hover"
+          color={theme.palette.text.secondary}
+        >
+          Ghayth Sabeaallil
+        </Link>
+        . All rights reserved.
       </Typography>
     </Box>
   );

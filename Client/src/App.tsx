@@ -70,6 +70,7 @@ function AppWithTheme() {
                   sx={{
                     display: "flex",
                     gap: 2,
+
                     alignItems: "center",
                     paddingRight: 2,
                   }}
@@ -79,6 +80,7 @@ function AppWithTheme() {
                     sx={{
                       display: "flex",
                       gap: 1,
+                      width: "100%",
                       flexDirection: "column",
                     }}
                   >
