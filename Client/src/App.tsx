@@ -21,6 +21,7 @@ import { ProductsProvider } from "./shared/context/Context/ProductContext";
 import Cashier from "./features/Cashier/Cashier";
 import SellCharts from "./features/SellCharts/SellCharts";
 import { ReceiptsProvider } from "./shared/context/Context/ReceiptContext";
+import Footer from "./features/Footer/Footer";
 
 function App() {
   return (
@@ -74,8 +75,24 @@ function AppWithTheme() {
                   }}
                 >
                   <Sidebar />
-                  <Cashier />
-                  <SellCharts />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      gap: 1,
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        gap: 2,
+                      }}
+                    >
+                      <Cashier />
+                      <SellCharts />
+                    </Box>
+                    <Footer />
+                  </Box>
                 </Box>
               ) : (
                 <Navigate to="/login" />

@@ -250,7 +250,7 @@ const Cashier = () => {
         gap: 2,
         width: "50%",
         height: "95vh",
-        backgroundColor: theme.palette.secondary.dark,
+        backgroundColor: theme.palette.secondary.main,
         padding: 2,
       }}
     >
