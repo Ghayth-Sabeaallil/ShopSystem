@@ -78,7 +78,6 @@ export default function Sidebar() {
           <Logo />
           {PrimarySideBarButtons.map((item, index) => {
             if (item.label === "Stock" && role !== "admin") return null;
-
             return (
               <SideBarIcon
                 key={index}
@@ -92,7 +91,6 @@ export default function Sidebar() {
             );
           })}
         </Box>
-
         <Box
           sx={{
             display: "flex",
