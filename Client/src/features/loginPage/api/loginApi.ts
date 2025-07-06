@@ -27,17 +27,18 @@ const logout = () => {
 
 const verifyAuth = async () => {
     try {
-        const { data } = await api.get<{ authenticated: boolean }>('/users/verify', {
+        const { data } = await api.get<{ authenticated: boolean, role: string }>('/users/verify', {
             withCredentials: true,
         });
 
         return {
             authenticated: data.authenticated,
+            role: data.role,
         };
     } catch {
         return {
             authenticated: false,
-            userId: "",
+            role: "",
         };
     }
 };

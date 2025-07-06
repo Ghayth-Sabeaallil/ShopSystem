@@ -41,7 +41,7 @@ userRouter.get('/verify', async (req, res) => {
         }
         else {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            res.status(200).json({ authenticated: true, user: decoded.username });
+            res.status(200).json({ authenticated: true, user: decoded.username, role: decoded.role });
 
         }
 

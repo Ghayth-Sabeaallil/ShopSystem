@@ -9,7 +9,6 @@ import ReceiptIcon from '@mui/icons-material/Receipt';
 export const PrimarySideBarButtons = [
     { label: "Stock", icon: StorefrontIcon },
     { label: "Receipt", icon: ReceiptIcon },
-
 ]
 export const SecondarySideBarButtons = [
     { label: "Support", icon: HelpIcon },

@@ -15,12 +15,14 @@ import {
   SecondarySideBarButtons,
 } from "../../shared/lib/SideBarButtons";
 import SideBarIcon from "./components/SideBarIcon";
+import { useAuth } from "../../shared/context/Context/AuthContext ";
 
 export default function Sidebar() {
   const theme = useTheme();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [currentView, setCurrentView] = useState<SidebarView>("");
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+  const { role } = useAuth();
 
   const handleOpenModal = (view: SidebarView) => {
     if (!view) return;
@@ -74,17 +76,21 @@ export default function Sidebar() {
           }}
         >
           <Logo />
-          {PrimarySideBarButtons.map((item, index) => (
-            <SideBarIcon
-              key={index}
-              label={item.label}
-              icon={item.icon}
-              open={true}
-              onClick={() =>
-                handleOpenModal(item.label.toLowerCase() as SidebarView)
-              }
-            />
-          ))}
+          {PrimarySideBarButtons.map((item, index) => {
+            if (item.label === "Stock" && role !== "admin") return null;
+
+            return (
+              <SideBarIcon
+                key={index}
+                label={item.label}
+                icon={item.icon}
+                open={true}
+                onClick={() =>
+                  handleOpenModal(item.label.toLowerCase() as SidebarView)
+                }
+              />
+            );
+          })}
         </Box>
 
         <Box
