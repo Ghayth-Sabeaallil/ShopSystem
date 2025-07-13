@@ -28,7 +28,15 @@ const getReceipts = async () => {
     });
 };
 
+const printReceipt = async (items: CashierProduct[], bar_code: string) =>
+    await api.post<receiptResponse>(`/receipts/print`, { items, bar_code })
+        .then(response => {
+            return response.data;
+        }).catch(error => {
+            console.error('Added failed:', error);
+            throw error;
+        });
 
 export const cashierApi = {
-    updateProduct, addReceipt, getReceipts
+    updateProduct, addReceipt, getReceipts, printReceipt
 };

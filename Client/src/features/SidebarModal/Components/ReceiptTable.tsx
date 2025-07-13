@@ -144,7 +144,9 @@ const ReceiptTable = () => {
   const getReceipt = (event: React.KeyboardEvent<HTMLFormElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      const res = receipts.find((receipt) => receipt.bar_code === barCode);
+      const res = receipts.find(
+        (receipt) => receipt.bar_code === "0" + barCode
+      );
       if (res) {
         setReceiptProduct(
           (res.items as CashierProduct[]).map((item) => ({

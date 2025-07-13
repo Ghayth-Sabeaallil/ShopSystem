@@ -194,11 +194,14 @@ const Cashier = () => {
   const updateDb = async () => {
     const expireAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     cashierApi.updateProduct(cashierProduct, "selling");
+    const barCode = getFormattedTimestamp();
+    console.log("barCode FE:", barCode);
     const receipt = await cashierApi.addReceipt(
       cashierProduct,
-      getFormattedTimestamp(),
+      barCode,
       expireAt
     );
+    cashierApi.printReceipt(cashierProduct, barCode);
     setReceipts([...receipts, receipt]);
 
     setProducts(

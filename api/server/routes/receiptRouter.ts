@@ -2,6 +2,9 @@ import express from 'express';
 import dotenv from 'dotenv';
 import jwt from "jsonwebtoken";
 import { ReceiptsModel } from '../models/receipt';
+import { SerialPort } from "serialport";
+import { createCanvas, loadImage } from "canvas";
+import bwipjs from "bwip-js";
 dotenv.config();
 
 const receiptRouter = express.Router();
@@ -80,7 +83,175 @@ receiptRouter.put("/update", async (req, res) => {
     }
 });
 
+receiptRouter.post("/print", async (req, res) => {
+    const { items, bar_code } = req.body;
+    if (!items || !Array.isArray(items)) {
+        res.status(400).send("Invalid items array");
+    }
+    try {
+        await printReceipt(items, bar_code);
+        res.send("تمت الطباعة بنجاح");
+    } catch (error) {
+        console.error("Print error:", error);
+        res.status(500).send("فشل الطباعة");
+    }
+});
 
+function canvasToEscPosBitmap(canvas: any) {
+    const ctx = canvas.getContext("2d");
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const width = canvas.width;
+    const height = canvas.height;
+    const widthBytes = Math.ceil(width / 8);
+    const bufferSize = 8 + widthBytes * height;
+    const buffer = Buffer.alloc(bufferSize);
+
+    buffer[0] = 0x1d;
+    buffer[1] = 0x76;
+    buffer[2] = 0x30;
+    buffer[3] = 0x00;
+    buffer[4] = widthBytes & 0xff;
+    buffer[5] = (widthBytes >> 8) & 0xff;
+    buffer[6] = height & 0xff;
+    buffer[7] = (height >> 8) & 0xff;
+
+    for (let y = 0; y < height; y++) {
+        for (let xByte = 0; xByte < widthBytes; xByte++) {
+            let byte = 0x00;
+            for (let bit = 0; bit < 8; bit++) {
+                const x = xByte * 8 + bit;
+                if (x >= width) continue;
+                const idx = (y * width + x) * 4;
+                const [r, g, b, a] = [
+                    imageData.data[idx],
+                    imageData.data[idx + 1],
+                    imageData.data[idx + 2],
+                    imageData.data[idx + 3],
+                ];
+                const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+                if (a > 128 && gray < 128) {
+                    byte |= 0x80 >> bit;
+                }
+            }
+            buffer[8 + y * widthBytes + xByte] = byte;
+        }
+    }
+
+    return buffer;
+}
+
+// Generate & print receipt
+export async function printReceipt(items: any[], barcodeText: string) {
+    console.log("barcode BE:", barcodeText);
+    const width = 576;
+    const fontSize = 36;
+    const lineHeight = fontSize + 20;
+    const margin = 40;
+    const itemCount = items.length;
+    const canvasHeight =
+        240 + lineHeight * itemCount + 80 + 200 + 200;
+
+    const canvas = createCanvas(width, canvasHeight);
+    const ctx = canvas.getContext("2d");
+
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(0, 0, width, canvas.height);
+
+    ctx.fillStyle = "#000000";
+    ctx.textAlign = "center";
+    ctx.direction = "rtl";
+
+    ctx.font = `bold ${fontSize + 4}px Arial`;
+    ctx.fillText("سوبر ماركت النجاح", width / 2, margin);
+    ctx.font = `${fontSize - 4}px Arial`;
+    ctx.fillText("الرياض - حي النخيل", width / 2, margin + 40);
+
+    const formattedDate = new Date().toLocaleDateString("ar-EG");
+    ctx.fillText(`التاريخ: ${formattedDate}`, width / 2, margin + 80);
+
+    ctx.font = `bold ${fontSize}px Arial`;
+    ctx.fillText("إيصال الدفع", width / 2, margin + 130);
+
+    const centerX = width / 2;
+    const colOffsets = { item: 150, qty: 0, price: -150 };
+
+    ctx.fillText("المنتج", centerX + colOffsets.item, margin + 180);
+    ctx.fillText("الكمية", centerX + colOffsets.qty, margin + 180);
+    ctx.fillText("السعر", centerX + colOffsets.price, margin + 180);
+
+    ctx.font = `${fontSize}px Arial`;
+    items.forEach((row, i) => {
+        const y = margin + 180 + lineHeight * (i + 1);
+        ctx.fillText(row.name, centerX + colOffsets.item, y);
+        ctx.fillText(row.amount, centerX + colOffsets.qty, y);
+        ctx.fillText(row.sale_price ? row.sale_price : row.selling_price, centerX + colOffsets.price, y);
+    });
+
+    const sepY = margin + 180 + lineHeight * (items.length + 1);
+    ctx.beginPath();
+    ctx.moveTo(margin, sepY);
+    ctx.lineTo(width - margin, sepY);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "#000000";
+    ctx.stroke();
+
+    const total = items.reduce((sum, item) => {
+        const parsed = parseFloat(
+            String(item.sale_price ? item.sale_price : item.selling_price).replace(/[^\d.]/g, "").replace(/٫/g, ".")
+        );
+        return sum + (isNaN(parsed) ? 0 : parsed);
+    }, 0);
+
+    ctx.font = `bold ${fontSize}px Arial`;
+    ctx.fillText("الإجمالي:", centerX + colOffsets.item, sepY + lineHeight);
+    ctx.fillText(`${total} ل.س`, centerX + colOffsets.price, sepY + lineHeight);
+
+    ctx.font = `bold ${fontSize + 6}px Arial`;
+    ctx.fillText("شكراً لتسوقكم معنا!", width / 2, sepY + lineHeight * 2.4);
+    ctx.font = `${fontSize - 6}px Arial`;
+    ctx.fillText("هاتف: 0501234567", width / 2, sepY + lineHeight * 3.2);
+
+    const pngBuffer = await bwipjs.toBuffer({
+        bcid: "ean13",
+        text: barcodeText.slice(1, 13),
+        scale: 3,
+        height: 15,
+        includetext: true,
+        textxalign: "center",
+        backgroundcolor: "FFFFFF",
+        paddingwidth: 0,      // keep sides tight
+        paddingheight: 10
+    });
+
+    const img = await loadImage(pngBuffer);
+    const barcodeY = sepY + lineHeight * 4;
+    ctx.drawImage(img, (width - img.width) / 2, barcodeY);
+
+    const bitmapBuffer = canvasToEscPosBitmap(canvas);
+
+    const port = new SerialPort({
+        path: "COM4",
+        baudRate: 9600,
+    });
+
+    return new Promise<void>((resolve, reject) => {
+        port.on("open", () => {
+            const init = Buffer.from([0x1b, 0x40]);
+            const cut = Buffer.from([0x1d, 0x56, 0x41, 0x10]);
+            const data = Buffer.concat([init, bitmapBuffer, cut]);
+
+            port.write(data, (err) => {
+                if (err) reject(err);
+                else {
+                    port.close();
+                    resolve();
+                }
+            });
+        });
+
+        port.on("error", reject);
+    });
+}
 
 
 
