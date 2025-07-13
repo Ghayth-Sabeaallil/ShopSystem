@@ -196,15 +196,23 @@ export async function printReceipt(items: any[], barcodeText: string) {
     ctx.stroke();
 
     const total = items.reduce((sum, item) => {
-        const parsed = parseFloat(
-            String(item.sale_price ? item.sale_price : item.selling_price).replace(/[^\d.]/g, "").replace(/٫/g, ".")
-        );
-        return sum + (isNaN(parsed) ? 0 : parsed);
+        const priceStr = item.sale_price ? item.sale_price : item.selling_price;
+
+        // Clean the price string
+        const cleanedPriceStr = String(priceStr)
+            .replace(/[^\d.]/g, "")
+            .replace(/٫/g, ".");
+
+        const price = parseFloat(cleanedPriceStr);
+        const amount = item.amount || 1; // default to 1 if amount missing
+
+        // Multiply price by amount and add to sum, handle NaN safely
+        return sum + (isNaN(price) ? 0 : price * amount);
     }, 0);
 
     ctx.font = `bold ${fontSize}px Arial`;
     ctx.fillText("الإجمالي:", centerX + colOffsets.item, sepY + lineHeight);
-    ctx.fillText(`${total} ل.س`, centerX + colOffsets.price, sepY + lineHeight);
+    ctx.fillText(`${Math.round(total * 100) / 100} ل.س`, centerX + colOffsets.price, sepY + lineHeight);
 
     ctx.font = `bold ${fontSize + 6}px Arial`;
     ctx.fillText("شكراً لتسوقكم معنا!", width / 2, sepY + lineHeight * 2.4);
