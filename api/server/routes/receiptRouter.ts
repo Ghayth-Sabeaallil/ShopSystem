@@ -84,12 +84,12 @@ receiptRouter.put("/update", async (req, res) => {
 });
 
 receiptRouter.post("/print", async (req, res) => {
-    const { items, bar_code } = req.body;
+    const { items, bar_code, marketName, marketAddress, marketPhone } = req.body;
     if (!items || !Array.isArray(items)) {
         res.status(400).send("Invalid items array");
     }
     try {
-        await printReceipt(items, bar_code);
+        await printReceipt(items, bar_code, marketName, marketAddress, marketPhone);
         res.send("تمت الطباعة بنجاح");
     } catch (error) {
         console.error("Print error:", error);
@@ -141,8 +141,7 @@ function canvasToEscPosBitmap(canvas: any) {
 }
 
 // Generate & print receipt
-export async function printReceipt(items: any[], barcodeText: string) {
-    console.log("barcode BE:", barcodeText);
+export async function printReceipt(items: any[], barcodeText: string, marketName: string, marketAddress: string, marketPhone: string) {
     const width = 576;
     const fontSize = 36;
     const lineHeight = fontSize + 20;
@@ -162,11 +161,11 @@ export async function printReceipt(items: any[], barcodeText: string) {
     ctx.direction = "rtl";
 
     ctx.font = `bold ${fontSize + 4}px Arial`;
-    ctx.fillText("سوبر ماركت النجاح", width / 2, margin);
+    ctx.fillText(marketName, width / 2, margin);
     ctx.font = `${fontSize - 4}px Arial`;
-    ctx.fillText("الرياض - حي النخيل", width / 2, margin + 40);
+    ctx.fillText(marketAddress, width / 2, margin + 40);
 
-    const formattedDate = new Date().toLocaleDateString("ar-EG");
+    const formattedDate = new Date().toLocaleDateString("en-GB");
     ctx.fillText(`التاريخ: ${formattedDate}`, width / 2, margin + 80);
 
     ctx.font = `bold ${fontSize}px Arial`;
@@ -217,7 +216,7 @@ export async function printReceipt(items: any[], barcodeText: string) {
     ctx.font = `bold ${fontSize + 6}px Arial`;
     ctx.fillText("شكراً لتسوقكم معنا!", width / 2, sepY + lineHeight * 2.4);
     ctx.font = `${fontSize - 6}px Arial`;
-    ctx.fillText("هاتف: 0501234567", width / 2, sepY + lineHeight * 3.2);
+    ctx.fillText(`هاتف: ${marketPhone}`, width / 2, sepY + lineHeight * 3.2);
 
     const pngBuffer = await bwipjs.toBuffer({
         bcid: "ean13",

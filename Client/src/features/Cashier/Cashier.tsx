@@ -25,10 +25,13 @@ import i18next from "../../utils/i18n";
 import { cashierApi } from "./api/cashierApi";
 import { getFormattedTimestamp } from "../../utils/getReceiptBarcode";
 import { useReceipt } from "../../shared/context/Context/ReceiptContext";
+import { useAuth } from "../../shared/context/Context/AuthContext ";
 const Cashier = () => {
   const theme = useTheme();
   const { products, setProducts } = useProduct();
   const { receipts, setReceipts } = useReceipt();
+  const { marketName, marketAddress, marketPhone } = useAuth();
+
   const [cashierProduct, setCashierProduct] = useState<CashierProduct[]>([]);
   const [barCode, setBarCode] = useState<string>("");
   const { t } = useTranslation();
@@ -200,7 +203,13 @@ const Cashier = () => {
       barCode,
       expireAt
     );
-    cashierApi.printReceipt(cashierProduct, barCode);
+    cashierApi.printReceipt(
+      cashierProduct,
+      barCode,
+      marketName,
+      marketAddress,
+      marketPhone
+    );
     setReceipts([...receipts, receipt]);
 
     setProducts(
