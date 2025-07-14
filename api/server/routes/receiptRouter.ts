@@ -84,12 +84,12 @@ receiptRouter.put("/update", async (req, res) => {
 });
 
 receiptRouter.post("/print", async (req, res) => {
-    const { items, bar_code, marketName, marketAddress, marketPhone } = req.body;
+    const { items, bar_code, lang, marketName, marketAddress, marketPhone } = req.body;
     if (!items || !Array.isArray(items)) {
         res.status(400).send("Invalid items array");
     }
     try {
-        await printReceipt(items, bar_code, marketName, marketAddress, marketPhone);
+        await printReceipt(items, bar_code, lang, marketName, marketAddress, marketPhone);
         res.send("تمت الطباعة بنجاح");
     } catch (error) {
         console.error("Print error:", error);
@@ -141,7 +141,7 @@ function canvasToEscPosBitmap(canvas: any) {
 }
 
 // Generate & print receipt
-export async function printReceipt(items: any[], barcodeText: string, marketName: string, marketAddress: string, marketPhone: string) {
+export async function printReceipt(items: any[], barcodeText: string, lang: string, marketName: string, marketAddress: string, marketPhone: string) {
     const width = 576;
     const fontSize = 36;
     const lineHeight = fontSize + 20;
@@ -166,17 +166,17 @@ export async function printReceipt(items: any[], barcodeText: string, marketName
     ctx.fillText(marketAddress, width / 2, margin + 40);
 
     const formattedDate = new Date().toLocaleDateString("en-GB");
-    ctx.fillText(`التاريخ: ${formattedDate}`, width / 2, margin + 80);
+    ctx.fillText(`${lang === "ar" ? "التاريخ" : "Date"}: ${formattedDate}`, width / 2, margin + 80);
 
     ctx.font = `bold ${fontSize}px Arial`;
-    ctx.fillText("إيصال الدفع", width / 2, margin + 130);
+    ctx.fillText(`${lang == "ar" ? "إيصال الدفع" : "Reciept"}`, width / 2, margin + 130);
 
     const centerX = width / 2;
     const colOffsets = { item: 150, qty: 0, price: -150 };
 
-    ctx.fillText("المنتج", centerX + colOffsets.item, margin + 180);
-    ctx.fillText("الكمية", centerX + colOffsets.qty, margin + 180);
-    ctx.fillText("السعر", centerX + colOffsets.price, margin + 180);
+    ctx.fillText(`${lang == "ar" ? "المنتج" : "Item"}`, centerX + colOffsets.item, margin + 180);
+    ctx.fillText(`${lang == "ar" ? "الكمية" : "Amount"}`, centerX + colOffsets.qty, margin + 180);
+    ctx.fillText(`${lang == "ar" ? "السعر" : "Price"}`, centerX + colOffsets.price, margin + 180);
 
     ctx.font = `${fontSize}px Arial`;
     items.forEach((row, i) => {
@@ -210,13 +210,13 @@ export async function printReceipt(items: any[], barcodeText: string, marketName
     }, 0);
 
     ctx.font = `bold ${fontSize}px Arial`;
-    ctx.fillText("الإجمالي:", centerX + colOffsets.item, sepY + lineHeight);
-    ctx.fillText(`${Math.round(total * 100) / 100} ل.س`, centerX + colOffsets.price, sepY + lineHeight);
+    ctx.fillText(`${lang == "ar" ? "الاجمالي" : "Total"}`, centerX + colOffsets.item, sepY + lineHeight);
+    ctx.fillText(`${Math.round(total * 100) / 100}`, centerX + colOffsets.price, sepY + lineHeight);
 
     ctx.font = `bold ${fontSize + 6}px Arial`;
-    ctx.fillText("شكراً لتسوقكم معنا!", width / 2, sepY + lineHeight * 2.4);
+    ctx.fillText(`${lang == "ar" ? "شكرا لتسوقكم معنا" : "Thank you"}`, width / 2, sepY + lineHeight * 2.4);
     ctx.font = `${fontSize - 6}px Arial`;
-    ctx.fillText(`هاتف: ${marketPhone}`, width / 2, sepY + lineHeight * 3.2);
+    ctx.fillText(`${lang == "ar" ? "هاتف" : "Tel"}: ${marketPhone}`, width / 2, sepY + lineHeight * 3.2);
 
     const pngBuffer = await bwipjs.toBuffer({
         bcid: "ean13",

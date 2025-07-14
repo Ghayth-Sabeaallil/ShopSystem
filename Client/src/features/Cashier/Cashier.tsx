@@ -31,7 +31,6 @@ const Cashier = () => {
   const { products, setProducts } = useProduct();
   const { receipts, setReceipts } = useReceipt();
   const { marketName, marketAddress, marketPhone } = useAuth();
-
   const [cashierProduct, setCashierProduct] = useState<CashierProduct[]>([]);
   const [barCode, setBarCode] = useState<string>("");
   const { t } = useTranslation();
@@ -206,6 +205,7 @@ const Cashier = () => {
     cashierApi.printReceipt(
       cashierProduct,
       barCode,
+      i18next.language,
       marketName,
       marketAddress,
       marketPhone

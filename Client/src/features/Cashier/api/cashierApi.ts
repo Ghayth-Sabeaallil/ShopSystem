@@ -28,8 +28,8 @@ const getReceipts = async () => {
     });
 };
 
-const printReceipt = async (items: CashierProduct[], bar_code: string, marketName: string, marketAddress: string, marketPhone: string) =>
-    await api.post<receiptResponse>(`/receipts/print`, { items, bar_code, marketName, marketAddress, marketPhone })
+const printReceipt = async (items: CashierProduct[], bar_code: string, lang: string, marketName: string, marketAddress: string, marketPhone: string) =>
+    await api.post<receiptResponse>(`/receipts/print`, { items, bar_code, lang, marketName, marketAddress, marketPhone })
         .then(response => {
             return response.data;
         }).catch(error => {
