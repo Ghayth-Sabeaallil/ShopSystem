@@ -221,7 +221,7 @@ export async function printReceipt(items: any[], barcodeText: string) {
 
     const pngBuffer = await bwipjs.toBuffer({
         bcid: "ean13",
-        text: barcodeText.slice(1, 13),
+        text: barcodeText,
         scale: 3,
         height: 15,
         includetext: true,
