@@ -2,6 +2,9 @@ import Mongoose from "mongoose";
 
 interface User {
     marketId: string;
+    marketName: string;
+    marketAddress: string;
+    marketPhone: string;
     employees: UserLogin[];
 }
 interface UserLogin {
@@ -18,6 +21,9 @@ const EmployeeSchema = new Mongoose.Schema<UserLogin>({
 
 const schema = new Mongoose.Schema<User>({
     marketId: { type: String, required: true, unique: true },
+    marketName: { type: String, required: true },
+    marketAddress: { type: String, required: true },
+    marketPhone: { type: String, required: true },
     employees: { type: [EmployeeSchema], required: true },
 
 });

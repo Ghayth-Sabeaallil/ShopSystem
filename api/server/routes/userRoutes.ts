@@ -7,12 +7,15 @@ const userRouter = express.Router();
 
 userRouter.post("/register", async (req, res) => {
     try {
-        const { marketId, username, password, role } = req.body;
+        const { marketId, marketName, marketAddress, marketPhone, username, password, role } = req.body;
         let user = await UserModel.findOne({ marketId });
         const hashedPassword = await bcrypt.hash(password, 10);
         if (!user) {
             const newUser = new UserModel({
                 marketId,
+                marketName,
+                marketAddress,
+                marketPhone,
                 employees: [{ username, password: hashedPassword, role }]
             });
             await newUser.save();
@@ -41,7 +44,7 @@ userRouter.get('/verify', async (req, res) => {
         }
         else {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            res.status(200).json({ authenticated: true, user: decoded.username, role: decoded.role });
+            res.status(200).json({ authenticated: true, user: decoded.username, marketName: decoded.marketName, marketAddress: decoded.marketAddress, marketPhone: decoded.marketPhone, role: decoded.role });
 
         }
 
@@ -63,10 +66,13 @@ userRouter.post('/login', async (req, res) => {
             if (employee) {
                 const isMatch = await bcrypt.compare(password, employee.password);
                 if (isMatch) {
-                    const token = jwt.sign({ marketId, username, userId: user._id, role: employee.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+                    const token = jwt.sign({ marketId, marketName: user.marketName, marketAddress: user.marketAddress, marketPhone: user.marketPhone, username, userId: user._id, role: employee.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
                     res.cookie('token', token, { httpOnly: true, secure: true, sameSite: "none" });
                     res.cookie('username', username, { secure: true, sameSite: "none" });
                     res.cookie('role', employee.role, { secure: true, sameSite: "none" });
+                    res.cookie('name', user.marketName, { secure: true, sameSite: "none" });
+                    res.cookie('address', user.marketAddress, { secure: true, sameSite: "none" });
+                    res.cookie('phone', user.marketPhone, { secure: true, sameSite: "none" });
                     res.status(200).json({ msg: 'Login successful' });
                 } else {
                     res.status(401).json({ msg: 'Wrong password or username' });
@@ -94,6 +100,18 @@ userRouter.post('/logout', ({ res }: any) => {
         sameSite: "none",
     });
     res.clearCookie('username', {
+        secure: true,
+        sameSite: "none",
+    });
+    res.clearCookie('name', {
+        secure: true,
+        sameSite: "none",
+    });
+    res.clearCookie('address', {
+        secure: true,
+        sameSite: "none",
+    });
+    res.clearCookie('phone', {
         secure: true,
         sameSite: "none",
     });

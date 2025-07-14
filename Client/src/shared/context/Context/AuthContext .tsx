@@ -10,6 +10,10 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setAuthenticated] = useState<boolean>(false);
   const [role, setRole] = useState<string>("");
+  const [marketName, setMarketName] = useState<string>("");
+  const [marketAddress, setMarketAddress] = useState<string>("");
+  const [marketPhone, setMarketPhone] = useState<string>("");
+
   const [loading, setLoading] = useState(true);
 
   const verifyAuth = async () => {
@@ -17,6 +21,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const isAuth = await logApi.verifyAuth();
       setAuthenticated(isAuth.authenticated);
       setRole(isAuth.role);
+      setMarketName(isAuth.marketName);
+      setMarketAddress(isAuth.marketAddress);
+      setMarketPhone(isAuth.marketPhone);
     } finally {
       setLoading(false);
     }
@@ -30,9 +37,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     <AuthContext.Provider
       value={{
         isAuthenticated,
-        setAuthenticated,
         role,
-        setRole,
+        marketName,
+        marketAddress,
+        marketPhone,
         verifyAuth,
         loading,
       }}

@@ -7,9 +7,10 @@ import type { receiptResponse } from "../../features/SidebarModal/types/receiptT
 export type AuthContextType = {
     isAuthenticated: boolean;
     role: string;
+    marketName: string;
+    marketAddress: string;
+    marketPhone: string;
     loading: boolean;
-    setAuthenticated: (value: boolean) => void;
-    setRole: (value: string) => void;
     verifyAuth: () => Promise<void>;
 };
 
