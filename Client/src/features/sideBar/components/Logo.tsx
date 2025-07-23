@@ -2,6 +2,7 @@
 // All rights reserved.
 
 import { Box } from "@mui/material";
+import logo from "/assets/logo.svg";
 
 const Logo = () => {
   return (
@@ -13,13 +14,7 @@ const Logo = () => {
         userSelect: "none",
       }}
     >
-      <Box
-        component="img"
-        src="/assets/logo.svg"
-        alt="Logo"
-        width={45}
-        height={45}
-      />
+      <Box component="img" src={logo} alt="Logo" width={45} height={45} />
     </Box>
   );
 };

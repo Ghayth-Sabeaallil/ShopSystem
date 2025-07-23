@@ -8,6 +8,8 @@ import { useProduct } from "../../shared/context/Context/ProductContext";
 import CancelIcon from "@mui/icons-material/Cancel";
 import Btn from "../../shared/components/Btn";
 import { useTranslation } from "react-i18next";
+import logo from "/assets/logo.svg";
+
 import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -242,8 +244,8 @@ const Cashier = () => {
         }}
       >
         <img
-          src="/assets/logo.svg"
-          alt="Logo"
+          src={logo}
+          alt="CashierLogo"
           style={{ width: 100, opacity: 0.5 }}
         />
       </Box>

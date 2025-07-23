@@ -22,6 +22,7 @@ import Btn from "../../../shared/components/Btn";
 import { receiptApi } from "../api/receiptApi";
 import { cashierApi } from "../../Cashier/api/cashierApi";
 import { getRemovedAndReducedItems } from "../../../utils/compareRecipets";
+import receipt from "/assets/receipt.svg";
 
 const ReceiptTable = () => {
   const { products } = useProduct();
@@ -224,8 +225,8 @@ const ReceiptTable = () => {
         }}
       >
         <img
-          src="/assets/receipt.svg"
-          alt="Logo"
+          src={receipt}
+          alt="receiptLogo"
           style={{ width: 100, opacity: 0.5 }}
         />
       </Box>

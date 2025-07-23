@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import { Box, TextField, Button, Typography, Paper } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import bg from "/assets/logo.svg";
+import logo from "/assets/logo.svg";
 import { useNavigate } from "react-router-dom";
 import { logApi } from "./api/loginApi";
 import { useAuth } from "../../shared/context/Context/AuthContext ";
@@ -60,8 +60,8 @@ const LoginPage = () => {
     >
       <Box
         component="img"
-        src={bg}
-        alt="Logo"
+        src={logo}
+        alt="BGLogo"
         sx={{
           position: "absolute",
           top: "50%",

@@ -21,6 +21,7 @@ import { productApi } from "../api/productApi";
 import EditProduct from "./EditProduct";
 import PercentIcon from "@mui/icons-material/Percent";
 import Sales from "./Sales";
+import stock from "/assets/stock.svg";
 
 const StockTable = () => {
   const { t } = useTranslation();
@@ -187,11 +188,7 @@ const StockTable = () => {
           height: "100%",
         }}
       >
-        <img
-          src="/assets/stock.svg"
-          alt="Logo"
-          style={{ width: 100, opacity: 0.5 }}
-        />
+        <img src={stock} alt="stockLogo" style={{ width: 100, opacity: 0.5 }} />
       </Box>
     );
   }
