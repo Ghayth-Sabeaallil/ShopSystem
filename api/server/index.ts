@@ -1,52 +1,37 @@
 import Mongoose from "mongoose";
 import Express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 import { apiRouter } from "./api";
-
+const port = 3000;
 dotenv.config();
 const app = Express();
-const port = process.env.PORT || 3000;
-
-console.log("Attempting to connect to MongoDB...");
+console.log("Attempting to connect to mongodb..");
 
 Mongoose.connect(process.env.MONGO_URI!)
     .then(() => console.log("Connected to MongoDB Atlas"))
     .catch((err) => console.error("MongoDB connection error:", err));
 
-/**
- * CORS Configuration
- * Allows both local dev and GitHub Pages frontend
- */
-const allowedOrigins = [
-    "http://localhost:5173",                // Vite Dev Server
-    "https://ghayth-sabeaallil.github.io",  // GitHub Pages domain
-];
-
 app.use(
     cors({
-        origin: function (origin, callback) {
-            // Allow requests with no origin (like Postman or server-to-server)
-            if (!origin) return callback(null, true);
-
-            if (allowedOrigins.includes(origin)) {
-                callback(null, true);
-            } else {
-                callback(new Error("CORS not allowed for this origin"));
-            }
-        },
-        credentials: true,
-        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        allowedHeaders: ["Content-Type", "Authorization"],
+        origin: "https://ghayth-sabeaallil.github.io/ShopSystem", // Match your custom domain (no trailing slash)
+        methods: "GET,POST,PUT,DELETE,OPTIONS", // Allow all relevant methods
+        credentials: true, // If using cookies or authentication
+        allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
     })
 );
 
-// Handle preflight OPTIONS automatically
-app.options("*", cors());
+// Explicitly handle OPTIONS requests if needed
+app.options("*", (req, res) => {
+    res.header("Access-Control-Allow-Origin", "https://ghayth-sabeaallil.github.io/ShopSystem"); // Match your custom domain exactly
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.sendStatus(200); // Respond to OPTIONS with status 200
+});
 
-app.use(Express.json());
-app.use("/users", apiRouter);
 
+app.use("/api", apiRouter);
 console.log("Starting server...");
 app.listen(port, () => {
     console.log("Server is listening on " + port);
