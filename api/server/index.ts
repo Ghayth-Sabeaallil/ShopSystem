@@ -14,7 +14,7 @@ Mongoose.connect(process.env.MONGO_URI!)
 
 app.use(
     cors({
-        origin: "https://ghayth-sabeaallil.github.io/ShopSystem/", // Match your custom domain (no trailing slash)
+        origin: "https://ghayth-sabeaallil.github.io/ShopSystem", // Match your custom domain (no trailing slash)
         methods: "GET,POST,PUT,DELETE,OPTIONS", // Allow all relevant methods
         credentials: true, // If using cookies or authentication
         allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
@@ -23,7 +23,7 @@ app.use(
 
 // Explicitly handle OPTIONS requests if needed
 app.options("*", (req, res) => {
-    res.header("Access-Control-Allow-Origin", "https://ghayth-sabeaallil.github.io/ShopSystem/"); // Match your custom domain exactly
+    res.header("Access-Control-Allow-Origin", "https://ghayth-sabeaallil.github.io/ShopSystem"); // Match your custom domain exactly
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
     res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
     res.header("Access-Control-Allow-Credentials", "true");
