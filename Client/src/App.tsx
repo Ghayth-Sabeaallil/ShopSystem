@@ -60,7 +60,7 @@ function AppWithTheme() {
   return (
     <ThemeProvider theme={muiTheme}>
       <CssBaseline />
-      <BrowserRouter>
+      <BrowserRouter basename="/ShopSystem">
         <Routes>
           <Route
             path="/"
