@@ -28,6 +28,7 @@ import { cashierApi } from "./api/cashierApi";
 import { getFormattedTimestamp } from "../../utils/getReceiptBarcode";
 import { useReceipt } from "../../shared/context/Context/ReceiptContext";
 import { useAuth } from "../../shared/context/Context/AuthContext ";
+import { printReceipt } from "../../utils/print";
 const Cashier = () => {
   const theme = useTheme();
   const { products, setProducts } = useProduct();
@@ -204,7 +205,7 @@ const Cashier = () => {
       barCode,
       expireAt
     );
-    cashierApi.printReceipt(
+    printReceipt(
       cashierProduct,
       barCode,
       i18next.language,
@@ -212,6 +213,7 @@ const Cashier = () => {
       marketAddress,
       marketPhone
     );
+
     setReceipts([...receipts, receipt]);
 
     setProducts(

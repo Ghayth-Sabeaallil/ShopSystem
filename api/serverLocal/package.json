@@ -1,0 +1,20 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Ett tillhörande REST-api för att rösta och se resultaten.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm run build && npm run start",
+    "start": "node ./dist/index.js",
+    "build": "npx esbuild index.ts --platform=node --bundle --packages=external --outdir=./dist --format=cjs"
+  },
+  "dependencies": {
+    "bwip-js": "^4.7.0",
+    "canvas": "^3.1.2",
+    "serialport": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/bwip-js": "^3.2.3",
+    "@types/node": "^22.7.9"
+  }
+}
